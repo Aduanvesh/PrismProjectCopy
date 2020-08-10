@@ -2,7 +2,7 @@
 
 Manage student societies, clubs  memberships, events and tickets
 
-##Create your local environment to develop for this project
+## Create your local environment to develop for this project
 ### Create Project Skeleton
 * ```quasar create sociit```
 * ```cd sociit```
@@ -24,10 +24,10 @@ Manage student societies, clubs  memberships, events and tickets
 * ```npm install firebase vuefire```
 * Login to Firebase Console > Database > Create Database -> Server in Aus or Asia
 * Configure Quasar bootfiles to access the DB before the app runs. 
-** Create a bootfile in sociit/src/boot/firebase.js
-** Add comments from this gist to it: https://gist.github.com/Baralabite/6599d853eb3164f5dfae818532faae2b
-** Look at the JS comments for notes on what they do.
-** Open ```quasar.config.js``` in sociit and add ```firebase.js``` to the boot array.
+	* Create a bootfile in sociit/src/boot/firebase.js
+	* Add comments from this gist to it: https://gist.github.com/Baralabite/6599d853eb3164f5dfae818532faae2b
+	* Look at the JS comments for notes on what they do.
+	* Open ```quasar.config.js``` in sociit and add ```firebase.js``` to the boot array.
 ``` boot: [
 'firebase.js',
 ],
