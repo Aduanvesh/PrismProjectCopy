@@ -15,6 +15,10 @@
       <br>
       {{'You live at: ' + item.street_address + ' ' + item.suburb
       }}
+
+      <div id="nav">
+       <router-link to="/login">Login</router-link>
+  </div>
     </q-item>
   </q-page>
 </template>
