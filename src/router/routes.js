@@ -4,8 +4,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: 'test', component: () => import('pages/Test.vue') }
+      { path: '', component: () => import('pages/Index.vue') }
     ]
   },
   {
@@ -13,6 +12,13 @@ const routes = [
     component: () => import('layouts/User.vue'),
     children: [
       { path: '', component: () => import('pages/Profile.vue') }
+    ]
+  },
+  {
+    path: '/memberships',
+    component: () => import('layouts/Main.vue'),
+    children: [
+      { path: '', component: () => import('pages/Memberships.vue') }
     ]
   },
 

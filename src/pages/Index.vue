@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <q-item
-      v-for="item in name"
+      v-for="item in user_data"
       :key="item.id"
     >
       {{'Hi, ' + item.first_name
@@ -24,11 +24,11 @@ export default {
   name: 'PageIndex',
   data () {
     return {
-      name: []
+      user_data: []
     }
   },
   created () {
-    this.$bind('name', this.$firestore.collection('users'))
+    this.$bind('user_data', this.$firestore.collection('users'))
   }
 }
 </script>
