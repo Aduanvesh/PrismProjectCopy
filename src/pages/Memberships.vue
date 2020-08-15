@@ -1,7 +1,7 @@
 <template>
   <!-- Grid layout needs major adjustment. -->
   <q-page class="flex">
-      <div class="row q-pa-md">
+      <div class="row q-pa-md" align="center">
         <div class="col full-width">
           <Cards
           v-for="link in cardsLinks"
@@ -10,12 +10,13 @@
           class=""
           />
         </div>
-        <div class="col full-width" align="center">
+        <div class="col full-width">
         <q-btn
           size="35px"
           round
-          color="primary"
-          icon="add"
+          flat
+          color="grey-9"
+          icon="add_circle_outline"
           class="q-mt-md"
           target="_blank"
           @click="layout = true"
@@ -26,18 +27,17 @@
     <div class="q-pa-md q-gutter-sm">
     <q-dialog v-model="layout">
       <q-layout view="Lhh lpR fff" container class="bg-white">
-        <q-header class="bg-primary">
-          <q-toolbar>
-            <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-            <q-toolbar-title>Header</q-toolbar-title>
-            <q-btn flat @click="drawerR = !drawerR" round dense icon="menu" />
-            <q-btn flat v-close-popup round dense icon="close" />
-          </q-toolbar>
+        <q-header class="bg-grey-3">
+            <q-img src="https://images.fiftyfootshadows.net/2019/06/grotta_desktops.jpg" basic>
+            <q-btn flat round dense icon="cloud_upload" class="absolute-center" size="xl" />
+            <div class="absolute-bottom text-h6"> Add Membership </div>
+            <q-btn flat v-close-popup round dense icon="close" class="float-left" />
+            </q-img>
         </q-header>
 
-        <q-footer class="bg-black text-white">
-          <q-toolbar inset>
-            <q-toolbar-title>Footer</q-toolbar-title>
+        <q-footer class="bg-grey-3 text-black">
+          <q-toolbar>
+          <q-btn flat v-close-popup round icon="check_circle" class="float-right" />
           </q-toolbar>
         </q-footer>
 
@@ -50,11 +50,46 @@
         </q-drawer>
 
         <q-page-container>
-          <q-page padding>
+          <!-- <q-page padding>
             <p v-for="n in contentSize" :key="n">
               {{ lorem }}
             </p>
-          </q-page>
+          </q-page> -->
+        <q-page padding>
+          <q-field outlined label="Card Name" stack-label class="q-pa-sm">
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0"> Name </div>
+            </template>
+          </q-field>
+          <q-field outlined label="Type" stack-label class='q-pl-sm q-pr-sm q-pb-sm'>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0"> Type </div>
+            </template>
+          </q-field>
+          <q-field outlined label="Price" stack-label class='q-pl-sm q-pr-sm q-pb-sm'>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0"> Price </div>
+            </template>
+          </q-field>
+          <q-field outlined label="Details" stack-label class='q-pl-sm q-pr-sm q-pb-sm'>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0"> Details </div>
+            </template>
+          </q-field>
+            <div align="absolute-bottom-right">
+              <q-toggle
+                v-model="first"
+                icon="alarm"
+                label="Send Alerts"
+              />
+              <q-toggle
+                v-model="second"
+                color="green"
+                icon="credit_card"
+                label="Card is Visible"
+              />
+            </div>
+        </q-page>
         </q-page-container>
       </q-layout>
     </q-dialog>
@@ -71,8 +106,7 @@ const cardsData = [
     title: 'QUT Code Network',
     caption: 'Standard Membership',
     details: '132 members',
-    icon: 'edit',
-    link: '/edit'
+    link: '/code-network-membership'
   }
 ]
 
@@ -81,6 +115,8 @@ export default {
   components: { Cards },
   data () {
     return {
+      first: true,
+      second: true,
       cardsLinks: cardsData,
       layout: false,
       moreContent: true,
