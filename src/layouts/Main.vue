@@ -14,7 +14,22 @@
         <q-toolbar-title class="text-center">
           Memberships
         </q-toolbar-title>
-
+        <!-- <q-btn
+          flat
+          dense
+          round
+          icon="edit"
+          aria-label="Edit"
+          @click="edit_status = !edit_status"
+        /> -->
+        <q-btn
+          flat
+          dense
+          round
+          icon="edit"
+          aria-label="Edit"
+          @click="edit_status = !edit_status"
+        />
       </q-toolbar>
     </q-header>
 
@@ -57,6 +72,7 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
+      edit_status: false,
       essentialLinks: linksData
     }
   }
