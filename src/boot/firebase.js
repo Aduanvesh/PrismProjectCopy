@@ -21,6 +21,10 @@ export default async ({ Vue }) => {
 
   // Initialize Firebase from settings
   firebase.initializeApp(firebaseConfig)
+  // const firebaseAuth = firebaseApp.auth()
+  // const firebaseDb = firebaseApp.database()
+
+  // export { firebaseAuth, firebaseDb }
 
   // Initialize Vuefire
   Vue.use(firestorePlugin)

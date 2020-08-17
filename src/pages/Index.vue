@@ -1,5 +1,9 @@
 <template>
   <q-page class="flex flex-center">
+    <div id="nav">
+      Landing Page!
+    </div>
+    <!--
     <q-item
       v-for="item in name"
       :key="item.id"
@@ -15,7 +19,8 @@
       <br>
       {{'You live at: ' + item.street_address + ' ' + item.suburb
       }}
-    </q-item>
+
+    </q-item> -->
   </q-page>
 </template>
 
