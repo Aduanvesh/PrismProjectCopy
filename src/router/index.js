@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 import routes from './routes'
 
+Vue.prototype.$user = ''
+
 Vue.use(VueRouter)
 
 /*

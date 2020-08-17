@@ -12,10 +12,13 @@
         />
 
         <q-toolbar-title>
-          Sociit App
+          {{title}}
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+              <div
+              v-if="!userDetails.email">Not logged in</div>
+              <div
+              v-else>Welcome {{ userDetails.email }}</div>
+        <!--<div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
     </q-header>
 
@@ -48,6 +51,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import { mapState } from 'vuex'
 
 const linksData = [
   {
@@ -103,6 +107,16 @@ const linksData = [
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
+  computed: {
+    ...mapState('store', ['userDetails']),
+    title () {
+      console.log(this.$route)
+      const currentPath = this.$route.fullPath
+      if (currentPath === '/') return 'Sociit'
+      else if (currentPath === '/login') return 'Login'
+      else return 'Login'
+    }
+  },
   data () {
     return {
       leftDrawerOpen: false,

@@ -1,5 +1,50 @@
 <template>
-  <div id="login">
+  <div class="q-pa-md">
+    <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
+    <div class="q-gutter-y-md" style="max-width: 600px">
+      <q-card>
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+          align="justify"
+          narrow-indicator
+        >
+          <q-tab name="login" label="Login" />
+          <q-tab name="register" label="Register" />
+        </q-tabs>
+
+        <q-separator />
+
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="login">
+            <div>
+              <q-form @submit= "login" class= "q-gutter-md">
+              <q-input filled v-model="loginForm.email" type = 'email' label="Email" :dense="false" />
+              <q-input filled v-model="loginForm.password"  type = 'password'  label="Password" :dense="false" />
+              <q-btn color="primary" label="Login" type="submit" />
+              </q-form>
+              <q-btn @click="signout" color="secondary" label="logout" />
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="register">
+            <div>
+              <q-form @submit= "signup" class= "q-gutter-md">
+              <q-input filled v-model="signupForm.email" type = 'email' label="Email" :dense="false" />
+              <q-input filled v-model="signupForm.password"  type = 'password'  label="Password" :dense="false" />
+              <q-btn color="primary" label="Sign Up" type="submit" />
+              </q-form>
+            </div>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card>
+    </div>
+  </div>
+</template>
+<!-- <div id="login">
     <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
     <section>
       <div class="col1">
@@ -45,19 +90,19 @@
           </div>
            <div>
             <label for="country">Country</label>
-            <input v-model.trim="signupForm.title" type="text" placeholder="Company" id="title" />
+            <input v-model.trim="signupForm.country" type="text" placeholder="Australia" id="country" />
           </div>
            <div>
             <label for="city">City</label>
-            <input v-model.trim="signupForm.title" type="text" placeholder="Company" id="title" />
+            <input v-model.trim="signupForm.city" type="text" placeholder="Brisbane" id="city" />
           </div>
            <div>
             <label for="university">University</label>
-            <input v-model.trim="signupForm.title" type="text" placeholder="Company" id="title" />
+            <input v-model.trim="signupForm.university" type="text" placeholder="QUT" id="university" />
           </div>
           <div>
             <label for="suburb">Suburb</label>
-            <input v-model.trim="signupForm.title" type="text" placeholder="Company" id="title" />
+            <input v-model.trim="signupForm.suburb" type="text" placeholder="someSuburb" id="suburb" />
           </div>
           <div>
             <label for="email2">Email</label>
@@ -85,16 +130,22 @@
       </div>
     </section>
   </div>
-</template>
+</template> -->
 
 <script>
 import PasswordReset from '../components/PasswordReset'
+// import * as firebase from 'firebase'
+import { mapActions } from 'vuex'
+// import router from 'vue-router'
+// import store from '../store/store.js'
+
 export default {
   components: {
     PasswordReset
   },
   data () {
     return {
+      tab: 'login',
       loginForm: {
         email: '',
         password: ''
@@ -110,6 +161,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('store', ['signupUser', 'signinUser', 'signoutUser']),
     toggleForm () {
       this.showLoginForm = !this.showLoginForm
     },
@@ -117,18 +169,13 @@ export default {
       this.showPasswordReset = !this.showPasswordReset
     },
     login () {
-      this.$store.dispatch('login', {
-        email: this.loginForm.email,
-        password: this.loginForm.password
-      })
+      this.signinUser(this.loginForm)
     },
     signup () {
-      this.$store.dispatch('signup', {
-        email: this.signupForm.email,
-        password: this.signupForm.password,
-        name: this.signupForm.name,
-        title: this.signupForm.title
-      })
+      this.signupUser(this.signupForm)
+    },
+    signout () {
+      this.signoutUser()
     }
   }
 }
