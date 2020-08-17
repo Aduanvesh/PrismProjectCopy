@@ -12,8 +12,25 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          {{title}}
         </q-toolbar-title>
+        <!-- code for the header buttons-->
+        <div
+        v-if="!userDetails.email">
+          <div
+          v-if="$route.path=='/'">
+            <q-btn color="secondary" label="Login" @click="$router.push('/login')" />
+            <q-btn color="secondary" label="Register" style="margin-left:10px;" @click="$router.push('/register')" />
+          </div>
+          <div
+          v-else>
+            <q-btn color="secondary" label="Back" @click="$router.push('/')" />
+          </div>
+        </div>
+        <div
+          v-else>{{ userDetails.email }}
+          <q-btn color="secondary" label="logout" @click="signout" />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -46,6 +63,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
+import { mapState, mapActions } from 'vuex'
 
 const linksData = [
   {
@@ -101,10 +119,26 @@ const linksData = [
 export default {
   name: 'MainLayout',
   components: { EssentialLink },
+  computed: {
+    ...mapState('store', ['userDetails']),
+    title () {
+      console.log(this.$route)
+      const currentPath = this.$route.fullPath
+      if (currentPath === '/') return 'Sociit'
+      else if (currentPath === '/login') return 'Login'
+      else return 'Login'
+    }
+  },
   data () {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksData
+    }
+  },
+  methods: {
+    ...mapActions('store', ['signoutUser']),
+    signout () {
+      this.signoutUser()
     }
   }
 }
