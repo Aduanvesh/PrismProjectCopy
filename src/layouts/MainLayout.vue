@@ -14,11 +14,25 @@
         <q-toolbar-title>
           {{title}}
         </q-toolbar-title>
-              <div
-              v-if="!userDetails.email">Not logged in</div>
-              <div
-              v-else>Welcome {{ userDetails.email }}</div>
-        <!--<div>Quasar v{{ $q.version }}</div> -->
+
+        <!-- code for the header buttons-->
+        <div
+        v-if="!userDetails.email">
+          <div
+          v-if="$route.path=='/'">
+            <q-btn color="secondary" label="Login" @click="$router.push('/login')" />
+            <q-btn color="secondary" label="Register" style="margin-left:10px;" @click="$router.push('/register')" />
+          </div>
+          <div
+          v-else>
+            <q-btn color="secondary" label="Back" @click="$router.push('/')" />
+          </div>
+        </div>
+        <div
+          v-else>{{ userDetails.email }}
+          <q-btn color="secondary" label="logout" @click="signout" />
+        </div>
+
       </q-toolbar>
     </q-header>
 
@@ -51,7 +65,7 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 const linksData = [
   {
@@ -121,6 +135,12 @@ export default {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksData
+    }
+  },
+  methods: {
+    ...mapActions('store', ['signoutUser']),
+    signout () {
+      this.signoutUser()
     }
   }
 }

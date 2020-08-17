@@ -14,42 +14,55 @@ const actions = {
     console.log('payload: ', payload)
     firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        console.log(response)
         const userID = firebase.auth().currentUser.uid
-        firebase.firestore().collection('users').doc(userID).set({
-          email: payload.email
-        })
+        const targetUser = firebase.firestore().collection('users').doc(userID)
+
+        // code that writes details to database. the data recorded is different depending on whether the signup is for user or club.
+        if (payload.type === 'User') {
+          targetUser.set({
+            type: payload.type,
+            email: payload.email,
+            first_name: payload.firstName,
+            last_name: payload.lastName,
+            phone_1: payload.phoneNumber,
+            university: payload.university
+          })
+        } else if (payload.type === 'Club') {
+          targetUser.set({
+            type: payload.type,
+            email: payload.email,
+            title: payload.title,
+            phone_1: payload.phoneNumber,
+            university: payload.university
+          })
+        }
+        this.$router.push('/')
       })
       .catch(error => {
         console.log(error.message)
       })
-
-    this.$router.push('/')
   },
   async signinUser (a = {}, payload) {
     console.log('payload: ', payload)
     firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(response => {
-        // console.log(response)
+        this.$router.push('/')
       })
       .catch(error => {
         console.log(error.message)
       })
-
-    this.$router.push('/')
   },
   async signoutUser (a = {}) {
     console.log('signedout')
     firebase.auth().signOut()
       .then(response => {
-        console.log(response)
       })
       .catch(error => {
         console.log(error.message)
       })
-
-    this.$router.push('/')
   },
+
+  // code that detects when the user authenticated has changed
   handleAuthStateChanged ({ commit }) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -59,7 +72,6 @@ const actions = {
         coll.doc(userID).get()
           .then(function (doc) {
             if (doc.exists) {
-              console.log('Document Data:', doc.data())
               commit('setUserDetails', {
                 email: doc.data().email
               })

@@ -1,5 +1,9 @@
 <template>
   <q-page class="flex flex-center">
+    <div id="nav">
+      Landing Page!
+    </div>
+    <!--
     <q-item
       v-for="item in name"
       :key="item.id"
@@ -16,10 +20,7 @@
       {{'You live at: ' + item.street_address + ' ' + item.suburb
       }}
 
-      <div id="nav">
-       <router-link to="/login">Login</router-link>
-  </div>
-    </q-item>
+    </q-item> -->
   </q-page>
 </template>
 
