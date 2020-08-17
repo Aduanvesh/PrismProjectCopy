@@ -14,7 +14,6 @@
         <q-toolbar-title>
           {{title}}
         </q-toolbar-title>
-
         <!-- code for the header buttons-->
         <div
         v-if="!userDetails.email">
@@ -32,7 +31,6 @@
           v-else>{{ userDetails.email }}
           <q-btn color="secondary" label="logout" @click="signout" />
         </div>
-
       </q-toolbar>
     </q-header>
 

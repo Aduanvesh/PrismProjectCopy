@@ -9,6 +9,14 @@
 
 <script>
 export default {
-  name: 'PageIndex'
+  name: 'Profile'
+
+  // example () {
+  //   return {
+  //     user_data: []
+  //   }
+  // }
+
 }
+
 </script>

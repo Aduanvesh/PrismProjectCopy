@@ -16,6 +16,13 @@ const routes = [
       { path: '', component: () => import('pages/Profile.vue') }
     ]
   },
+  {
+    path: '/memberships',
+    component: () => import('layouts/Main.vue'),
+    children: [
+      { path: '', component: () => import('pages/Memberships.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
