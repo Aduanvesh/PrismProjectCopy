@@ -84,6 +84,18 @@ const actions = {
         commit('setUserDetails', {})
       }
     })
+  },
+
+  async resetPassword (a = {}, payload) {
+    this.errorMsg = ''
+    console.log(payload.email)
+    try {
+      await firebase.auth().sendPasswordResetEmail(payload.email)
+      this.showSuccess = true
+    } catch (err) {
+      this.errorMsg = err.message
+      console.log(err.message)
+    }
   }
 }
 const getters = {
