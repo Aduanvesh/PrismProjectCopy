@@ -95,6 +95,11 @@ const actions = {
     } catch (err) {
       this.errorMsg = err.message
       console.log(err.message)
+      if (err.message === 'The email address is badly formatted.') {
+        return 'bad_format'
+      } else {
+        return 'test'
+      }
     }
   }
 }

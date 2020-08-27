@@ -12,8 +12,8 @@
           align="justify"
           narrow-indicator
         >
-          <q-tab name="login" label="Login" :active="!showPasswordReset"/>
-          <q-tab name="reset" label="Reset Password" :active="showPasswordReset"/>
+          <q-tab name="login" label="Login" />
+          <q-tab name="reset" label="Reset Password" />
         </q-tabs>
 
         <q-separator />
@@ -28,10 +28,10 @@
                 <q-input filled v-model="loginForm.password"  type = 'password'  label="Password" :dense="false" />
 
                 <div class="extras">
-                  <a @click="$router.push('/reset_password')">Forgot Password</a> |
+                  <a @click="togglePasswordReset">Forgot Password</a> |
                   <a @click="$router.push('/register')">Create an Account</a>
+                  <p> {{messageError}} </p>
                 </div>
-
                 <q-btn color="primary" label="Login" type="submit" />
 
               </q-form>
@@ -42,6 +42,7 @@
             <div>
               <q-form @submit= "resetPasswordMethod" class= "q-gutter-md">
                 <q-input filled v-model="resetForm.email" type = 'email' label="Email" :dense="false" />
+                <p> {{messageError}} </p>
                 <div
                 v-if="!showPasswordReset">
                   <q-btn color="primary" label="Send Recovery Email" type="submit" />
@@ -78,7 +79,8 @@ export default {
         email: ''
       },
       showPasswordReset: false,
-      view: false
+      view: false,
+      messageError: ' '
     }
   },
   methods: {
@@ -86,7 +88,7 @@ export default {
 
     // TODO: to be implemented for password reset
     togglePasswordReset () {
-      this.showPasswordReset = !this.showPasswordReset
+      this.tab = 'reset'
     },
 
     // TODO: managing of login errors
@@ -97,12 +99,36 @@ export default {
     backLogin () {
       console.log(this.tab)
       this.tab = 'login'
+      this.showPasswordReset = false
+    },
+
+    changeMessage () {
+      this.messageError = 'The Email address that you provided could not be found.'
     },
 
     async resetPasswordMethod () {
-      this.resetPassword(this.resetForm)
-      this.showPasswordReset = true
+      let errorType = ''
+      this.messageError = 'test'
+      console.log('testing1', this.messageError)
+      const error = this.resetPassword(this.resetForm)
+      error.then(function (defs, messageError) {
+        console.log('the error is', defs)
+        errorType = defs
+        if (errorType === '') {
+          console.log('errortype is', errorType)
+          this.showPasswordReset = true
+        } else if (errorType === 'bad_format') {
+          // this.messageError = 'test'
+          console.log('testing', messageError)
+        }
+      })
     }
   }
 }
 </script>
+
+<style>
+p {
+  color: red;
+}
+</style>
