@@ -26,7 +26,8 @@
                         <q-input filled v-model="signupForm.email" type = 'email' label="Email" :dense="false" />
                         <q-input filled v-model="signupForm.password" type = 'password'  label="Password" :dense="false" />
                         <q-input filled v-model="signupForm.phoneNumber" type = 'text' label="Phone Number" :dense="false" />
-                        <q-input filled v-model="signupForm.university" type = 'text' label="University" :dense="false" />
+                        <!--  <q-input filled v-model="signupForm.university" type = 'text' label="University" :dense="false" /> -->
+                        <q-select filled v-model="signupForm.university" :options="options" label="University" />
                         <q-btn color="primary" label="Sign Up" type="submit" />
                     </q-form>
                 </div>
@@ -39,7 +40,8 @@
                         <q-input filled v-model="signupClubForm.email" type = 'email' label="Email" :dense="false" />
                         <q-input filled v-model="signupClubForm.password" type = 'password'  label="Password" :dense="false" />
                         <q-input filled v-model="signupClubForm.phoneNumber" type = 'text' label="Phone Number" :dense="false" />
-                        <q-input filled v-model="signupClubForm.university" type = 'text' label="University" :dense="false" />
+                        <!-- <q-input filled v-model="signupClubForm.university" type = 'text' label="University" :dense="false" /> -->
+                        <q-select filled v-model="signupClubForm.university" :options="options" label="University" />
                         <q-btn color="primary" label="Sign Up" type="submit" />
                     </q-form>
                 </div>
@@ -52,6 +54,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+// import * as firebase from 'firebase'
 
 export default {
   data () {
@@ -73,11 +76,13 @@ export default {
         password: '',
         phoneNumber: '',
         university: ''
-      }
+      },
+      options: [
+        'Cannot connect to the server']
     }
   },
   methods: {
-    ...mapActions('store', ['signupUser']),
+    ...mapActions('store', ['signupUser', 'getUniversities']),
 
     // TODO: potentially changing the actions for user and club registration. right now they dont do anything differently, just different forms.
     // TODO: managing of signup errors
@@ -86,7 +91,20 @@ export default {
     },
     signUpClub () {
       this.signupUser(this.signupClubForm)
+    },
+
+    async getUni () {
+      const stuff = await this.getUniversities()
+        .then(function (data) {
+          // console.log('if this works:', data)
+          return data
+        })
+      console.log('does this work:', stuff)
+      this.options = stuff
     }
+  },
+  created () {
+    this.getUni()
   }
 }
 </script>

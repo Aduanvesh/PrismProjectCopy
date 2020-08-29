@@ -7,6 +7,9 @@ const state = {
 const mutations = {
   setUserDetails (state, payload) {
     state.userDetails = payload
+  },
+  getUniversityNames (state, payload) {
+    state.universities = payload
   }
 }
 const actions = {
@@ -101,8 +104,20 @@ const actions = {
         return 'test'
       }
     }
+  },
+
+  async getUniversities (a = {}) {
+    const col = firebase.firestore().collection('site_data')
+    const query = col.doc('universities')
+    const data = query.get()
+      .then(doc => {
+        console.log('check', doc.data().university_name)
+        return doc.data().university_name
+      })
+    return data
   }
 }
+
 const getters = {
 
 }
