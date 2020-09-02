@@ -15,45 +15,47 @@ const mutations = {
 const actions = {
   async signupUser (a = {}, payload) {
     console.log('payload: ', payload)
-    firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-      .then(response => {
-        const userID = firebase.auth().currentUser.uid
-        const targetUser = firebase.firestore().collection('users').doc(userID)
+    try {
+      await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
 
-        // code that writes details to database. the data recorded is different depending on whether the signup is for user or club.
-        if (payload.type === 'User') {
-          targetUser.set({
-            type: payload.type,
-            email: payload.email,
-            first_name: payload.firstName,
-            last_name: payload.lastName,
-            phone_1: payload.phoneNumber,
-            university: payload.university
-          })
-        } else if (payload.type === 'Club') {
-          targetUser.set({
-            type: payload.type,
-            email: payload.email,
-            title: payload.title,
-            phone_1: payload.phoneNumber,
-            university: payload.university
-          })
-        }
-        this.$router.push('/')
-      })
-      .catch(error => {
-        console.log(error.message)
-      })
+      // code that writes details to database. the data recorded is different depending on whether the signup is for user or club.
+      if (payload.type === 'User') {
+        targetUser.set({
+          type: payload.type,
+          email: payload.email,
+          first_name: payload.firstName,
+          last_name: payload.lastName,
+          phone_1: payload.phoneNumber,
+          university: payload.university
+        })
+      } else if (payload.type === 'Club') {
+        targetUser.set({
+          type: payload.type,
+          email: payload.email,
+          title: payload.title,
+          phone_1: payload.phoneNumber,
+          university: payload.university
+        })
+      }
+      this.$router.push('/')
+    } catch (err) {
+      this.errorMsg = err.message
+      console.log(err.message)
+      return err.message
+    }
   },
   async signinUser (a = {}, payload) {
     console.log('payload: ', payload)
-    firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-      .then(response => {
-        this.$router.push('/')
-      })
-      .catch(error => {
-        console.log(error.message)
-      })
+    try {
+      await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+      this.$router.push('/')
+    } catch (err) {
+      this.errorMsg = err.message
+      console.log(err.message)
+      return err.message
+    }
   },
   async signoutUser (a = {}) {
     console.log('signedout')
@@ -98,11 +100,16 @@ const actions = {
     } catch (err) {
       this.errorMsg = err.message
       console.log(err.message)
-      if (err.message === 'The email address is badly formatted.') {
+      return err.message
+      /* if (err.message === 'The email address is badly formatted.') {
         return 'bad_format'
+      } else if (err.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+        return 'no_email'
+      } else if (err.message === 'We have blocked all requests from this device due to unusual activity. Try again later.') {
+        return 'no_reach'
       } else {
-        return 'test'
-      }
+        return 'error'
+      } */
     }
   },
 
