@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <div @click="$emit('close')" class="close">close</div>
+      <div @click="$router.push('/login')" class="close">Back to login</div>
       <h3>Reset Password</h3>
       <div v-if="!showSuccess">
         <p>Enter your email to reset your password</p>
