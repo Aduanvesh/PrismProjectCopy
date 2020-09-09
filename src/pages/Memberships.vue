@@ -37,7 +37,7 @@
 
         <q-footer class="bg-grey-3 text-black">
           <q-toolbar>
-          <q-btn flat v-close-popup round icon="check_circle" class="float-right" />
+          <q-btn flat v-close-popup round icon="check_circle" class="float-right" @click="submitMembership" />
           </q-toolbar>
         </q-footer>
 
@@ -56,26 +56,10 @@
             </p>
           </q-page> -->
         <q-page padding>
-          <q-field outlined label="Card Name" stack-label class="q-pa-sm">
-            <template v-slot:control>
-              <div class="self-center full-width no-outline" tabindex="0"> Name </div>
-            </template>
-          </q-field>
-          <q-field outlined label="Type" stack-label class='q-pl-sm q-pr-sm q-pb-sm'>
-            <template v-slot:control>
-              <div class="self-center full-width no-outline" tabindex="0"> Type </div>
-            </template>
-          </q-field>
-          <q-field outlined label="Price" stack-label class='q-pl-sm q-pr-sm q-pb-sm'>
-            <template v-slot:control>
-              <div class="self-center full-width no-outline" tabindex="0"> Price </div>
-            </template>
-          </q-field>
-          <q-field outlined label="Details" stack-label class='q-pl-sm q-pr-sm q-pb-sm'>
-            <template v-slot:control>
-              <div class="self-center full-width no-outline" tabindex="0"> Details </div>
-            </template>
-          </q-field>
+          <q-input filled v-model="membership.name" outlined label="Name" stack-label class='q-pl-sm q-pr-sm q-pb-sm' q-input/>
+          <q-input filled v-model="membership.type" outlined label="Type" stack-label class='q-pl-sm q-pr-sm q-pb-sm' q-input/>
+          <q-input filled v-model="membership.price" outlined label="Price" stack-label class='q-pl-sm q-pr-sm q-pb-sm' q-input/>
+          <q-input filled v-model="membership.details" outlined label="Details" stack-label class='q-pl-sm q-pr-sm q-pb-sm' q-input/>
             <div align="absolute-bottom-right">
               <q-toggle
                 v-model="first"
@@ -100,10 +84,17 @@
 <script>
 // Usually the import statement below is placed in a layouts vue, rather than a page.
 import Cards from 'components/Cards.vue'
+import { mapActions } from 'vuex'
 // import Modal from 'components/Modal.vue'
 const cardsData = [
   {
     title: 'QUT Code Network',
+    caption: 'Standard Membership',
+    details: '132 members',
+    link: '/code-network-membership'
+  },
+  {
+    title: 'QUT NotCode Network',
     caption: 'Standard Membership',
     details: '132 members',
     link: '/code-network-membership'
@@ -122,7 +113,13 @@ export default {
       moreContent: true,
       drawer: false,
       drawerR: false,
-      lorem: 'hello, this is a test'
+      lorem: 'hello, this is a test',
+      membership: {
+        name: '',
+        type: '',
+        price: '',
+        details: ''
+      }
     }
   },
 
@@ -133,10 +130,47 @@ export default {
   },
 
   methods: {
+    ...mapActions('store', ['addCard', 'getCards']),
+
     go (href) {
       console.log(href)
       alert('Hey')
+    },
+
+    submitMembership () {
+      console.log('hola')
+      this.addCard(this.membership)
+    },
+
+    async retrieveMembership () {
+      const cards = await this.getCards()
+        .then(function (data) {
+          const cardsData = []
+          console.log(data)
+          console.log(data[0].details)
+          for (var i = 0; i < data.length; i++) {
+            console.log(data[i].details)
+            const card = {
+              title: '',
+              caption: '',
+              details: '',
+              link: ''
+            }
+            card.title = data[i].name
+            card.caption = data[i].type
+            card.details = data[i].details
+            card.link = '/code-network-membership'
+            cardsData.push(card)
+          }
+          return cardsData
+        })
+      this.cardsData = cards
+      this.cardsLinks = this.cardsData
+      console.log(this.cardsData)
     }
+  },
+  created () {
+    this.retrieveMembership()
   }
 }
 </script>

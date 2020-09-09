@@ -101,15 +101,6 @@ const actions = {
       this.errorMsg = err.message
       console.log(err.message)
       return err.message
-      /* if (err.message === 'The email address is badly formatted.') {
-        return 'bad_format'
-      } else if (err.message === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
-        return 'no_email'
-      } else if (err.message === 'We have blocked all requests from this device due to unusual activity. Try again later.') {
-        return 'no_reach'
-      } else {
-        return 'error'
-      } */
     }
   },
 
@@ -122,6 +113,44 @@ const actions = {
         return doc.data().university_name
       })
     return data
+  },
+
+  async addCard (a = {}, payload) {
+    try {
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('memberships').doc(userID)
+      const newCard = targetUser.collection('cards').doc()
+
+      console.log(newCard.id)
+      // code that writes details to database. the data recorded is different depending on whether the signup is for user or club.
+      newCard.set({
+        name: payload.name,
+        type: payload.type,
+        price: payload.price,
+        details: payload.details
+      })
+    } catch (err) {
+      this.errorMsg = err.message
+      console.log(err.message)
+      return err.message
+    }
+  },
+
+  async getCards () {
+    const userID = firebase.auth().currentUser.uid
+    const snapshot = await firebase.firestore().collection('memberships').doc(userID).collection('cards').get()
+
+    return snapshot.docs.map(doc => doc.data())
+    /*
+    const col = firebase.firestore().collection('memberships').doc(userID)
+    const query = col.collection('cards')
+    const data = query.get()
+      .then(doc => {
+        console.log('check', doc)
+        return doc
+      })
+    return data
+    */
   }
 }
 

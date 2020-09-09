@@ -1,7 +1,11 @@
 <template>
   <q-page class="flex flex-center">
-    <div id="nav">
-      Landing Page!
+    <div id="buttons" class="q-gutter-sm">
+    <q-btn color="primary" label="Memberships" @click = "toMemberships"  />
+    <q-btn color="primary" label="Profile" @click = "toProfile"  />
+      <div id="nav">
+        Landing Page!
+      </div>
     </div>
     <!--
     <q-item
@@ -30,6 +34,14 @@ export default {
   data () {
     return {
       user_data: []
+    }
+  },
+  methods: {
+    toMemberships () {
+      this.$router.push('/memberships')
+    },
+    toProfile () {
+      this.$router.push('/profile')
     }
   },
   created () {
