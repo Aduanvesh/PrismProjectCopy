@@ -28,7 +28,9 @@ const actions = {
           first_name: payload.firstName,
           last_name: payload.lastName,
           phone_1: payload.phoneNumber,
-          university: payload.university
+          university: payload.university,
+          memberships: [
+            'iMuo2bRED9JChlIAolK8']
         })
       } else if (payload.type === 'Club') {
         targetUser.set({
@@ -36,7 +38,9 @@ const actions = {
           email: payload.email,
           title: payload.title,
           phone_1: payload.phoneNumber,
-          university: payload.university
+          university: payload.university,
+          memberships: [
+            'iMuo2bRED9JChlIAolK8']
         })
       }
       this.$router.push('/')
@@ -118,16 +122,21 @@ const actions = {
   async addCard (a = {}, payload) {
     try {
       const userID = firebase.auth().currentUser.uid
-      const targetUser = firebase.firestore().collection('memberships').doc(userID)
-      const newCard = targetUser.collection('cards').doc()
+      const targetDoc = firebase.firestore().collection('memberships').doc()
 
-      console.log(newCard.id)
-      // code that writes details to database. the data recorded is different depending on whether the signup is for user or club.
-      newCard.set({
+      // code that stores the card in the memberships collection.
+      targetDoc.set({
         name: payload.name,
         type: payload.type,
         price: payload.price,
-        details: payload.details
+        details: payload.details,
+        memberCount: 1
+      })
+
+      // stores the id of the membership in the users collection.
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      targetUser.update({
+        memberships: firebase.firestore.FieldValue.arrayUnion(targetDoc.id)
       })
     } catch (err) {
       this.errorMsg = err.message
@@ -138,19 +147,25 @@ const actions = {
 
   async getCards () {
     const userID = firebase.auth().currentUser.uid
-    const snapshot = await firebase.firestore().collection('memberships').doc(userID).collection('cards').get()
-
-    return snapshot.docs.map(doc => doc.data())
-    /*
-    const col = firebase.firestore().collection('memberships').doc(userID)
-    const query = col.collection('cards')
-    const data = query.get()
+    const targetUser = firebase.firestore().collection('users').doc(userID)
+    const targetArray = await targetUser.get()
       .then(doc => {
-        console.log('check', doc)
-        return doc
+        console.log('check', doc.data().memberships)
+        return doc.data().memberships
       })
-    return data
-    */
+    console.log(targetArray)
+
+    // PLEASE FIND IF THERE IS A BETTER WAY TO DO THIS, I DID THIS QUICKLY
+    const finalArray = []
+    for (var i = 0; i < targetArray.length; i++) {
+      const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
+        .then(doc => {
+          return doc.data()
+        })
+      finalArray.push(snapshot)
+    }
+    console.log('exo:', finalArray)
+    return finalArray
   }
 }
 
