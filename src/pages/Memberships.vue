@@ -140,14 +140,13 @@ export default {
     submitMembership () {
       console.log('hola')
       this.addCard(this.membership)
+      this.retrieveMembership()
     },
 
     async retrieveMembership () {
       const cards = await this.getCards()
         .then(function (data) {
           const cardsData = []
-          console.log(data)
-          console.log(data[0].details)
           for (var i = 0; i < data.length; i++) {
             console.log(data[i].details)
             const card = {
@@ -158,7 +157,11 @@ export default {
             }
             card.title = data[i].name
             card.caption = data[i].type
-            card.details = data[i].details
+            if (data[i].memberCount === 1) {
+              card.details = '1 member'
+            } else {
+              card.details = data[i].memberCount + ' members'
+            }
             card.link = '/code-network-membership'
             cardsData.push(card)
           }
