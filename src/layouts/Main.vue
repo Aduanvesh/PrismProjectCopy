@@ -4,6 +4,13 @@
       <q-toolbar>
         <q-btn
           flat
+          round
+          dense
+          icon="img:static/sociit1024x959.png"
+          type="a" href="/"
+        />
+        <q-btn
+          flat
           dense
           round
           icon="menu"

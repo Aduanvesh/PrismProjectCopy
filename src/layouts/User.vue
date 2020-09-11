@@ -1,86 +1,95 @@
 <template>
   <q-layout view="hHh Lpr fFf"> <!-- Be sure to play with the Layout demo on docs -->
-
     <!-- (Optional) The Header -->
+    <!-- When placing icons and static resources (images), you should read the docs.
+        Images won't work if they're placed in "assets". They should be placed in public.
+        The path is relative to public, also.-->
     <q-header elevated>
       <q-toolbar>
         <q-btn
           flat
           round
           dense
-          icon="menu"
-          @click="leftDrawer = !leftDrawer"
+          icon="img:static/sociit1024x959.png"
+          type="a" href="/"
         />
         <q-toolbar-title>
-          Header
+          Sociit
         </q-toolbar-title>
       </q-toolbar>
-
+    </q-header>
+    <div class="col-12">
+    <!-- BANNER for the User Page -->
+    <div class="row-3">
+        <q-img
+            src="https://placeimg.com/500/300/nature"
+            style="height: 400px;"
+        ></q-img>
+    </div>
+    <!-- USER toolbar -->
+    <q-toolbar class="q-pt-xl q-pl-xl">
+        <q-toolbar-title>
+          {{title}}
+        </q-toolbar-title>
+    </q-toolbar>
+    </div>
+    <!-- TABS requires if-binding -->
       <q-tabs>
         <q-route-tab
-          icon="map"
+          icon="local_activity"
           to="/your/route"
           replace
-          label="One Tab"
+          label="Tickets"
         />
         <q-route-tab
-          icon="assignment"
+          icon="credit_card"
           to="/some/other/route"
           replace
-          label="Other Tab"
+          label="Memberships"
+        />
+        <q-tab
+          icon="edit"
+          aria-label="Edit"
+          replace
+          label="Edit"
         />
       </q-tabs>
-    </q-header>
-
-    <!-- (Optional) The Footer -->
-    <q-footer>
-      <q-tabs switch-indicator>
-        <q-route-tab
-          icon="map"
-          to="/your/route"
-          replace
-          label="One Tab"
-        />
-        <q-route-tab
-          icon="assignment"
-          to="/some/other/route"
-          replace
-          label="Other Tab"
-        />
-      </q-tabs>
-
-      <q-toolbar>
-        <q-btn
-          flat
-          round
-          dense
-          icon="menu"
-          @click="leftDrawer = !leftDrawer"
-        />
-        <q-toolbar-title>
-          Footer
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
-
-    <!-- (Optional) A Drawer; you can add one more with side="right" or change this one's side -->
-    <q-drawer
-      v-model="leftDrawer"
-      side="left"
-      bordered
-      content-class="bg-grey-2"
-    >
-      <!-- QScrollArea is optional -->
-      <q-scroll-area class="fit q-pa-sm">
-        <!-- Content here -->
-      </q-scroll-area>
-    </q-drawer>
-
+    <!-- END USER toolbar -->
     <q-page-container>
       <!-- This is where pages get injected -->
+      <!-- TITLE for User Page -->
+      <div>
+      <div class="row q-pt-md q-pl-xl">
+        <div class="text-h5 text-bold"> {{title}} </div>
+      </div>
+      <div class="row q-pl-xl">
+        <div class="text-h6"> {{subtitle}} </div>
+      </div>
+      </div>
+      <!-- BODY CONTENT for User Page -->
+      <div class="row">
+        <div class="col 12">
+          <div class="q-pl-xl q-pt-lg">
+            <div class="row">
+              {{textarea}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col 12">
+          <div class="q-pl-xl q-pt-lg">
+            <div class="row">
+              {{textarea}}
+            </div>
+          </div>
+        </div>
+      </div>
       <router-view />
     </q-page-container>
-
+  <q-footer>
+    Some footer?
+  </q-footer>
   </q-layout>
 </template>
 
@@ -89,7 +98,10 @@ export default {
   // name: 'LayoutName',
   data () {
     return {
-      leftDrawer: true
+      leftDrawer: true,
+      title: 'Society Profile',
+      subtitle: 'A subtitle',
+      textarea: 'Needs to be bound to a bio in the server.'
     }
   }
 }

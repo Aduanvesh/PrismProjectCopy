@@ -1,5 +1,6 @@
 <template>
-  <!-- Grid layout needs major adjustment. -->
+  <!-- Grid layout needs major adjustment.
+  https://quasar.dev/layout/grid/flex-playground-->
   <q-page class="flex">
       <div class="row q-pa-md" align="center">
         <div class="col full-width">

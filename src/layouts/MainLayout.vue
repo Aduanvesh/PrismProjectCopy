@@ -4,13 +4,19 @@
       <q-toolbar>
         <q-btn
           flat
+          round
+          dense
+          icon="img:static/sociit1024x959.png"
+          type="a" href="/"
+        />
+        <q-btn
+          flat
           dense
           round
           icon="menu"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-
         <q-toolbar-title>
           {{title}}
         </q-toolbar-title>
@@ -124,7 +130,7 @@ export default {
     title () {
       console.log(this.$route)
       const currentPath = this.$route.fullPath
-      if (currentPath === '/') return 'Sociit'
+      if (currentPath === '/') return 'Dashboard'
       else if (currentPath === '/login') return 'Login'
       else return 'Login'
     }
