@@ -24,7 +24,13 @@ const routes = [
       { path: '', component: () => import('pages/Memberships.vue') }
     ]
   },
-
+  {
+    path: '/settings',
+    component: () => import('pages/Profile.vue'),
+    children: [
+      { path: '', component: () => import('pages/Settings.vue') }
+    ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

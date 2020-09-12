@@ -3,6 +3,7 @@
     <div id="buttons" class="q-gutter-sm">
     <q-btn color="primary" label="Memberships" @click = "toMemberships"  />
     <q-btn color="primary" label="Profile" @click = "toProfile"  />
+    <q-btn color="primary" label="Settings" @click = "toSettings"  />
       <div id="nav">
         Landing Page!
         <br>
@@ -26,6 +27,9 @@ export default {
     },
     toProfile () {
       this.$router.push('/profile')
+    },
+    toSettings () {
+      this.$router.push('/settings')
     }
   },
   created () {
