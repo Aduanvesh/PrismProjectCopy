@@ -13,6 +13,7 @@
     </div>
 </template>
 <script>
+// https://techformist.com/using-vue-plugins-quasar/
 import Hero from "./components/Hero";
 import BasicElements from "./components/BasicElements";
 import Inputs from "./components/Inputs";
