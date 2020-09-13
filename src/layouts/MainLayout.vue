@@ -132,6 +132,7 @@ export default {
       const currentPath = this.$route.fullPath
       if (currentPath === '/') return 'Dashboard'
       else if (currentPath === '/login') return 'Login'
+      else if (currentPath === '/profile') return 'Profile'
       else return 'Login'
     }
   },
@@ -145,6 +146,9 @@ export default {
     ...mapActions('store', ['signoutUser']),
     signout () {
       this.signoutUser()
+      if (this.$route.path !== '/') {
+        this.$router.push('/')
+      }
     }
   }
 }

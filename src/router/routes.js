@@ -12,9 +12,9 @@ const routes = [
   },
   {
     path: '/profile',
-    component: () => import('layouts/User.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Profile.vue') }
+      { path: '', component: () => import('layouts/User.vue') }
     ]
   },
   {

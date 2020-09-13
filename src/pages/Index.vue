@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'PageIndex',
   data () {
@@ -20,12 +22,24 @@ export default {
       user_data: []
     }
   },
+  computed: {
+    ...mapState('store', ['userDetails'])
+  },
   methods: {
+    // TODO: clean this up later
     toMemberships () {
-      this.$router.push('/memberships')
+      if (!this.userDetails.email) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/memberships')
+      }
     },
     toProfile () {
-      this.$router.push('/profile')
+      if (!this.userDetails.email) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/profile')
+      }
     }
   },
   created () {

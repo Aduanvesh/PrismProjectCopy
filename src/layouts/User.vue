@@ -4,20 +4,6 @@
     <!-- When placing icons and static resources (images), you should read the docs.
         Images won't work if they're placed in "assets". They should be placed in public.
         The path is relative to public, also.-->
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          round
-          dense
-          icon="img:static/sociit1024x959.png"
-          type="a" href="/"
-        />
-        <q-toolbar-title>
-          Sociit
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
     <div class="col-12">
     <!-- BANNER for the User Page -->
     <div class="row-3">
