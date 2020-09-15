@@ -15,7 +15,10 @@
     <!-- USER toolbar -->
     <q-toolbar class="q-pt-xl q-pl-xl">
         <q-toolbar-title>
-          {{title}}
+          {{name}}
+          <div class = "greyout">
+          #{{$route.params.id}}
+          </div>
         </q-toolbar-title>
     </q-toolbar>
     </div>
@@ -80,15 +83,45 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   // name: 'LayoutName',
   data () {
     return {
       leftDrawer: true,
+      name: 'Member',
       title: 'Society Profile',
       subtitle: 'A subtitle',
       textarea: 'Needs to be bound to a bio in the server.'
     }
+  },
+  computed: {
+    ...mapState('store', ['userDetails'])
+  },
+  methods: {
+    ...mapActions('store', ['checkUser']),
+
+    async checkUserPage () {
+      const check = await this.checkUser(this.$route.params.id)
+      if (check !== 'in') {
+        this.$router.push('/')
+      } else {
+        this.name = this.userDetails.firstName + ' ' + this.userDetails.lastName
+        console.log(this.firstName)
+      }
+    }
+  },
+  created () {
+    this.checkUserPage()
   }
 }
 </script>
+
+<style>
+.greyout {
+  color:#747474;
+  font-size: 13px;
+  font-style: italic;
+}
+</style>

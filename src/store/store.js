@@ -7,6 +7,7 @@ const state = {
 const mutations = {
   setUserDetails (state, payload) {
     state.userDetails = payload
+    console.log('ubersuccess:', state.userDetails.firstName)
   },
   getUniversityNames (state, payload) {
     state.universities = payload
@@ -81,9 +82,15 @@ const actions = {
         coll.doc(userID).get()
           .then(function (doc) {
             if (doc.exists) {
-              commit('setUserDetails', {
-                email: doc.data().email
-              })
+              if (doc.data().type === 'User') {
+                commit('setUserDetails', {
+                  email: doc.data().email,
+                  firstName: doc.data().first_name,
+                  lastName: doc.data().last_name,
+                  id: userID
+                })
+              }
+              // TODO: add one for societies
             } else {
               console.log('doc not found')
             }
@@ -166,6 +173,16 @@ const actions = {
     }
     console.log('exo:', finalArray)
     return finalArray
+  },
+
+  async checkUser (a = {}, payload) {
+    const userID = firebase.auth().currentUser.uid
+    console.log(payload)
+    if (payload === userID) {
+      return 'in'
+    } else {
+      return 'out'
+    }
   }
 }
 

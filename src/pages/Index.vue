@@ -38,7 +38,7 @@ export default {
       if (!this.userDetails.email) {
         this.$router.push('/login')
       } else {
-        this.$router.push('/profile')
+        this.$router.push('/profile/' + this.userDetails.id)
       }
     }
   },

@@ -132,7 +132,7 @@ export default {
       const currentPath = this.$route.fullPath
       if (currentPath === '/') return 'Dashboard'
       else if (currentPath === '/login') return 'Login'
-      else if (currentPath === '/profile') return 'Profile'
+      else if (currentPath === '/profile/:id') return 'Profile'
       else return 'Login'
     }
   },
