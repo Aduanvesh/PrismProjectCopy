@@ -110,11 +110,12 @@
 </template>
 <script>
   import NavbarToggleButton from '@/components/NavbarToggleButton'
-
+  import BaseDropdown from '@/components/BaseDropdown' //I added this.
   export default {
     name: 'sidebar',
     components: {
-      NavbarToggleButton
+      NavbarToggleButton,
+      BaseDropdown //I added this.
     },
     props: {
       logo: {

@@ -31,20 +31,20 @@
           <!-- your content here -->
           <router-view></router-view>
         </fade-transition>
-        <!-- <content-footer v-if="!$route.meta.hideFooter"></content-footer> -->
+        <content-footer v-if="!$route.meta.hideFooter"></content-footer>
       </div>
     </div>
   </div>
 </template>
 <script>
-  // import DashboardNavbar from './DashboardNavbar.vue';
-  // import ContentFooter from './ContentFooter.vue';
+  import DashboardNavbar from './DashboardNavbar.vue';
+  import ContentFooter from './ContentFooter.vue';
   import { FadeTransition } from 'vue2-transitions';
 
   export default {
     components: {
-      //DashboardNavbar,
-      //ContentFooter,
+      DashboardNavbar,
+      ContentFooter,
       FadeTransition
     },
     data() {
