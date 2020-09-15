@@ -34,30 +34,31 @@
                             <div class="col-lg-4 order-lg-1">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
-                                        <span class="heading">22</span>
+                                        <span class="heading">{{followers}}</span>
                                         <span class="description">Followers</span>
                                     </div>
                                     <div>
-                                        <span class="heading">10</span>
+                                        <span class="heading">{{up_coming_events}}</span>
                                         <span class="description">Events</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <h3>QUT Law Society
+                            <h3>{{society_name}}
                                 <span class="font-weight-light"></span>
                             </h3>
-                            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Brisbane, Queensland</div>
-                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Law Society</div>
-                            <div><i class="ni education_hat mr-2"></i>Queensland University of Technology</div>
+                            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{location}}</div>
+                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{subtitle}}</div>
+                            <div><i class="ni education_hat mr-2"></i>{{university}}</div>
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="h6"> Bio </div>
                             <div class="row justify-content-center">
                                 <div class="col-lg-9">
-                                    <p>An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
+                                    <p>{{bio}}</p>
                                     <a href="#">Show more</a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -83,23 +84,23 @@
                                     <div class="container container-lg">
                                         <div class="row">
                                             <div class="col-md-6 mb-5 mb-md-0">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                    <router-link to="/landing" title="Landing Page">
-                                                        <img v-lazy="'img/theme/lcard.png'" class="card-img">
-                                                    </router-link>
+                                                <div class="card shadow border-0">
+                                                    <modal></modal>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-5 mb-lg-0">
                                                 <div class="card card-lift--hover shadow border-0">
                                                     <router-link to="/profile" title="Profile Page">
                                                         <img v-lazy="'img/theme/lcard.png'" class="card-img">
-                                                    </router-link>
-                                                </div>
+                                                    </router-link>   
+                                                </div> 
                                             </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
+                            <!-- <modal></modal> -->
                         </div>
                     </div>
                 </card>
@@ -108,7 +109,26 @@
     </div>
 </template>
 <script>
-export default {};
+import Modal from "./components/JavascriptComponents/Purchase.vue";
+export default {
+name: "components",
+  components: {
+    Modal,
+  },
+  data() {
+    return {
+        followers: 22,
+        up_coming_events: 10,
+        society_name: "QUT Law Society",
+        subtitle: "Law Society",
+        location: "Brisbane, Queensland",
+        university: "Queensland University of Technology",
+        bio: "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
+    };
+    // need to pass data 'down the tree' 
+    // card image, card title, etc --> modal (Purchase.vue)
+  }
+}
 </script>
 <style>
 </style>
