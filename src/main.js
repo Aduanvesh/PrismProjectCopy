@@ -19,10 +19,12 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import Argon from "./plugins/argon-kit";
+import ArgonDashboard from './plugins/argon-dashboard';
 import './registerServiceWorker'
 
 Vue.config.productionTip = false;
 Vue.use(Argon);
+Vue.use(ArgonDashboard);
 new Vue({
   router,
   render: h => h(App)

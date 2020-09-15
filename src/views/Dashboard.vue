@@ -130,10 +130,10 @@
             <!--Tables-->
             <div class="row mt-5">
                 <div class="col-xl-8 mb-5 mb-xl-0">
-                    <page-visits-table></page-visits-table>
+                    <!-- <page-visits-table></page-visits-table> -->
                 </div>
                 <div class="col-xl-4">
-                    <social-traffic-table></social-traffic-table>
+                    <!-- <social-traffic-table></social-traffic-table> -->
                 </div>
             </div>
             <!--End tables-->
@@ -148,15 +148,15 @@
   import BarChart from '@/components/Charts/BarChart';
 
   // Tables
-  import SocialTrafficTable from './Dashboard/SocialTrafficTable';
-  import PageVisitsTable from './Dashboard/PageVisitsTable';
+  // import SocialTrafficTable from './Dashboard/SocialTrafficTable';
+  // import PageVisitsTable from './Dashboard/PageVisitsTable';
 
   export default {
     components: {
       LineChart,
       BarChart,
-      PageVisitsTable,
-      SocialTrafficTable,
+      // PageVisitsTable,
+      // SocialTrafficTable,
     },
     data() {
       return {

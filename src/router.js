@@ -2,12 +2,15 @@ import Vue from "vue";
 import Router from "vue-router";
 import AppHeader from "./layout/AppHeader";
 import AppFooter from "./layout/AppFooter";
+//import DashHeader from "./layout/DashHeader";
+//import DashFooter from "./layout/DashFooter";
+import DashboardLayout from '@/layout/DashboardLayout';
 import Components from "./views/Components.vue";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
-import Dashboard from "./views/Dash.vue";
+import Dashboard from "./views/Dashboard.vue";
 
 Vue.use(Router);
 
@@ -52,13 +55,14 @@ export default new Router({
       }
     },
     {
-      path: "/dash",
+      path: "/dashboard",
       name: "dashboard",
-      components: {
-        header: AppHeader,
-        default: Dashboard,
-        footer: AppFooter
-      }
+      component: DashboardLayout,
+      // components: {
+      //   //header: DashHeader,
+      //   //default: Dashboard,
+      //   //footer: DashFooter
+      // }
     },
     {
       path: "/profile",
