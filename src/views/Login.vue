@@ -22,14 +22,13 @@
                                 <small>Sign in with</small>
                             </div>
                             <div class="btn-wrapper text-center">
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/github.svg">
-                                    Github
-                                </base-button>
-
-                                <base-button type="neutral">
+                                <base-button type="neutral" class="mb-3">
                                     <img slot="icon" src="img/icons/common/google.svg">
                                     Google
+                                </base-button>
+                                <base-button type="neutral">
+                                    <img slot="icon" src="img/icons/common/apple.svg">
+                                    Sign in with Apple
                                 </base-button>
                             </div>
                         </template>
@@ -64,7 +63,7 @@
                             </a>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="#" class="text-light">
+                            <a href="/register" class="text-light">
                                 <small>Create new account</small>
                             </a>
                         </div>

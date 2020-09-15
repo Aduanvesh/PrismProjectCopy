@@ -19,17 +19,16 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
+                                <small>Register with</small>
                             </div>
                             <div class="btn-wrapper text-center">
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/github.svg">
-                                    Github
-                                </base-button>
-
-                                <base-button type="neutral">
+                                <base-button type="neutral" class="mb-3">
                                     <img slot="icon" src="img/icons/common/google.svg">
                                     Google
+                                </base-button>
+                                <base-button type="neutral">
+                                    <img slot="icon" src="img/icons/common/apple.svg">
+                                    Sign in with Apple
                                 </base-button>
                             </div>
                         </template>
