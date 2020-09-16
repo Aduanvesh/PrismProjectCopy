@@ -11,6 +11,16 @@ import BaseSwitch from "../components/BaseSwitch";
 import Card from "../components/Card";
 import Icon from "../components/Icon";
 
+
+import BaseDropdown from "../components/BaseDropdown";
+import BaseNav from "../components/BaseNav";
+import BaseTable from "../components/BaseTable";
+import BaseHeader from "../components/BaseHeader";
+import StatsCard from "../components/StatsCard";
+import Modal from "../components/Modal";
+import TabPane from "../components/Tabs/TabPane";
+import Tabs from "../components/Tabs/Tabs";
+
 export default {
   install(Vue) {
     Vue.component(Badge.name, Badge);
@@ -25,5 +35,15 @@ export default {
     Vue.component(BaseSwitch.name, BaseSwitch);
     Vue.component(Card.name, Card);
     Vue.component(Icon.name, Icon);
+
+    Vue.component(BaseNav.name, BaseNav);
+    Vue.component(BaseDropdown.name, BaseDropdown);
+    Vue.component(BaseCheckbox.name, BaseCheckbox);
+    Vue.component(BaseTable.name, BaseTable);
+    Vue.component(BaseHeader.name, BaseHeader);
+    Vue.component(StatsCard.name, StatsCard);
+    Vue.component(Modal.name, Modal);
+    Vue.component(TabPane.name, TabPane);
+    Vue.component(Tabs.name, Tabs);
   }
 };

@@ -23,7 +23,6 @@
                             <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
                         </div>
                     </div>
-
                     <template>
                         <div class=" dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome!</h6>
@@ -56,16 +55,16 @@
     </base-nav>
 </template>
 <script>
-  import BaseNav from '@/components/BaseNav' //I added this.
-  import BaseDropdown from '@/components/BaseDropdown' //I added this.
-  import BaseHeader from '@/components/BaseHeader' //I added this.
+  // import BaseNav from '@/components/BaseNav' //I added this.
+  // import BaseDropdown from '@/components/BaseDropdown' //I added this.
+  // import BaseHeader from '@/components/BaseHeader' //I added this.
   export default {
-    name: 'Nav', //I added this.
-    components: {
-      BaseDropdown, //I added this.
-      BaseNav, //I added this.
-      BaseHeader
-    },
+    // name: 'Nav', //I added this.
+    // components: {
+    //   // BaseDropdown, //I added this.
+    //   // BaseNav, //I added this.
+    //   // BaseHeader
+    // },
     data() {
       return {
         activeNotifications: false,
