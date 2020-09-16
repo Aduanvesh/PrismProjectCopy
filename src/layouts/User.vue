@@ -4,20 +4,6 @@
     <!-- When placing icons and static resources (images), you should read the docs.
         Images won't work if they're placed in "assets". They should be placed in public.
         The path is relative to public, also.-->
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          round
-          dense
-          icon="img:static/sociit1024x959.png"
-          type="a" href="/"
-        />
-        <q-toolbar-title>
-          Sociit
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
     <div class="col-12">
     <!-- BANNER for the User Page -->
     <div class="row-3">
@@ -29,7 +15,10 @@
     <!-- USER toolbar -->
     <q-toolbar class="q-pt-xl q-pl-xl">
         <q-toolbar-title>
-          {{title}}
+          {{name}}
+          <div class = "greyout">
+          #{{$route.params.id}}
+          </div>
         </q-toolbar-title>
     </q-toolbar>
     </div>
@@ -94,15 +83,45 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   // name: 'LayoutName',
   data () {
     return {
       leftDrawer: true,
+      name: 'Member',
       title: 'Society Profile',
       subtitle: 'A subtitle',
       textarea: 'Needs to be bound to a bio in the server.'
     }
+  },
+  computed: {
+    ...mapState('store', ['userDetails'])
+  },
+  methods: {
+    ...mapActions('store', ['checkUser']),
+
+    async checkUserPage () {
+      const check = await this.checkUser(this.$route.params.id)
+      if (check !== 'in') {
+        this.$router.push('/')
+      } else {
+        this.name = this.userDetails.firstName + ' ' + this.userDetails.lastName
+        console.log(this.firstName)
+      }
+    }
+  },
+  created () {
+    this.checkUserPage()
   }
 }
 </script>
+
+<style>
+.greyout {
+  color:#747474;
+  font-size: 13px;
+  font-style: italic;
+}
+</style>
