@@ -11,10 +11,15 @@
 </template>
 <script>
 import { FadeTransition } from "vue2-transitions";
+import { mapActions } from 'vuex'
+import store from 'main'
 
 export default {
   components: {
     FadeTransition
+  },
+  mounted () {
+    this.$store.dispatch('handleAuthStateChanged')
   }
 };
 </script>

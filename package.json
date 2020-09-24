@@ -10,15 +10,19 @@
   "dependencies": {
     "@creative-tim-official/argon-dashboard-free": "^1.2.0",
     "bootstrap-vue": "^2.0.4",
+    "es6-promise": "^4.2.8",
+    "firebase": "^7.21.0",
     "flatpickr": "^4.5.1",
+    "main": "^1000.0.1",
     "nouislider": "^11.1.0",
     "register-service-worker": "^1.5.2",
-    "vue": "^2.6.6",
+    "vue": "^2.6.12",
     "vue-argon-dashboard": "^0.1.0",
     "vue-flatpickr-component": "^8.1.1",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.2",
     "vue2-transitions": "^0.2.3",
+    "vuex": "^3.5.1",
     "yarn": "^1.22.5"
   },
   "devDependencies": {
