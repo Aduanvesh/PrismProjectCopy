@@ -14,6 +14,16 @@
                     {{title}}
                 </a>
             </slot>
+            <div class="white"
+            v-if="userExists">
+            {{user}}
+
+            <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
+            </div>
+            <div
+            v-else>
+            Not logged in
+            </div>
             <navbar-toggle-button :toggled="toggled"
                                   :target="contentId"
                                   @click.native.stop="toggled = !toggled">
@@ -33,6 +43,8 @@
 <script>
 import { FadeTransition } from "vue2-transitions";
 import NavbarToggleButton from "./NavbarToggleButton";
+import store from 'main'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: "base-nav",
@@ -88,10 +100,28 @@ export default {
       this.$emit("title-click", evt);
     },
     closeMenu() {
+      console.log
       this.toggled = false;
     }
+  },
+  computed: {
+    ...mapState('store', ['userDetails']),
+    user(){
+      return this.$store.state.userDetails.email
+    },
+    userExists(){
+      console.log(this.$store.state.userDetails.email)
+      if (this.$store.state.userDetails.email){
+        return true
+      } else {
+        return false
+      }
+    } 
   }
 };
 </script>
 <style>
+.white {
+color: white;
+}
 </style>

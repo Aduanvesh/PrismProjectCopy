@@ -36,22 +36,25 @@
                             <div class="text-center text-muted mb-4">
                                 <small>Or sign in with credentials</small>
                             </div>
-                            <form role="form">
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Email"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
-                                <base-input alternative
-                                            type="password"
-                                            placeholder="Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>
+                            <form role="form" @submit.prevent="login">
+                                <div class = "login">
+                                    <input type="email"
+                                                class="mb-3"
+                                                placeholder="Email"
+                                                addon-left-icon="ni ni-email-83"
+                                                v-model="loginForm.email">
+                                </div>
+                                <div class = "password">
+                                    <input type="password"
+                                                placeholder="Password"
+                                                addon-left-icon="ni ni-lock-circle-open"
+                                                v-model="loginForm.password">
+                                </div>
                                 <base-checkbox>
                                     Remember me
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Sign In</base-button>
+                                    <button type="submit" class="my-4">Sign In</button>
                                 </div>
                             </form>
                         </template>
@@ -74,7 +77,100 @@
     </section>
 </template>
 <script>
-export default {};
+import { mapActions } from 'vuex'
+import store from 'main'
+
+export default {
+  components: {
+    // PasswordReset
+  },
+  data () {
+    return {
+      tab: 'login',
+      loginForm: {
+        email: '',
+        password: ''
+      },
+      resetForm: {
+        email: ''
+      },
+      showPasswordReset: false,
+      view: false,
+      messageError: ' ',
+      message: ' '
+    }
+  },
+  mounted() {
+      this.message = this.$store.getters.getMessage
+  },
+  methods: {
+    //...mapActions('store', ['signinUser', 'resetPassword']),
+    // TODO: to be implemented for password reset
+    togglePasswordReset () {
+      this.tab = 'reset'
+    },
+    // TODO: managing of login errors
+    async login () {
+        console.log('emailtest:', this.loginForm.email)
+        let errorType = '' 
+        const error = this.$store.dispatch('signinUser', this.loginForm)
+        this.messageError = await error.then(function (defs, messageError) {
+            errorType = defs
+            if (errorType === undefined) {
+            console.log('cappa')
+            return ' '
+            } else if (errorType === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+            return 'The entered username or password is incorrect'
+            } else if (errorType === 'The password is invalid or the user does not have a password.') {
+            return 'The entered username or password isrc\stores incorrect'
+            }
+        })
+      console.log('loginmessageerror(ignore if blank):', this.messageError) 
+    },
+    backLogin () {
+      console.log(this.tab)
+      this.tab = 'login'
+      this.resetTabs()
+    },
+    resetTabs () {
+      this.showPasswordReset = false
+      this.messageError = ' '
+    },
+    async resetPasswordMethod () {
+      let errorType = ''
+      console.log('testing1', this.messageError)
+      const error = this.resetPassword(this.resetForm)
+      this.messageError = ' '
+      this.messageError = await error.then(function (defs, messageError) {
+        console.log('the error is', defs)
+        errorType = defs
+        if (errorType === undefined) {
+          return 'An email has been sent to change your password'
+        } else if (errorType === 'The email address is badly formatted.') {
+          return 'Not a valid email address'
+        } else if (errorType === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
+          return 'Email address not found'
+        } else if (errorType === 'We have blocked all requests from this device due to unusual activity. Try again later.') {
+          return 'Can not connect to servers right now. Please try again later'
+        } else {
+          return 'An unexpected error has occurred. Please try again later'
+        }
+      })
+      console.log('resetmessageerror(ignore if blank):', this.messageError)
+      if (this.messageError === 'An email has been sent to change your password') {
+        this.showPasswordReset = true
+      }
+    }
+  },
+  created () {
+      console.log('started')
+  }, 
+  /*computed: {
+    errorMessage () {
+      return store.state.message
+    }
+  } */
+}
 </script>
 <style>
 </style>

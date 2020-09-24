@@ -56,7 +56,7 @@
                     </a>
                     <router-link to="/landing" class="dropdown-item">Landing</router-link>
                     <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
-                    <router-link to="/profile" class="dropdown-item">Profile</router-link>
+                    <router-link :to="userID"  class="dropdown-item">Profile</router-link>
                     <router-link to="/login" class="dropdown-item">Login</router-link>
                     <router-link to="/register" class="dropdown-item">Register</router-link>
                 </base-dropdown>
@@ -80,12 +80,18 @@
 import BaseNav from "@/components/BaseNav";
 import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
+import store from 'main'
 
 export default {
   components: {
     BaseNav,
     CloseButton,
     BaseDropdown
+  },
+  computed: {
+    userID(){
+      return '/profile/' + this.$store.state.userDetails.id
+    },
   }
 };
 </script>

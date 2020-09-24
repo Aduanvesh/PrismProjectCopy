@@ -11,10 +11,11 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dashboard.vue";
+import VueRouter from 'vue-router'
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export default new Router({
+export default new VueRouter({
   linkExactActiveClass: "active",
   mode: 'history',
   routes: [
@@ -55,6 +56,15 @@ export default new Router({
       }
     },
     {
+      path: "/memberships",
+      name: "memberships",
+      components: {
+        header: AppHeader,
+        default: Register,
+        //footer: AppFooter
+      }
+    },
+    {
       path: "/dashboard",
       redirect: "dashboard",
       component: DashboardLayout,
@@ -70,7 +80,7 @@ export default new Router({
       ] 
     },
     {
-      path: "/profile",
+      path: "/profile/:id",
       name: "profile",
       components: {
         header: AppHeader,

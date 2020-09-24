@@ -51,6 +51,7 @@
                             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{location}}</div>
                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{subtitle}}</div>
                             <div><i class="ni education_hat mr-2"></i>{{university}}</div>
+                            <div><i class="fade"></i>#{{$route.params.id}}</div>
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="h6"> Bio </div>
@@ -110,12 +111,15 @@
 </template>
 <script>
 import Modal from "./components/JavascriptComponents/Purchase.vue";
+import store from 'main'
+import router from '../router'
+
 export default {
 name: "components",
-  components: {
+components: {
     Modal,
-  },
-  data() {
+},
+data() {
     return {
         followers: 22,
         up_coming_events: 10,
@@ -125,8 +129,28 @@ name: "components",
         university: "Queensland University of Technology",
         bio: "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
     };
-    // need to pass data 'down the tree' 
-    // card image, card title, etc --> modal (Purchase.vue)
+// need to pass data 'down the tree' 
+// card image, card title, etc --> modal (Purchase.vue)
+},
+methods: {
+
+    async checkUserPage () {
+      const check = await this.$store.dispatch('checkUser', this.$route.params.id)
+      if (check !== 'in') {
+        router.push('/')
+      } else {
+        this.name = this.fullname
+      }
+    }
+  },
+  computed: {
+      fullname() {
+          return this.$store.state.userDetails.firstName + ' ' + this.$store.state.userDetails.lastName
+      }
+  },
+    created () {
+    this.checkUserPage()
+    console.log('profile')
   }
 }
 </script>
