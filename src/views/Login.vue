@@ -26,10 +26,6 @@
                                     <img slot="icon" src="img/icons/common/google.svg">
                                     Google
                                 </base-button>
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/apple.svg">
-                                    Sign in with Apple
-                                </base-button>
                             </div>
                         </template>
                         <template>
@@ -39,7 +35,7 @@
                             <form role="form" @submit.prevent="login">
                                 <div class = "login">
                                     <input type="email"
-                                                class="mb-3"
+                                                class="form-control"
                                                 placeholder="Email"
                                                 addon-left-icon="ni ni-email-83"
                                                 v-model="loginForm.email">
@@ -48,7 +44,8 @@
                                     <input type="password"
                                                 placeholder="Password"
                                                 addon-left-icon="ni ni-lock-circle-open"
-                                                v-model="loginForm.password">
+                                                v-model="loginForm.password"
+                                                class="form-control">
                                 </div>
                                 <base-checkbox>
                                     Remember me
@@ -66,7 +63,7 @@
                             </a>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="/register" class="text-light">
+                            <a href="/register/user" class="text-light">
                                 <small>Create new account</small>
                             </a>
                         </div>
@@ -117,7 +114,7 @@ export default {
         this.messageError = await error.then(function (defs, messageError) {
             errorType = defs
             if (errorType === undefined) {
-            console.log('cappa')
+            console.log('successfully logged in')
             return ' '
             } else if (errorType === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
             return 'The entered username or password is incorrect'
@@ -173,4 +170,8 @@ export default {
 }
 </script>
 <style>
+.password, .login{
+    text-align: center;
+    padding-bottom: 25px;
+}
 </style>

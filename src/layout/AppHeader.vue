@@ -3,7 +3,7 @@
         <base-nav class="navbar-main" transparent type="" effect="light" expand>
 
             <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" to="/">
-                    <img src="img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
+                    <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
                     <span class="text-white alpha-7">Sociit</span>
             </router-link>
 
@@ -61,7 +61,12 @@
                     <router-link to="/register" class="dropdown-item">Register</router-link>
                 </base-dropdown>
             </ul>
-            <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+            <div class = "white" v-if="userExists">
+                {{user}}
+                <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
+            </div >
+            <div v-else>
+               <ul class="navbar-nav align-items-lg-center ml-lg-auto">
                 <li class="nav-item d-none d-lg-block ml-lg-4">
                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login">
                         <span class="nav-link-inner--text">Login</span>
@@ -72,7 +77,9 @@
                         <span class="nav-link-inner--text">Register</span>
                     </router-link>
                 </li>
-            </ul>
+            </ul> 
+            </div>
+            
         </base-nav>
     </header>
 </template>
@@ -92,8 +99,24 @@ export default {
     userID(){
       return '/profile/' + this.$store.state.userDetails.id
     },
+    user(){
+      return this.$store.state.userDetails.email
+    },
+    userExists(){
+      console.log(this.$store.state.userDetails.email)
+      if (this.$store.state.userDetails.email){
+        return true
+      } else {
+        return false
+      }
+    } 
   }
 };
 </script>
 <style>
+
+.white {
+color: white;
+}
+
 </style>

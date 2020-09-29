@@ -104,6 +104,12 @@ export default new Vuex.Store({
                     lastName: doc.data().last_name,
                     id: userID
                     })
+                } else {
+                    commit('setUserDetails', {
+                        email: doc.data().email,
+                        title: doc.data().title,
+                        id: userID
+                        })
                 }
                 // TODO: add one for societies
                 } else {
@@ -113,7 +119,7 @@ export default new Vuex.Store({
         } else {
             console.log('logged out')
             commit('setUserDetails', {})
-        }
+            }
         })
     },
 
@@ -122,7 +128,7 @@ export default new Vuex.Store({
         const query = col.doc('universities')
         const data = query.get()
           .then(doc => {
-            console.log('check', doc.data().university_name)
+            console.log('university check:', doc.data().university_name)
             return doc.data().university_name
           })
         return data
