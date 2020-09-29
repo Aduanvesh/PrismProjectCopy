@@ -12,7 +12,7 @@
             </div>
         </section> -->
         <section class="section-profile-cover section-shaped my-0">
-        <img v-lazy="'img/theme/qutlscover.jpg'" class="col-12"/>
+        <img v-lazy="'/img/theme/qutlscover.jpg'" class="col-12"/>
         </section>
         <section class="section section-skew">
             <div class="container">
@@ -92,7 +92,7 @@
                                             <div class="col-md-6 mb-5 mb-lg-0">
                                                 <div class="card card-lift--hover shadow border-0">
                                                     <router-link to="/profile" title="Profile Page">
-                                                        <img v-lazy="'img/theme/lcard.png'" class="card-img">
+                                                        <img v-lazy="'/img/theme/lcard.png'" class="card-img">
                                                     </router-link>   
                                                 </div> 
                                             </div>

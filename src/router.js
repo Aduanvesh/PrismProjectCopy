@@ -53,7 +53,18 @@ export default new VueRouter({
         header: AppHeader,
         default: Register,
         //footer: AppFooter
-      }
+      },
+      children: [
+        {
+          path: '/register/user',
+          name: 'user',
+          component: Register
+        },
+        {
+          path: '/register/club',
+          name: 'club',
+          component: Register
+        },]
     },
     {
       path: "/memberships",
