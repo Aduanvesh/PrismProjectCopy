@@ -282,6 +282,10 @@ export default {
       this.messageError = ' '
     },
 
+    toClub(){
+         this.$forceUpdate();
+    },
+
     async getUni () {
         const stuff = await this.$store.dispatch('getUniversities')
             .then(function (data) {

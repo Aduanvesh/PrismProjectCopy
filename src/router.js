@@ -10,7 +10,7 @@ import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
-import Dashboard from "./views/Dashboard.vue";
+import Dashboard from "./views/Dashboard2.vue";
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
@@ -77,18 +77,11 @@ export default new VueRouter({
     },
     {
       path: "/dashboard",
-      redirect: "dashboard",
-      component: DashboardLayout,
-      children: [
-        {
-          path: '/dashboard',
-          name: 'dashboard',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
-        }
-      ] 
+      name: "dashboard",
+      components: {
+        header: AppHeader,
+        default: Dashboard 
+      }, 
     },
     {
       path: "/profile/:id",
