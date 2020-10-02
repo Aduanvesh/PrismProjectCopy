@@ -1,21 +1,13 @@
 <template>
     <div class="section section-shaped section-lg my-0">
          <div class="shape shape-style-1 bg-gradient-default">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
         <div class="profile-page">
            <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{activeTabIndex}">
                     <tab-pane key="tab1">
-                        <template slot="title">
-                            <i class="ni ni-cloud-upload-96 mr-2"></i>Clubs and Societies
+                        <template slot="title"> 
+                            <i class="fa fa-university mr-2"></i>Clubs and Societies
                         </template>
                     
                     <li v-for="cards in cardsLinks" v-bind:key="cards.title"> {{cards.title}} ({{cards.details}}) </li>
@@ -24,7 +16,7 @@
 
                     <tab-pane key="tab2">
                         <template slot="title">
-                            <i class="ni ni-bell-55 mr-2"></i>Events
+                            <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
 
                         <p class="description">Cosby sweater eu banh mi, qui irure terry richardson ex
@@ -34,7 +26,7 @@
 
                     <tab-pane key="tab3">
                         <template slot="title">
-                            <i class="ni ni-calendar-grid-58 mr-2"></i>Payments
+                            <i class="ni ni-money-coins mr-2"></i>Payments
                         </template>
 
                         <p class="description">Raw denim you probably haven't heard of them jean shorts
@@ -44,7 +36,7 @@
                     </tab-pane>
                     <tab-pane key="tab4">
                         <template slot="title">
-                            <i class="ni ni-calendar-grid-58 mr-2"></i>Tickets
+                            <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
 
                         <p class="description">Raws denim you probably haven't heard of them jean shorts
