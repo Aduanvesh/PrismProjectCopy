@@ -8,6 +8,7 @@ import DashboardLayout from '@/layout/DashboardLayout';
 import Components from "./views/Components.vue";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
+import PasswordReset from "./views/PasswordReset.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dashboard2.vue";
@@ -43,6 +44,15 @@ export default new VueRouter({
       components: {
         header: AppHeader,
         default: Login,
+        //footer: AppFooter
+      }
+    },
+    {
+      path: "/password-reset",
+      name: "password-reset",
+      components: {
+        header: AppHeader,
+        default: PasswordReset,
         //footer: AppFooter
       }
     },

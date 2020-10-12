@@ -17,7 +17,8 @@
                         <template slot="title">
                             <i class="ni ni-cloud-upload-96 mr-2"></i>Clubs and Societies
                         </template>
-                    
+                    <modal>
+                    </modal>
                     <li v-for="cards in cardsLinks" v-bind:key="cards.title"> {{cards.title}} ({{cards.details}}) </li>
                       
                     </tab-pane>
@@ -27,20 +28,36 @@
                             <i class="ni ni-bell-55 mr-2"></i>Events
                         </template>
 
-                        <p class="description">Cosby sweater eu banh mi, qui irure terry richardson ex
-                            squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan
-                            american apparel, butcher voluptate nisi qui.</p>
+                        <h1>Upcoming Events:</h1>
                     </tab-pane>
 
                     <tab-pane key="tab3">
                         <template slot="title">
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Payments
                         </template>
-
-                        <p class="description">Raw denim you probably haven't heard of them jean shorts
-                            Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache
-                            cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
-                            keffiyeh dreamcatcher synth.</p>
+                        <h1>Payments:</h1>
+                        <div>
+                                <template>
+                                <table style="width:75%">
+                                    <tr>
+                                        <th>Payment ID</th>
+                                        <th>Status</th>
+                                        <th>Payee</th>
+                                        <th>Date submitted</th>
+                                        <th>Date paid</th>
+                                        <th>-</th>
+                                    </tr>
+                                    <tr v-for="payment in payments" v-bind:key="payment.id">
+                                        <th>{{payment.id}}</th>
+                                        <th>{{payment.status}}</th>
+                                        <th>{{payment.payee}}</th>
+                                        <th>{{payment.date1}}</th>
+                                        <th>{{payment.date2}}</th>
+                                        <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
+                                    </tr>
+                                    </table>
+                                </template>
+                            </div>
                     </tab-pane>
                     <tab-pane key="tab4">
                         <template slot="title">
@@ -61,6 +78,7 @@
 <script>
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
+import Modal from '../views/SearchClub.vue'
 
 const cardsData = [
   {
@@ -79,11 +97,42 @@ const cardsData = [
 
   export default {
     components: {
-
+        Modal,
     },
     data () {
         return {
         cardsLinks: cardsData,
+        showSearch: false,
+        payments: [
+        ],
+        events: [
+            {
+                id: '12398',
+                payee: 'Upcoming event',
+                date: '01/08/2020',
+                description: 'This is an example event'
+            },
+            {
+                id: '12398',
+                payee: 'Upcoming event',
+                date: '01/08/2020',
+                description: 'This is an example event'
+            },
+        ],
+        tickets: [
+            {
+                id: '12398',
+                payee: 'Upcoming event',
+                date: '01/08/2020',
+                description: 'This is an example event'
+            },
+            {
+                id: '12398',
+                payee: 'Upcoming event',
+                date: '01/08/2020',
+                description: 'This is an example event'
+            },
+        ],
         first: true,
         second: true,
         layout: false,
@@ -96,16 +145,18 @@ const cardsData = [
             type: '',
             price: '',
             details: ''
-        }
+        },
+        search: '',
         }
     },
+
     methods: {
         async retrieveMembership () {
         const cards = this.$store.dispatch('getCards')
             .then(function (data) {
             const cardsData = []
             for (var i = 0; i < data.length; i++) {
-                console.log(data[i].details)
+                //console.log(data[i].details)
                 const card = {
                 title: '',
                 caption: '',
@@ -127,13 +178,54 @@ const cardsData = [
         this.cardsData = await cards
         this.cardsLinks = this.cardsData
         console.log('cardscheck:', this.cardsData)
+        },
+
+        async paymentMake (pid) {
+            this.$store.dispatch('makePayment', pid.substring(0))
+
+        },
+
+
+
+        async retrievePayments () {
+            const pays = this.$store.dispatch('getPayments')
+            .then(function (data) {
+            const Arpayments = []
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].details)
+                const card = {
+                id: '',
+                status: '',
+                payee: '',
+                date1: '',
+                date2: '',
+            }
+                
+                card.id = data[i].id
+                card.status = data[i].status
+                card.payee = data[i].payee
+                card.date1 = data[i].date1
+                card.date2 = data[i].date2
+
+            Arpayments.push(card)
+            }
+                return Arpayments
+            })
+        this.payments = await pays
+
+        console.log('cardscheck:', this.payments)
         }
         
     },
     created() {
-        this.retrieveMembership()
+        setTimeout(() => this.retrieveMembership(), 5000)
+        setTimeout(() => this.retrievePayments(), 5000)
     }
   }
 </script>
 
-<style></style>
+<style>
+.table, th, td {
+    border: 1px solid rgb(51, 51, 51);    
+}
+</style>

@@ -57,7 +57,7 @@ export default new Vuex.Store({
                 'iMuo2bRED9JChlIAolK8']
             })
             }
-            router.push('/')
+            router.push('/dashboard')
         } catch (err) {
             this.errorMsg = err.message
             console.log(err.message)
@@ -69,7 +69,7 @@ export default new Vuex.Store({
         console.log('payload: ', payload.email)
         try {
           await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-          router.push('/')
+          router.push('/dashboard')
         } catch (err) {
           this.errorMsg = err.message
           console.log(err.message)
@@ -181,9 +181,6 @@ export default new Vuex.Store({
             console.log('check', doc.data().memberships)
             return doc.data().memberships
           })
-        console.log(targetArray)
-    
-        // PLEASE FIND IF THERE IS A BETTER WAY TO DO THIS, I DID THIS QUICKLY
         const finalArray = []
         for (var i = 0; i < targetArray.length; i++) {
           const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
@@ -192,9 +189,37 @@ export default new Vuex.Store({
             })
           finalArray.push(snapshot)
         }
-        console.log('exo:', finalArray)
+        console.log('final array:', finalArray)
         return finalArray
       },
+
+    async getPayments () {
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      const targetArray = await targetUser.get()
+          .then(doc => {
+            console.log('check', doc.data().payments)
+            return doc.data().payments
+          })
+        const finalArray = []
+        for (var i = 0; i < targetArray.length; i++) {
+          const snapshot = await firebase.firestore().collection('payments').doc(targetArray[i]).get()
+            .then(doc => {
+              return doc.data()
+            })
+          finalArray.push(snapshot)
+        }
+      console.log('final array:', finalArray)
+      return finalArray
+    },
+
+    async makePayment (a = {}, payload) {
+      console.log('doco:',':', payload)
+      console.log(payload)
+      const snapshot = await firebase.firestore().collection('payments').doc(payload).update({
+        status: 'paid'
+      })
+    },
 
     async checkUser (a = {}, payload) {
         const userID = firebase.auth().currentUser.uid
@@ -204,7 +229,41 @@ export default new Vuex.Store({
         } else {
           return 'out'
         }
-     }
+    },
+
+    async joinClubCode (a = {}, payload) {
+      console.log('attempt:', payload)
+      try {
+        const club = await firebase.firestore().collection('memberships').doc(payload)
+        
+        const snapshot = await club.get()
+          .then(doc => {
+            if (doc.exists){
+              return doc.data() 
+            } else {
+              return undefined
+            }
+          })
+        if (snapshot !== undefined){
+          const userID = firebase.auth().currentUser.uid
+          const targetUser = firebase.firestore().collection('users').doc(userID)
+          club.update({
+            members: firebase.firestore.FieldValue.arrayUnion(userID)
+          })
+          targetUser.update({
+            memberships: firebase.firestore.FieldValue.arrayUnion(club.id)
+          })
+          return 'success'
+        } else {
+          return 'missing'
+        }
+      } catch (err) {
+        this.errorMsg = err.message
+          console.log('error:', err.message)
+          return err.message
+      }
+     
+    }
 
   },
   getters: {

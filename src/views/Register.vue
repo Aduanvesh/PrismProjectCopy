@@ -27,22 +27,32 @@
                                     Google
                                 </base-button>
                                 </div>
-                            <div class="text-muted text-center mb-3">
-                                <small>Register club account at</small>
+                            <div v-if="this.$router.currentRoute.path=='/register/club'">
+                            
+
+                                 <div  class="text-muted text-center mb-3">
+                                <small>Register user account at</small>
                             </div>
                             <div class="btn-wrapper text-center">
-                                <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register/club">
-                                    <span class="nav-link-inner--text">Club Registration</span>
-                                </router-link>
-                                </div>
+                            <button type="button" class="btn btn-neutral btn-icon" v-on:click="toUser">User Registration</button>
+                            </div>
                              <!--   <base-button type="neutral">
                                     <img slot="icon" src="img/icons/common/apple.svg">
                                     Sign in with Apple
                                 </base-button> -->
-                            
+                            </div>
+                            <div v-else>
+                            <div  class="text-muted text-center mb-3">
+                                <small>Register club account at</small>
+                            </div>
+                            <div class="btn-wrapper text-center">
+                            <button type="button" class="btn btn-neutral btn-icon" v-on:click="toClub">Club Registration</button>
+                            </div>
+                            </div>
                         </template>
                         <template>
                             <div class="text-center text-muted mb-4">
+                                <br>
                                 <small>Or sign up with credentials</small>
                             </div>
                              <div v-if="messageError != ' '" class="error">
@@ -282,8 +292,14 @@ export default {
       this.messageError = ' '
     },
 
+    toUser(){
+        this.$router.push('/register/user')
+        this.$forceUpdate();
+    },
+
     toClub(){
-         this.$forceUpdate();
+        this.$router.push('/register/club')
+        this.$forceUpdate();
     },
 
     async getUni () {
