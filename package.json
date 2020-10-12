@@ -16,6 +16,7 @@
     "main": "^1000.0.1",
     "nouislider": "^11.1.0",
     "register-service-worker": "^1.5.2",
+    "stripe": "^8.106.0",
     "vue": "^2.6.12",
     "vue-argon-dashboard": "^0.1.0",
     "vue-flatpickr-component": "^8.1.1",

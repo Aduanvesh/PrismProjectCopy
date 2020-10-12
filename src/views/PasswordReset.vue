@@ -18,51 +18,30 @@
                           body-classes="px-lg-5 py-lg-5"
                           class="border-0">
                         <template>
-                            <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
-                            </div>
-                            <div class="btn-wrapper text-center">
-                                <base-button type="neutral" class="mb-3">
-                                    <img slot="icon" src="img/icons/common/google.svg">
-                                    Google
-                                </base-button>
-                            </div>
-                        </template>
-                        <template>
                             <div class="text-center text-muted mb-4">
-                                <small>Or sign in with credentials</small>
+                                <small>Enter email address associated with your account.</small>
                             </div>
-                             <div v-if="messageError != ' '" class="error">
+                            <div v-if="messageError != ' '" class="error">
                                 {{messageError}}
                             </div>
-                            <form role="form" @submit.prevent="login">
+                            <form role="form" @submit.prevent="resetPasswordMethod">
                                 <div class = "login">
                                     <input type="email"
                                                 class="form-control"
                                                 placeholder="Email"
                                                 addon-left-icon="ni ni-email-83"
-                                                v-model="loginForm.email">
+                                                v-model="resetForm.email">
                                 </div>
-                                <div class = "password">
-                                    <input type="password"
-                                                placeholder="Password"
-                                                addon-left-icon="ni ni-lock-circle-open"
-                                                v-model="loginForm.password"
-                                                class="form-control">
-                                </div>
-                                <base-checkbox>
-                                    Remember me
-                                </base-checkbox>
                                 <div class="text-center">
-                                    <button type="submit" class="my-4">Sign In</button>
+                                    <button type="submit" class="my-4">Send Recovery Email</button>
                                 </div>
                             </form>
                         </template>
                     </card>
                     <div class="row mt-3">
                         <div class="col-6">
-                            <a href="/password-reset" class="text-light">
-                                <small>Forgot password?</small>
+                            <a href="/login" class="text-light">
+                                <small>Go back to login</small>
                             </a>
                         </div>
                         <div class="col-6 text-right">
@@ -86,16 +65,10 @@ export default {
   },
   data () {
     return {
-      tab: 'login',
-      loginForm: {
-        email: '',
-        password: ''
-      },
       resetForm: {
         email: ''
       },
       showPasswordReset: false,
-      view: false,
       messageError: ' ',
       message: ' '
     }
@@ -104,44 +77,9 @@ export default {
       this.message = this.$store.getters.getMessage
   },
   methods: {
-    //...mapActions('store', ['signinUser', 'resetPassword']),
-    // TODO: to be implemented for password reset
-    togglePasswordReset () {
-      this.tab = 'reset'
-    },
-    // TODO: managing of login errors
-    async login () {
-        console.log('emailtest:', this.loginForm.email)
-        let errorType = '' 
-        const error = this.$store.dispatch('signinUser', this.loginForm)
-        this.messageError = await error.then(function (defs, messageError) {
-            errorType = defs
-            if (errorType === undefined) {
-            console.log('successfully logged in')
-            return ' '
-            } else if (errorType === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
-            return 'The entered username or password is incorrect'
-            } else if (errorType === 'The password is invalid or the user does not have a password.') {
-            return 'The entered username or password is incorrect   '
-            } else if (errorType === 'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.') {
-            return 'You have made too many failed login attempts. Please reset your password or try again later.'
-            }
-        })
-      console.log('loginmessageerror(ignore if blank):', this.messageError) 
-    },
-    backLogin () {
-      console.log(this.tab)
-      this.tab = 'login'
-      this.resetTabs()
-    },
-    resetTabs () {
-      this.showPasswordReset = false
-      this.messageError = ' '
-    },
     async resetPasswordMethod () {
       let errorType = ''
-      console.log('testing1', this.messageError)
-      const error = this.resetPassword(this.resetForm)
+      const error = this.$store.dispatch('resetPassword', this.resetForm)
       this.messageError = ' '
       this.messageError = await error.then(function (defs, messageError) {
         console.log('the error is', defs)

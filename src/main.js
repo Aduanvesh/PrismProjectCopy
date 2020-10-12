@@ -23,6 +23,7 @@ import router from "./router";
 import Argon from "./plugins/argon-kit";
 import ArgonDashboard from './plugins/argon-dashboard';
 import './registerServiceWorker'
+//import * as functions from 'firebase-functions'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAHgW7HE1meejzypySKCg_c5t6tI1vFhY8',
@@ -47,3 +48,8 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
+
+/*
+export const helloWorld = functions.https.onRequest((request, response) => {
+  response.send("Hello from Firebase!")
+})*/
