@@ -191,6 +191,19 @@
                                                 <!-- End card element -->
                                         </div>
                     </tab-pane>
+                    <tab-pane key="tab5">
+                        <template slot="title">
+                            <i class="fa fa-users mr-2"></i>Membership list
+                        </template>
+                        <h5> Membership List</h5>
+                               <div class="container-fluid mt--7">
+                                    <div class="row">
+                                        <div class="col">
+                                            <projects-table title="Light Table"></projects-table>
+                                        </div>
+                                    </div>
+                               </div>
+                    </tab-pane>
                 </card>
             </tabs>
         </div>
@@ -200,6 +213,7 @@
 <script>
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
+import ProjectsTable from './Tables/ProjectsTable'
 
 const cardsData = [
   {
@@ -217,9 +231,11 @@ const cardsData = [
 ]
 
   export default {
+    name: 'tables',
     components: {
-
+      ProjectsTable
     },
+
     data () {
         return {
         cardsLinks: cardsData,
@@ -273,6 +289,7 @@ const cardsData = [
         this.retrieveMembership()
     }
   }
+  
 </script>
 
 <style></style>

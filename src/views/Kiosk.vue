@@ -8,6 +8,8 @@
                   class="mt-4"
                   to="/society"
       ></base-nav>
+      <base-table>
+      </base-table>
         <div class="shape shape-style-1 bg-gradient-default">
             <span></span>
             <span></span>
