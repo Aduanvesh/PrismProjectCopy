@@ -19,16 +19,29 @@
                         </template>
                     <modal>
                     </modal>
+                    <br>
                     <li v-for="cards in cardsLinks" v-bind:key="cards.title"> {{cards.title}} ({{cards.details}}) </li>
                       
                     </tab-pane>
 
                     <tab-pane key="tab2">
                         <template slot="title">
-                            <i class="ni ni-bell-55 mr-2"></i>Events
+                            <i class="ni ni-bell-55 mr-2"></i>Notifications
                         </template>
 
-                        <h1>Upcoming Events:</h1>
+                        <h1>Recent Updates:</h1>
+                        <div>
+                                <template>
+                                <table style="width:75%">
+                                    <tr v-for="event in events" v-bind:key="event.id">
+                                        <th><h2>{{event.name}}</h2>
+                                            {{event.date}}
+                                            <p>{{event.event_description}}</p>
+                                        </th>
+                                    </tr>
+                                    </table>
+                                </template>
+                            </div>
                     </tab-pane>
 
                     <tab-pane key="tab3">
@@ -45,7 +58,7 @@
                                         <th>Payee</th>
                                         <th>Date submitted</th>
                                         <th>Date paid</th>
-                                        <th>-</th>
+                                        <th>Payment</th>
                                     </tr>
                                     <tr v-for="payment in payments" v-bind:key="payment.id">
                                         <th>{{payment.id}}</th>
@@ -81,18 +94,6 @@ import store from 'main'
 import Modal from '../views/SearchClub.vue'
 
 const cardsData = [
-  {
-    title: 'QUT Code Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  },
-  {
-    title: 'QUT NotCode Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  }
 ]
 
   export default {
@@ -108,15 +109,27 @@ const cardsData = [
         events: [
             {
                 id: '12398',
-                payee: 'Upcoming event',
+                name: 'Example event',
                 date: '01/08/2020',
-                description: 'This is an example event'
+                event_description: 'This is an example event'
             },
             {
-                id: '12398',
-                payee: 'Upcoming event',
-                date: '01/08/2020',
-                description: 'This is an example event'
+                id: '12399',
+                name: 'Example event2',
+                date: '02/08/2020',
+                event_description: 'This is an another example event'
+            },
+            {
+                id: '12400',
+                name: 'Weekend Brunch',
+                date: '03/08/2020',
+                description: 'Food tastes very nice'
+            },
+            {
+                id: '12401',
+                name: 'QUT foundry Lecture',
+                date: '04/08/2030',
+                description: 'Come visit the foundry for free pizza'
             },
         ],
         tickets: [
@@ -181,11 +194,37 @@ const cardsData = [
         },
 
         async paymentMake (pid) {
+            console.log(this.payments)
             this.$store.dispatch('makePayment', pid.substring(0))
 
         },
 
+        async retrieveEvents () {
+            const eventsarray = this.$store.dispatch('getEvents')
+            .then(function (data) {
+            const ArEvents = []
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].details)
+                const card = {
+                id: '',
+                name: '',
+                date: '',
+                event_description: ''
+            }
+                
+                card.id = data[i].id
+                card.name = data[i].event_name
+                card.date = new Date(data[i].date_created.seconds * 1000)
+                card.event_description = data[i].event_description
 
+            ArEvents.push(card)
+            }
+                return ArEvents
+            })
+        this.events = await eventsarray
+
+        console.log('cardscheck:', this.events)
+        },
 
         async retrievePayments () {
             const pays = this.$store.dispatch('getPayments')
@@ -220,6 +259,7 @@ const cardsData = [
     created() {
         setTimeout(() => this.retrieveMembership(), 5000)
         setTimeout(() => this.retrievePayments(), 5000)
+        setTimeout(() => this.retrieveEvents(), 5000)
     }
   }
 </script>
