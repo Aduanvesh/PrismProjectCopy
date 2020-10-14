@@ -193,6 +193,55 @@ export default new Vuex.Store({
         return finalArray
       },
 
+
+    
+    async getEvents () {
+      const userID = firebase.auth().currentUser.uid
+        const targetUser = firebase.firestore().collection('users').doc(userID)
+        const targetArray = await targetUser.get()
+          .then(doc => {
+            console.log('check', doc.data().memberships)
+            return doc.data().memberships
+          })
+        const memberArray = []
+        for (var i = 0; i < targetArray.length; i++) {
+          const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
+            .then(doc => {
+              return doc.data().events
+            })
+            if (snapshot !== undefined){
+              console.log('chock:', snapshot)
+              for (var i = 0; i < snapshot.length; i++){
+                memberArray.push(snapshot[i])
+              }
+            }
+        }
+        console.log('chock2:', memberArray)
+        const finalArray = []
+        for (var i = 0; i < memberArray.length; i++) {
+          console.log(memberArray[i])
+          const snapshot = await firebase.firestore().collection('events').doc(memberArray[i]).get()
+            .then(doc => {
+              return doc.data()
+            })
+              finalArray.push(snapshot)
+        }
+        console.log('final array events:', finalArray)
+        for (var i = 0; i < finalArray.length - 1; i++) {
+          console.log('lololol', finalArray[i])
+            for (var j = i + 1; j < finalArray.length; j++) {
+                if (finalArray[i].date_created < finalArray[j].date_created) { 
+                  
+                    let temp = finalArray[i]; 
+                    finalArray[i] = finalArray[j]; 
+                    finalArray[j] = temp; 
+                } 
+            }
+        }
+        console.log('final array events2:', finalArray)
+        return finalArray
+    },
+
     async getPayments () {
       const userID = firebase.auth().currentUser.uid
       const targetUser = firebase.firestore().collection('users').doc(userID)
