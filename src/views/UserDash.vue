@@ -6,12 +6,13 @@
                 <div class="col-12 offset-10">
                     <tabs :fill="false" circle>
                         <tab-pane>
-                            <a href="/profile/undefined">Go to profile</a>
                             <span slot="title" class="nav-link-icon d-block"><i class="ni ni-atom"></i></span>
                         </tab-pane>
                         <tab-pane>
-                            <a href="/kiosk/undefined/">Go to Kiosk Mode</a>
                             <span slot="title" class="nav-link-icon d-block"><i class="fa fa-keyboard-o"></i></span>
+                            <a href="https://www.sketchapp.com/" target="_blank" data-toggle="tooltip" data-original-title="[Coming Soon] Sketch - Digital design toolkit">
+                                    <img v-lazy="'https://s3.amazonaws.com/creativetim_bucket/tim_static_images/presentation-page/sketch.jpg'" class="img-fluid opacity-5">
+                                </a>
                         </tab-pane>
 
                     </tabs>
@@ -31,13 +32,8 @@
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                             <div class="row">
-                                            <div class="col-auto mr-auto">Upcoming</div>
-                                            <!-- <div class="col-auto mb-3"> -->
-                                                <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-edit"></base-button>
-                                                <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
-                                            <!-- </div> -->
-                                            </div>
-                            <div class="row">
+                                <p> Upcoming </p>
+                                    <div class="col-md-6 mb-3"></div>
                                     <!-- Card Element (V-for each) -->
                                         <div class="col-md-6 mb-3">
                                             <div class="card card-lift--hover shadow border-0">
@@ -133,12 +129,9 @@
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
                                         <div class="row">
-                                            <div class="col-auto mr-auto">My Tickets</div>
-                                            <!-- <div class="col-auto mb-3"> -->
-                                                <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-edit"></base-button>
-                                            <!-- </div> -->
-                                        </div>
-                                        <div class="row">
+                                            <p> My Tickets </p>
+                                            <div class="col-md-6 mb-5 mb-md-0">
+                                            </div>
                                             <!-- Card Element (V-for each) -->
                                             <div class="col-md-6 mb-3">
                                                 <div class="card card-lift--hover shadow border-0">
@@ -167,42 +160,29 @@
                                             </div>
                                             <!-- End card element -->
                                         </div>
-                                            <div class="row pt-5">
-                                                <p class="col-md-6 mb-5 mb-md-3"> My Tickets </p>
+                                        <div class="row pt-5">
+                                            <p> Following </p>
+                                            <div class="col-md-6 mb-5 mb-md-0">
                                             </div>
-                                                <div class="row">
-                                                <!-- Card Element (V-for each) -->
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="card card-lift--hover shadow border-0">
-                                                    <router-link to="/profile" title="Profile Page">
-                                                        <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                    </router-link>   
-                                                    </div>
+                                            <!-- Card Element (V-for each) -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card card-lift--hover shadow border-0">
+                                                <router-link to="/profile" title="Profile Page">
+                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
+                                                </router-link>   
                                                 </div>
-                                                <!-- End card element -->
-                                                <!-- Card Element (V-for each) -->
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="card card-lift--hover shadow border-0">
-                                                    <router-link to="/profile" title="Profile Page">
-                                                        <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                    </router-link>   
-                                                    </div>
+                                            </div>
+                                            <!-- End card element -->
+                                            <!-- Card Element (V-for each) -->
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card card-lift--hover shadow border-0">
+                                                <router-link to="/profile" title="Profile Page">
+                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
+                                                </router-link>   
                                                 </div>
-                                                <!-- End card element -->
+                                            </div>
+                                            <!-- End card element -->
                                         </div>
-                    </tab-pane>
-                    <tab-pane key="tab5">
-                        <template slot="title">
-                            <i class="fa fa-users mr-2"></i>Membership list
-                        </template>
-                        <h5> Membership List</h5>
-                               <div class="container-fluid mt--7">
-                                    <div class="row">
-                                        <div class="col">
-                                            <projects-table title="Light Table"></projects-table>
-                                        </div>
-                                    </div>
-                               </div>
                     </tab-pane>
                 </card>
             </tabs>
@@ -213,7 +193,6 @@
 <script>
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
-import ProjectsTable from './Tables/ProjectsTable'
 
 const cardsData = [
   {
@@ -231,11 +210,9 @@ const cardsData = [
 ]
 
   export default {
-    name: 'tables',
     components: {
-      ProjectsTable
-    },
 
+    },
     data () {
         return {
         cardsLinks: cardsData,
@@ -289,7 +266,6 @@ const cardsData = [
         this.retrieveMembership()
     }
   }
-  
 </script>
 
 <style></style>

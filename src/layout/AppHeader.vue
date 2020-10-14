@@ -57,16 +57,27 @@
                     <router-link to="/landing" class="dropdown-item">Landing</router-link>
                     <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
                     <router-link :to="userID"  class="dropdown-item">Profile</router-link>
+                    <router-link to="/event/undefined"  class="dropdown-item">Event</router-link>
                     <router-link to="/login" class="dropdown-item">Login</router-link>
                     <router-link to="/register" class="dropdown-item">Register</router-link>
                 </base-dropdown>
             </ul>
-            <div class = "white" v-if="userExists">
-                {{user}}
-                <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
+            <div class = "white" v-if="userExists"> 
+                <!--  -->
+                <ul class="navbar-nav align-items-lg-center ml-lg-auto navbar-right">
+                    <li class="nav-item d-none d-lg-block ml-lg-4">
+                        {{user}}
+                    </li>
+                    <li class="nav-item d-none d-lg-block ml-lg-4">    
+                        <img alt="Profile Settings" class="img-fluid rounded-circle shadow" data-src="img/theme/team-2-800x800.jpg" src="img/theme/team-2-800x800.jpg" lazy="loaded" style="width: 50px;">
+                    </li>
+                    <li class="nav-item d-none d-lg-block ml-lg-4">
+                        <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
+                    </li>
+                </ul>
             </div >
             <div v-else>
-               <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+               <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item d-none d-lg-block ml-lg-4">
                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login">
                         <span class="nav-link-inner--text">Login</span>

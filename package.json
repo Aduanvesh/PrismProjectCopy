@@ -11,7 +11,7 @@
     "@creative-tim-official/argon-dashboard-free": "^1.2.0",
     "bootstrap-vue": "^2.0.4",
     "es6-promise": "^4.2.8",
-    "firebase": "^7.21.0",
+    "firebase": "^7.22.0",
     "flatpickr": "^4.5.1",
     "main": "^1000.0.1",
     "nouislider": "^11.1.0",
