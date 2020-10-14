@@ -1,51 +1,35 @@
 <template>
-    <!-- Modals -->
-    <!-- <div class="row"> -->
     <div>
-        <!-- <div class="col-md-4"> -->
-                <div @click="modals.modal1 = true">
-                        <img v-lazy="'img/theme/lcard.png'" class="card-img">
+                <!-- Need to define a new button type that takes a src image/url. -->
+                <base-button block type="primary" class=" mb-3" @click="modals.modal1 = true">
+                Purchase
+                </base-button>
+                <div class="card shadow border-0">
+                    <input type="image" v-lazy="'/img/theme/lcard.png'" @click="modals.modal1 = true" />
                 </div>
             <modal :show.sync="modals.modal1">
-                <h6 slot="header" class="modal-title" id="modal-title-default">Purchase L Card</h6>
+                <h6 slot="header" class="modal-title" id="modal-title-default">Purchase {{cardname}}</h6>
 
-                <p>The L Card is a student discount card created by the UQ Law Society, in collaboration with QUT Law Society, Griffith University Law Society and USQ Law Society.</p>
+                <p>{{description}}</p>
                 <template>
-                        <div class="text-muted text-center mb-3">
-                            <small>Sign in</small>
-                        </div>
-                        <div class="btn-wrapper text-center">
-                            <base-button type="neutral">
-                                <img slot="icon" src="img/icons/common/google.svg">
-                                Google
-                            </base-button>
+                        <div class="text-center mb-3">
+                            <b>{{price}}</b>
                         </div>
                     </template>
                     <template>
-                        <div class="text-center text-muted mb-4">
-                            <small>Or sign in with credentials</small>
-                        </div>
                         <form role="form">
                             <base-input alternative
-                                        class="mb-3"
-                                        placeholder="Email"
-                                        addon-left-icon="ni ni-email-83">
-                            </base-input>
-                            <base-input alternative
-                                        type="password"
-                                        placeholder="Password"
-                                        addon-left-icon="ni ni-lock-circle-open">
+                                        type="text"
+                                        placeholder="Card Inscription"
+                                        addon-left-icon="fa fa-pencil">
                             </base-input>
                             <base-checkbox>
-                                Remember me
+                                {{terms}}
                             </base-checkbox>
-                            <div class="text-center">
-                                <base-button type="primary" class="my-4">Sign In</base-button>
-                            </div>
                         </form>
                     </template>
                 <template slot="footer">
-                    <base-button type="primary">Save changes</base-button>
+                    <base-button type="primary">Purchase</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
                     </base-button>
                 </template>
@@ -64,7 +48,10 @@ export default {
       modals: {
         modal1: false
       },
-
+      description: 'The L Card is a student discount card created by the UQ Law Society, in collaboration with QUT Law Society, Griffith University Law Society and USQ Law Society.',
+      cardname: 'L Card',
+      price: '$10',
+      terms: 'I agree to the terms and conditions'
     };
   }
 };

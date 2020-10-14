@@ -57,6 +57,7 @@
                     <router-link to="/landing" class="dropdown-item">Landing</router-link>
                     <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
                     <router-link :to="userID"  class="dropdown-item">Profile</router-link>
+                    <router-link to="/event/undefined"  class="dropdown-item">Event</router-link>
                     <router-link to="/login" class="dropdown-item">Login</router-link>
                     <router-link to="/register" class="dropdown-item">Register</router-link>
                 </base-dropdown>
@@ -76,7 +77,7 @@
                 </ul>
             </div >
             <div v-else>
-               <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+               <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item d-none d-lg-block ml-lg-4">
                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login">
                         <span class="nav-link-inner--text">Login</span>

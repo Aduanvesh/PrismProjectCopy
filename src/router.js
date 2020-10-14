@@ -2,15 +2,15 @@ import Vue from "vue";
 import Router from "vue-router";
 import AppHeader from "./layout/AppHeader";
 import AppFooter from "./layout/AppFooter";
-//import DashHeader from "./layout/DashHeader";
-//import DashFooter from "./layout/DashFooter";
-import DashboardLayout from '@/layout/DashboardLayout';
 import Components from "./views/Components.vue";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
-import Dashboard from "./views/Dashboard2.vue";
+import Dashboard from "./views/UserDash.vue";
+import SocietyDashboard from "./views/Society.vue";
+import Event from "./views/Event.vue";
+import Kiosk from "./views/Kiosk.vue";
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
@@ -80,7 +80,17 @@ export default new VueRouter({
       name: "dashboard",
       components: {
         header: AppHeader,
-        default: Dashboard 
+        default: Dashboard,
+        footer: AppFooter 
+      }, 
+    },
+    {
+      path: "/society",
+      name: "societydashboard",
+      components: {
+        header: AppHeader,
+        default: SocietyDashboard,
+        footer: AppFooter 
       }, 
     },
     {
@@ -90,6 +100,22 @@ export default new VueRouter({
         header: AppHeader,
         default: Profile,
         footer: AppFooter
+      }
+    },
+    {
+      path: "/event/:id",
+      name: "event",
+      components: {
+        header: AppHeader,
+        default: Event,
+        footer: AppFooter
+      }
+    },
+    {
+      path: "/kiosk/:id",
+      name: "kiosk",
+      components: {
+        default: Kiosk,
       }
     }
   ],
