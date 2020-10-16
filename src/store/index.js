@@ -33,6 +33,7 @@ export default new Vuex.Store({
             await firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
             const userID = firebase.auth().currentUser.uid
             const targetUser = firebase.firestore().collection('users').doc(userID)
+            const targetClub = firebase.firestore().collection('memberships').doc()
 
             // code that writes details to database. the data recorded is different depending on whether the signup is for user or club.
             if (payload.type === 'User') {
@@ -43,8 +44,6 @@ export default new Vuex.Store({
                 last_name: payload.lastName,
                 phone_1: payload.phoneNumber,
                 university: payload.university,
-                memberships: [
-                'iMuo2bRED9JChlIAolK8']
             })
             } else if (payload.type === 'Club') {
             targetUser.set({
@@ -53,8 +52,13 @@ export default new Vuex.Store({
                 title: payload.title,
                 phone_1: payload.phoneNumber,
                 university: payload.university,
-                memberships: [
-                'iMuo2bRED9JChlIAolK8']
+                membershiplink: targetClub.id
+            })
+            targetClub.set({
+              name: payload.title,
+              userlink: userID,
+              members: [],
+              details: ''
             })
             }
             router.push('/dashboard')
@@ -85,6 +89,7 @@ export default new Vuex.Store({
           .catch(error => {
             console.log(error.message)
           })
+          router.push('/landing')
     },
 
         // code that detects when the user authenticated has changed
@@ -98,24 +103,34 @@ export default new Vuex.Store({
             .then(function (doc) {
                 if (doc.exists) {
                 if (doc.data().type === 'User') {
-                    commit('setUserDetails', {
-                    email: doc.data().email,
-                    firstName: doc.data().first_name,
-                    lastName: doc.data().last_name,
-                    id: userID
+                      commit('setUserDetails', {
+                      email: doc.data().email,
+                      type: 'User',
+                      firstName: doc.data().first_name,
+                      lastName: doc.data().last_name,
+                      id: userID
                     })
+                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID) {
+                    router.push('/dashboard/user/'+userID)
+                  }
                 } else {
-                    commit('setUserDetails', {
-                        email: doc.data().email,
-                        title: doc.data().title,
-                        id: userID
-                        })
+                  commit('setUserDetails', {
+                    email: doc.data().email,
+                    title: doc.data().title,
+                    linkid: doc.data().membershiplink,
+                    type: 'Club',
+                    id: userID
+                  })
+                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID) {
+                    router.push('/dashboard/club/'+userID)
+                  }
                 }
                 // TODO: add one for societies
                 } else {
                 console.log('doc not found')
                 }
             })
+            
         } else {
             console.log('logged out')
             commit('setUserDetails', {})
@@ -197,50 +212,49 @@ export default new Vuex.Store({
     
     async getEvents () {
       const userID = firebase.auth().currentUser.uid
-        const targetUser = firebase.firestore().collection('users').doc(userID)
-        const targetArray = await targetUser.get()
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      const targetArray = await targetUser.get()
+        .then(doc => {
+          console.log('check', doc.data().memberships)
+          return doc.data().memberships
+        })
+      const memberArray = []
+      for (var i = 0; i < targetArray.length; i++) {
+        const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
           .then(doc => {
-            console.log('check', doc.data().memberships)
-            return doc.data().memberships
+            return doc.data().events
           })
-        const memberArray = []
-        for (var i = 0; i < targetArray.length; i++) {
-          const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
-            .then(doc => {
-              return doc.data().events
-            })
-            if (snapshot !== undefined){
-              console.log('chock:', snapshot)
-              for (var i = 0; i < snapshot.length; i++){
-                memberArray.push(snapshot[i])
-              }
-            }
+        if (snapshot !== undefined){
+          console.log('chock:', snapshot)
+          for (var i = 0; i < snapshot.length; i++){
+            memberArray.push(snapshot[i])
+          }
         }
-        console.log('chock2:', memberArray)
-        const finalArray = []
-        for (var i = 0; i < memberArray.length; i++) {
-          console.log(memberArray[i])
-          const snapshot = await firebase.firestore().collection('events').doc(memberArray[i]).get()
-            .then(doc => {
-              return doc.data()
-            })
-              finalArray.push(snapshot)
-        }
-        console.log('final array events:', finalArray)
-        for (var i = 0; i < finalArray.length - 1; i++) {
-          console.log('lololol', finalArray[i])
-            for (var j = i + 1; j < finalArray.length; j++) {
-                if (finalArray[i].date_created < finalArray[j].date_created) { 
-                  
-                    let temp = finalArray[i]; 
-                    finalArray[i] = finalArray[j]; 
-                    finalArray[j] = temp; 
-                } 
-            }
-        }
-        console.log('final array events2:', finalArray)
-        return finalArray
-    },
+      }
+      console.log('chock2:', memberArray)
+      const finalArray = []
+      for (var i = 0; i < memberArray.length; i++) {
+        console.log(memberArray[i])
+        const snapshot = await firebase.firestore().collection('events').doc(memberArray[i]).get()
+          .then(doc => {
+            return doc.data()
+          })
+            finalArray.push(snapshot)
+      }
+      console.log('final array events:', finalArray)
+      for (var i = 0; i < finalArray.length - 1; i++) {
+        console.log('lololol', finalArray[i])
+          for (var j = i + 1; j < finalArray.length; j++) {
+              if (finalArray[i].date_created < finalArray[j].date_created) { 
+                  let temp = finalArray[i]; 
+                  finalArray[i] = finalArray[j]; 
+                  finalArray[j] = temp; 
+              } 
+          }
+      }
+      console.log('final array events2:', finalArray)
+      return finalArray
+  },
 
     async getPayments () {
       const userID = firebase.auth().currentUser.uid
@@ -311,7 +325,32 @@ export default new Vuex.Store({
           console.log('error:', err.message)
           return err.message
       }
-     
+    },
+
+    async createEvent () {
+
+    }, 
+
+    async getClubMembers () {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetArray = await club.get()
+        .then(doc => {
+          
+          return doc.data().members
+        })
+        console.log('thickem', targetArray)
+      const memberArray = []
+      for (var i = 0; i < targetArray.length; i++) {
+        const snapshot = await firebase.firestore().collection('users').doc(targetArray[i]).get()
+          .then(doc => {
+            return doc.data()
+          })
+        if (snapshot !== undefined){
+            memberArray.push(snapshot)
+        }
+      }
+      console.log('memberdata:', memberArray)
+      return memberArray
     }
 
   },

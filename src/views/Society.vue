@@ -238,6 +238,7 @@ const cardsData = [
 
     data () {
         return {
+        user: 'club',
         cardsLinks: cardsData,
         first: true,
         second: true,
@@ -251,7 +252,51 @@ const cardsData = [
             type: '',
             price: '',
             details: ''
-        }
+        },
+        memberlist: 
+            [
+          {
+            img: '/img/theme/bootstrap.jpg',
+            first_name: 'Argon Design System',
+            budget: '$2500 USD',
+            status: 'pending',
+            statusType: 'warning',
+            completion: 60
+          },
+          {
+            img: '/img/theme/angular.jpg',
+            first_name: 'Angular Now UI Kit PRO',
+            budget: '$1800 USD',
+            status: 'completed',
+            statusType: 'success',
+            completion: 100
+          },
+          {
+            img: '/img/theme/sketch.jpg',
+            first_name: 'Black Dashboard',
+            budget: '$3150 USD',
+            status: 'delayed',
+            statusType: 'danger',
+            completion: 72
+          },
+          {
+            img: '/img/theme/react.jpg',
+            first_name: 'React Material Dashboard',
+            budget: '$4400 USD',
+            status: 'on schedule',
+            statusType: 'info',
+            completion: 90
+          },
+          {
+            img: '/img/theme/vue.jpg',
+            first_name: 'Vue Paper UI Kit PRO',
+            budget: '$2200 USD',
+            status: 'completed',
+            statusType: 'success',
+            completion: 100
+          }
+        ]
+        
         }
     },
     methods: {
@@ -282,11 +327,18 @@ const cardsData = [
         this.cardsData = await cards
         this.cardsLinks = this.cardsData
         console.log('cardscheck:', this.cardsData)
-        }
+        },
         
+        async getMembers () {
+            const clubMembers = await this.$store.dispatch('getClubMembers')
+            this.memberlist = clubMembers
+            console.log('membercheck:', this.memberlist)
+            
+        }
     },
     created() {
-        this.retrieveMembership()
+        //setTimeout(() => this.retrieveMembership(), 5000)
+        setTimeout(() => this.getMembers(), 5000) 
     }
   }
   

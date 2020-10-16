@@ -6,7 +6,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h3 class="mb-0" :class="type === 'dark' ? 'text-white': ''">
-            {{title}}
+            {{message}}
           </h3>
         </div>
         <div class="col text-right">
@@ -37,7 +37,7 @@
                 <img alt="Image placeholder" :src="row.img">
               </a>
               <div class="media-body">
-                <span class="name mb-0 text-sm">{{row.title}}</span>
+                <span class="name mb-0 text-sm">{{row.first_name}}</span>
               </div>
             </div>
           </th>
@@ -113,52 +113,58 @@
       type: {
         type: String
       },
-      title: String
+      title: String,
+      
     },
     data() {
       return {
-        tableData: [
+       tableData: [
           {
-            img: 'img/theme/bootstrap.jpg',
-            title: 'Argon Design System',
+            img: '/img/theme/bootstrap.jpg',
+            first_name: 'Argon Design System',
             budget: '$2500 USD',
             status: 'pending',
             statusType: 'warning',
             completion: 60
           },
           {
-            img: 'img/theme/angular.jpg',
-            title: 'Angular Now UI Kit PRO',
+            img: '/img/theme/angular.jpg',
+            first_name: 'Angular Now UI Kit PRO',
             budget: '$1800 USD',
             status: 'completed',
             statusType: 'success',
             completion: 100
           },
           {
-            img: 'img/theme/sketch.jpg',
-            title: 'Black Dashboard',
+            img: '/img/theme/sketch.jpg',
+            first_name: 'Black Dashboard',
             budget: '$3150 USD',
             status: 'delayed',
             statusType: 'danger',
             completion: 72
           },
           {
-            img: 'img/theme/react.jpg',
-            title: 'React Material Dashboard',
+            img: '/img/theme/react.jpg',
+            first_name: 'React Material Dashboard',
             budget: '$4400 USD',
             status: 'on schedule',
             statusType: 'info',
             completion: 90
           },
           {
-            img: 'img/theme/vue.jpg',
-            title: 'Vue Paper UI Kit PRO',
+            img: '/img/theme/vue.jpg',
+            first_name: 'Vue Paper UI Kit PRO',
             budget: '$2200 USD',
             status: 'completed',
             statusType: 'success',
             completion: 100
           }
         ]
+      }
+    },
+    methods: {
+      async convert () {
+        
       }
     }
   }

@@ -86,7 +86,7 @@ export default new VueRouter({
       }
     },
     {
-      path: "/dashboard",
+      path: "/dashboard/user/:id",
       name: "dashboard",
       components: {
         header: AppHeader,
@@ -95,7 +95,7 @@ export default new VueRouter({
       }, 
     },
     {
-      path: "/society",
+      path: "/dashboard/club/:id",
       name: "societydashboard",
       components: {
         header: AppHeader,
