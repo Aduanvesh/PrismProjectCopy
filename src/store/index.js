@@ -327,8 +327,17 @@ export default new Vuex.Store({
       }
     },
 
-    async createEvent () {
-
+    async createEvent (a = {}, payload) {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetEvent = firebase.firestore().collection('events').doc()
+      targetEvent.set({
+        date_created: new Date(),
+        event_description: payload.description,
+        event_name: payload.title,
+        price: payload.price,
+        id: targetEvent.id,
+        linked_account: this.state.userDetails.linkid
+      })
     }, 
 
     async getClubMembers () {
@@ -351,6 +360,18 @@ export default new Vuex.Store({
       }
       console.log('memberdata:', memberArray)
       return memberArray
+    },
+
+    async joinEvent (a = {}, payload) {
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      const targetEvent = firebase.firestore().collection('events').doc(payload)
+      targetUser.update({
+        events: firebase.firestore.FieldValue.arrayUnion(payload)
+      })
+      targetEvent.update ({
+        members: firebase.firestore.FieldValue.arrayUnion(userID)
+      })
     }
 
   },
