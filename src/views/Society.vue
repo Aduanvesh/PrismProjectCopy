@@ -132,6 +132,7 @@
                         <template slot="title">
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
+                                        <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                         <div class="row">
                                             <div class="col-auto mr-auto">My Tickets</div>
                                             <!-- <div class="col-auto mb-3"> -->
@@ -146,6 +147,10 @@
                                                     <img v-lazy="'/img/theme/lcard.png'" class="card-img">
                                                 </router-link>   
                                                 </div>
+                                                <!-- Demo card that I'm working on -->
+                                                <my-card class="card-lift--hover shadow bg-danger">
+                                                    <div class="card-body">test</div>
+                                                </my-card>
                                             </div>
                                             <!-- End card element -->
                                             <!-- Card Element (V-for each) -->
@@ -212,6 +217,7 @@
 
 <script>
 import Cards from '../views/components/Cards.vue'
+import MyCard from '../components/MyCard.vue'
 import store from 'main'
 import ProjectsTable from './Tables/ProjectsTable'
 
@@ -238,7 +244,7 @@ const cardsData = [
 
     data () {
         return {
-        user: 'club',
+        user: 'club', //return actual user's name i.e. 'QUTLS'
         cardsLinks: cardsData,
         first: true,
         second: true,
