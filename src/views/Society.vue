@@ -140,40 +140,21 @@
                                             <!-- </div> -->
                                         </div>
                                         <div class="row">
-                                            <!-- Card Element (V-for each) -->
                                             <div class="col-md-6 mb-3">
-                                                <!-- <router-link to="/profile" title="Profile Page"> -->
-                                                <!-- Demo card that I'm working on -->
-                                                <!-- HERE HERE HERE HERE -->
-                                                <card class="card-options--hover shadow" options="true" link="/ee" img="/img/theme/lcard.png">
+
+                                                <card class="card-options--hover shadow" options="true" link="/event/undefined" img="/img/theme/lcard.png">
                                                 </card>
-                                                <!-- </router-link> -->
                                             </div>
-                                            <!-- End card element -->
                                         </div>
                                             <div class="row pt-5">
                                                 <p class="col-md-6 mb-5 mb-md-3"> Following </p>
                                             </div>
-                                                <div class="row">
-                                                <!-- Card Element (V-for each) -->
+                                            <div class="row">
                                                 <div class="col-md-6 mb-3">
-                                                    <div class="card card-lift--hover shadow border-0">
-                                                    <router-link to="/profile" title="Profile Page">
-                                                        <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                    </router-link>   
-                                                    </div>
+                                                    <card class="card-options--hover shadow" options="true" link="/event/undefined" img="/img/theme/lcard.png">
+                                                    </card>
                                                 </div>
-                                                <!-- End card element -->
-                                                <!-- Card Element (V-for each) -->
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="card card-lift--hover shadow border-0">
-                                                    <router-link to="/profile" title="Profile Page">
-                                                        <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                    </router-link>   
-                                                    </div>
-                                                </div>
-                                                <!-- End card element -->
-                                        </div>
+                                            </div>
                     </tab-pane>
                     <tab-pane key="tab5">
                         <template slot="title">
@@ -183,7 +164,14 @@
                                <div class="container-fluid mt--7">
                                     <div class="row">
                                         <div class="col">
-                                            <projects-table title="Light Table"></projects-table>
+                                            <projects-table title="Light Table"
+                                            img="String"
+                                            first_name="TESTTTEST"
+                                            budget="String"
+                                            status="String"
+                                            statusType="String"
+                                            completion= "String"
+                                            ></projects-table>
                                         </div>
                                     </div>
                                </div>
@@ -249,38 +237,6 @@ const cardsData = [
             statusType: 'warning',
             completion: 60
           },
-          {
-            img: '/img/theme/angular.jpg',
-            first_name: 'Angular Now UI Kit PRO',
-            budget: '$1800 USD',
-            status: 'completed',
-            statusType: 'success',
-            completion: 100
-          },
-          {
-            img: '/img/theme/sketch.jpg',
-            first_name: 'Black Dashboard',
-            budget: '$3150 USD',
-            status: 'delayed',
-            statusType: 'danger',
-            completion: 72
-          },
-          {
-            img: '/img/theme/react.jpg',
-            first_name: 'React Material Dashboard',
-            budget: '$4400 USD',
-            status: 'on schedule',
-            statusType: 'info',
-            completion: 90
-          },
-          {
-            img: '/img/theme/vue.jpg',
-            first_name: 'Vue Paper UI Kit PRO',
-            budget: '$2200 USD',
-            status: 'completed',
-            statusType: 'success',
-            completion: 100
-          }
         ]
         
         }

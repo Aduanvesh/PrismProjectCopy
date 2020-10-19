@@ -114,52 +114,65 @@
         type: String
       },
       title: String,
+
+      //Ed inserted
+      tableData: [
+          {
+            img: String,
+            first_name: String,
+            budget: String,
+            status: String,
+            statusType: String,
+            completion: String,
+          }
+      ]
+      //end
       
     },
     data() {
       return {
-       tableData: [
-          {
-            img: '/img/theme/bootstrap.jpg',
-            first_name: 'Argon Design System',
-            budget: '$2500 USD',
-            status: 'pending',
-            statusType: 'warning',
-            completion: 60
-          },
-          {
-            img: '/img/theme/angular.jpg',
-            first_name: 'Angular Now UI Kit PRO',
-            budget: '$1800 USD',
-            status: 'completed',
-            statusType: 'success',
-            completion: 100
-          },
-          {
-            img: '/img/theme/sketch.jpg',
-            first_name: 'Black Dashboard',
-            budget: '$3150 USD',
-            status: 'delayed',
-            statusType: 'danger',
-            completion: 72
-          },
-          {
-            img: '/img/theme/react.jpg',
-            first_name: 'React Material Dashboard',
-            budget: '$4400 USD',
-            status: 'on schedule',
-            statusType: 'info',
-            completion: 90
-          },
-          {
-            img: '/img/theme/vue.jpg',
-            first_name: 'Vue Paper UI Kit PRO',
-            budget: '$2200 USD',
-            status: 'completed',
-            statusType: 'success',
-            completion: 100
-          }
-        ]
+      //  tableData: [
+      //     {
+      //       img: '/img/theme/bootstrap.jpg',
+      //       first_name: 'Argon Design System',
+      //       budget: '$2500 USD',
+      //       status: 'pending',
+      //       statusType: 'warning',
+      //       completion: 60
+      //     },
+      //     {
+      //       img: '/img/theme/angular.jpg',
+      //       first_name: 'Angular Now UI Kit PRO',
+      //       budget: '$1800 USD',
+      //       status: 'completed',
+      //       statusType: 'success',
+      //       completion: 100
+      //     },
+      //     {
+      //       img: '/img/theme/sketch.jpg',
+      //       first_name: 'Black Dashboard',
+      //       budget: '$3150 USD',
+      //       status: 'delayed',
+      //       statusType: 'danger',
+      //       completion: 72
+      //     },
+      //     {
+      //       img: '/img/theme/react.jpg',
+      //       first_name: 'React Material Dashboard',
+      //       budget: '$4400 USD',
+      //       status: 'on schedule',
+      //       statusType: 'info',
+      //       completion: 90
+      //     },
+      //     {
+      //       img: '/img/theme/vue.jpg',
+      //       first_name: 'Vue Paper UI Kit PRO',
+      //       budget: '$2200 USD',
+      //       status: 'completed',
+      //       statusType: 'success',
+      //       completion: 100
+      //     }
+      //   ]
       }
     },
     methods: {
