@@ -134,7 +134,7 @@
                         </template>
                                         <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                         <div class="row">
-                                            <div class="col-auto mr-auto">My Tickets</div>
+                                            <div class="col-auto mr-auto">Active Tickets</div>
                                             <!-- <div class="col-auto mb-3"> -->
                                                 <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-edit"></base-button>
                                             <!-- </div> -->
@@ -142,38 +142,17 @@
                                         <div class="row">
                                             <!-- Card Element (V-for each) -->
                                             <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
                                                 <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
                                                 <!-- Demo card that I'm working on -->
-                                                <my-card class="card-lift--hover shadow bg-danger">
-                                                    <div class="card-body">test</div>
-                                                </my-card>
-                                            </div>
-                                            <!-- End card element -->
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            <!-- End card element -->
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
+                                                <!-- HERE HERE HERE HERE -->
+                                                <card class="card-options--hover shadow card-lift--hover" options="true" link="/ee" img="/img/theme/lcard.png">
+                                                </card>
+                                                </router-link>
                                             </div>
                                             <!-- End card element -->
                                         </div>
                                             <div class="row pt-5">
-                                                <p class="col-md-6 mb-5 mb-md-3"> My Tickets </p>
+                                                <p class="col-md-6 mb-5 mb-md-3"> Following </p>
                                             </div>
                                                 <div class="row">
                                                 <!-- Card Element (V-for each) -->
@@ -216,8 +195,9 @@
 </template>
 
 <script>
-import Cards from '../views/components/Cards.vue'
-import MyCard from '../components/MyCard.vue'
+// import cards has been replaced with a new 'SocietyCard' component made by me.
+// import Cards from '../views/components/Cards.vue'
+import SocietyCard from '../components/SocietyCard.vue'
 import store from 'main'
 import ProjectsTable from './Tables/ProjectsTable'
 

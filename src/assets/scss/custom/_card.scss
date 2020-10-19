@@ -93,3 +93,32 @@
         @include transition($transition-base);
     }
 }
+
+//Modified by Ed. This should create an overlay over the card in light grey. 
+//The idea is to then present an options menu.
+
+// This doesn't work. Attempt at only showing overlay if hovering.
+.card-options-overlay {
+    display: none;
+}
+
+.card-options-overlay:hover {
+    display: inline;
+    background-color: rgba(0,0,0,0.5) !important;
+    z-index: 2;
+    @include transition($transition-base);
+}
+// End
+
+.card-options--hover {
+    &:hover {
+        background-color: rgba(0,0,0,0.5) !important;
+        z-index: 2;
+        @include transition($transition-base);
+    }
+    .nav-white-highlight {
+        &:hover {
+        color: whitesmoke;
+        }
+    }
+}
