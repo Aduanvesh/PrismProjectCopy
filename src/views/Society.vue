@@ -142,12 +142,12 @@
                                         <div class="row">
                                             <!-- Card Element (V-for each) -->
                                             <div class="col-md-6 mb-3">
-                                                <router-link to="/profile" title="Profile Page">
+                                                <!-- <router-link to="/profile" title="Profile Page"> -->
                                                 <!-- Demo card that I'm working on -->
                                                 <!-- HERE HERE HERE HERE -->
-                                                <card class="card-options--hover shadow card-lift--hover" options="true" link="/ee" img="/img/theme/lcard.png">
+                                                <card class="card-options--hover shadow" options="true" link="/ee" img="/img/theme/lcard.png">
                                                 </card>
-                                                </router-link>
+                                                <!-- </router-link> -->
                                             </div>
                                             <!-- End card element -->
                                         </div>
