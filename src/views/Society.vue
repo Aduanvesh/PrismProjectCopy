@@ -6,7 +6,7 @@
                 <div class="col-12 offset-10">
                     <tabs :fill="false" circle>
                         <tab-pane>
-                            <a href="/profile/undefined">Go to profile</a>
+                            <a @click="goProfile">Go to profile</a>
                             <span slot="title" class="nav-link-icon d-block"><i class="ni ni-atom"></i></span>
                         </tab-pane>
                         <tab-pane>
@@ -214,6 +214,8 @@
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
 import ProjectsTable from './Tables/ProjectsTable'
+import router from '../router'
+
 
 const cardsData = [
   {
@@ -334,6 +336,11 @@ const cardsData = [
             this.memberlist = clubMembers
             console.log('membercheck:', this.memberlist)
             
+        },
+
+        async goProfile () {
+            console.log('test123')
+            this.$router.push("/profile/" + this.$store.state.userDetails.id)
         }
     },
     created() {

@@ -140,7 +140,7 @@ methods: {
       }
   },
     created () {
-    this.checkUserPage()
+    //this.checkUserPage()
     console.log('profile')
   }
 }

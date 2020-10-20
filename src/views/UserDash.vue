@@ -24,7 +24,7 @@
                             <i class="fa fa-university mr-2"></i>Clubs and Societies
                         </template>
                             <p> Needs to display a card for each item in database for which the user follows </p>
-                            <li v-for="cards in cardsLinks" v-bind:key="cards.title"> {{cards.title}} ({{cards.details}}) </li>
+                            <li v-for="cards in cardsLinks" v-bind:key="cards.title"> <a v-bind:href="cards.link">{{cards.title}} ({{cards.details}}) </a> </li>
                     </tab-pane>
 
                     <tab-pane key="tab2">
@@ -233,7 +233,7 @@ const cardsData = [
     },
     methods: {
         async retrieveMembership () {
-        const cards = this.$store.dispatch('getCards')
+        const cards = this.$store.dispatch('getMemberships')
             .then(function (data) {
             const cardsData = []
             for (var i = 0; i < data.length; i++) {
@@ -251,7 +251,7 @@ const cardsData = [
             } else {
                 card.details = data[i].memberCount + ' members'
             }
-            card.link = '/code-network-membership'
+            card.link = '/profile/' + data[i].userlink
             cardsData.push(card)
             }
                 return cardsData
@@ -263,7 +263,7 @@ const cardsData = [
         
     },
     created() {
-        this.retrieveMembership()
+       setTimeout(() => this.retrieveMembership(), 5000)
     }
   }
 </script>
