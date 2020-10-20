@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <button type="default" size="sm" class="float-right" @click="addToClub">Follow</button>
+                                    <button type="default" size="sm" class="btn btn-1 btn-primary" @click="addToClub">Follow</button>
                                 </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
