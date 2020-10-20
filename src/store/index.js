@@ -111,7 +111,7 @@ export default new Vuex.Store({
                       lastName: doc.data().last_name,
                       id: userID
                     })
-                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID && !router.currentRoute.fullPath.includes('profile')) {
+                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID && !router.currentRoute.fullPath.includes('profile') && !router.currentRoute.fullPath.includes('event')) {
                     router.push('/dashboard/user/'+userID)
                   }
                 } else {
@@ -122,7 +122,7 @@ export default new Vuex.Store({
                     type: 'Club',
                     id: userID
                   })
-                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID && !router.currentRoute.fullPath.includes('profile')) {
+                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID && !router.currentRoute.fullPath.includes('profile') && !router.currentRoute.fullPath.includes('event')) {
                     router.push('/dashboard/club/'+userID)
                   }
                 }
