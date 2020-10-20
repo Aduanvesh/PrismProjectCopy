@@ -1,5 +1,5 @@
 <template>
-
+<!-- THIS IS A QUASAR CARD AND NEEDS TO BE DELETED -->
   <q-item
     clickable
     tag="a"

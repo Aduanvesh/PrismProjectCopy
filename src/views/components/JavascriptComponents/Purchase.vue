@@ -1,11 +1,15 @@
 <template>
     <div>
                 <!-- Need to define a new button type that takes a src image/url. -->
-                <base-button block type="primary" class=" mb-3" @click="modals.modal1 = true">
+                <!-- <base-button block type="primary" class=" mb-3" @click="modals.modal1 = true">
                 Purchase
                 </base-button>
                 <div class="card shadow border-0">
                     <input type="image" v-lazy="'/img/theme/lcard.png'" @click="modals.modal1 = true" />
+                </div> -->
+                <div @click="modals.modal1 = true">
+                    <slot name="modal-button-wrapper">
+                    </slot>
                 </div>
             <modal :show.sync="modals.modal1">
                 <h6 slot="header" class="modal-title" id="modal-title-default">Purchase {{cardname}}</h6>

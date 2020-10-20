@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <base-button type="default" size="sm" class="float-right">Follow</base-button>
+                                    <button type="default" size="sm" class="btn btn-1 btn-primary" @click="addToClub">Follow</button>
                                 </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
@@ -72,26 +72,41 @@
                          -->
                         <!-- Vue-if statement. Are there tickets to display for this society that are available for purchase? -->
                         <div class="mt-5 py-5 border-top text-center">
-                            <div class="h6"> Tickets </div>
+                            <div class="h6"> Events </div>
                             <div class="row justify-content-center">
-                                <div class="col-lg-9">
-                                    <!-- Cards element -->
-                                </div>
+                                    <div class="col-md-6 mb-3" v-for="cards in eventData" v-bind:key="cards.title">
+                                        <card class="card-options--hover shadow" :link="cards.link" :img="cards.image">
+                                            <template slot="header">
+                                                {{cards.title}}
+                                            </template>
+                                        </card>
+                                    </div>
                             </div>
                         </div>
                         <!-- Vue-if statement. Are there memberships to display for this society that are available for purchase? -->
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="h6"> Memberships </div>
                             <div class="row justify-content-center">
-                                <div class="col-lg-9">
                                     <div class="container container-lg">
                                         <div class="row">
-                                            <div class="col-md-6 mb-5 mb-md-3">
-                                                    <modal></modal>
+                                            <div class="col-md-6 mb-5 mb-md-3">         
+                                                
+                                                    
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 mb-3" v-for="cards in membershipData" v-bind:key="cards.title">
+                                                <modal>
+                                                    <template slot="modal-button-wrapper">
+                                                        <card class="card-options--hover shadow" :link="cards.link" :img="cards.image">
+                                                            <template slot="header">
+                                                                {{cards.title}}
+                                                            </template>
+                                                        </card>
+                                                    </template>
+                                                </modal>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,6 +134,29 @@ data() {
         location: "Brisbane, Queensland",
         university: "Queensland University of Technology",
         bio: "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
+    
+        eventData: 
+            [
+          {
+            title: 'Event Title 1',
+            image: '/img/theme/lcard.png',
+            link: '/event/',
+          },
+          {
+            title: 'Event Title 2',
+            image: '/img/theme/lcard.png',
+            link: '/event/',
+          },
+        ],
+
+        membershipData: 
+            [
+          {
+            title: 'Membership Title 1',
+            image: '/img/theme/lcard.png',
+            link: '/event/',
+          },
+        ],
     };
 // need to pass data 'down the tree' 
 // card image, card title, etc --> modal (Purchase.vue)
@@ -132,6 +170,16 @@ methods: {
       } else {
         this.name = this.fullname
       }
+    },
+
+    async addToClub () {
+        if (this.$store.userDetails.type = 'user'){
+            const check = this.$store.dispatch('joinClubCode', this.$route.params.id)
+            const result = await check.then(function (defs, messageError) {
+                return defs
+            })
+            console.log(result)
+        }
     }
   },
   computed: {
@@ -140,7 +188,7 @@ methods: {
       }
   },
     created () {
-    this.checkUserPage()
+    //this.checkUserPage()
     console.log('profile')
   }
 }

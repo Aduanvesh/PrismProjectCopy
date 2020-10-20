@@ -20,7 +20,7 @@
                             </div>
                             
                             <div class="text-center">
-                                    <button type="submit" class="my-4">Request to join</button>
+                                    <button type="submit" class="btn btn-1 btn-primary">Join</button>
                             </div>
                         </form>
                     </template>
