@@ -20,10 +20,37 @@
                 <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
                     <tab-pane key="tab1">
                         <template slot="title"> 
-                            <i class="fa fa-university mr-2"></i>Clubs and Societies
+                            <i class="fa fa-university mr-2"></i>{{user}}
                         </template>
-                            <p> Needs to display a card for each item in database for which the user follows </p>
-                            <li v-for="cards in cardsLinks" v-bind:key="cards.title"> {{cards.title}} ({{cards.details}}) </li>
+                                <div class="row">
+                                    <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
+                                    <div class="col-auto mr-auto mb-3">Edit Page</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <router-link to="/profile/cPcBCPXhnVPTonoVOQtyrCF0MNh1">
+                                        <card class="card-options--hover shadow" link="/profile/cPcBCPXhnVPTonoVOQtyrCF0MNh1" img="/img/theme/qutlscover.jpg">
+                                            <template slot="footer">
+                                                {{user}} Page
+                                            </template>
+                                        </card>
+                                        </router-link>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
+                                    <div class="col-auto mr-auto mt-3">Memberships</div>
+                                        <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus"></base-button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
+                                        <card class="card-options--hover shadow" options="true" :link="cards.link" :img="cards.image">
+                                            <template slot="header">
+                                                {{cards.title}}
+                                            </template>
+                                        </card>
+                                    </div>
+                                </div>
                     </tab-pane>
 
                     <tab-pane key="tab2">
@@ -163,21 +190,8 @@ const cardsData = [
 
     data () {
         return {
-        user: 'club', //return actual user's name i.e. 'QUTLS'
+        user: 'Code Network', //return actual user's name i.e. 'QUTLS'
         cardsLinks: cardsData,
-        first: true,
-        second: true,
-        layout: false,
-        moreContent: true,
-        drawer: false,
-        drawerR: false,
-        lorem: 'hello, this is a test',
-        membership: {
-            name: '',
-            type: '',
-            price: '',
-            details: ''
-        },
         memberlist: 
             [
           {
@@ -188,7 +202,12 @@ const cardsData = [
             statusType: 'warning',
             completion: 60
           },
-        ]
+        ],
+
+        switches: {
+            membershipsVisible: false,
+            
+        }
         
         }
     },

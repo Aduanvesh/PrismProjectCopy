@@ -17,8 +17,9 @@
         <div class="" :class="bodyClasses" v-if="!noBody">
             <slot></slot>
             <!-- Below has been added by Ed -->
+            <!-- style="max-height: 200px; max-width: 200px; object-fit: cover; width: 100%;" -->
             <div v-if="img">
-              <img :src="img" class="card-img">
+              <img :src="img" class="card-img-crop" >
             </div>
             <!-- Below has been added by Ed -->
               <!-- Needs to have the element for when hover, show in css -->
