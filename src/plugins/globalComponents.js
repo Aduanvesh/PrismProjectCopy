@@ -9,6 +9,7 @@ import BaseRadio from "../components/BaseRadio";
 import BaseSlider from "../components/BaseSlider";
 import BaseSwitch from "../components/BaseSwitch";
 import Card from "../components/Card";
+import SocietyCard from "../components/SocietyCard";
 import Icon from "../components/Icon";
 
 
@@ -34,6 +35,7 @@ export default {
     Vue.component(BaseSlider.name, BaseSlider);
     Vue.component(BaseSwitch.name, BaseSwitch);
     Vue.component(Card.name, Card);
+    Vue.component(SocietyCard.name, SocietyCard); //experimental
     Vue.component(Icon.name, Icon);
 
     Vue.component(BaseNav.name, BaseNav);
