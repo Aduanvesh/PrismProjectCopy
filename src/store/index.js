@@ -345,7 +345,7 @@ export default new Vuex.Store({
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const targetArray = await club.get()
         .then(doc => {
-          
+          console.log(doc.data(), this.state.userDetails.linkid)
           return doc.data().members
         })
         console.log('thickem', targetArray)

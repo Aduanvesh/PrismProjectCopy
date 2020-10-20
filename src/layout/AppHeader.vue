@@ -10,7 +10,7 @@
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
                 <div class="col-6 collapse-brand">
                     <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
-                        <img src="img/brand/blue.png">
+                        <img src="/img/brand/blue.png">
                     </a>
                 </div>
                 <div class="col-6 collapse-close">
@@ -65,11 +65,11 @@
             <div class = "white" v-if="userExists"> 
                 <!--  -->
                 <ul class="navbar-nav align-items-lg-center ml-lg-auto navbar-right">
-                    <li class="nav-item d-none d-lg-block ml-lg-4">
+                    <li class="nav-item d-none d-lg-block ml-lg-4" @click="toDashboard">
                         {{user}}
                     </li>
                     <li class="nav-item d-none d-lg-block ml-lg-4">    
-                        <img alt="Profile Settings" class="img-fluid rounded-circle shadow" data-src="img/theme/team-2-800x800.jpg" src="img/theme/team-2-800x800.jpg" lazy="loaded" style="width: 50px;">
+                        <img alt="Profile Settings" class="img-fluid rounded-circle shadow" data-src="img/theme/team-2-800x800.jpg" src="/img/theme/team-2-800x800.jpg" lazy="loaded" style="width: 50px;">
                     </li>
                     <li class="nav-item d-none d-lg-block ml-lg-4">
                         <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
@@ -99,6 +99,7 @@ import BaseNav from "@/components/BaseNav";
 import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
 import store from 'main'
+import router from '../router'
 
 export default {
   components: {
@@ -106,6 +107,16 @@ export default {
     CloseButton,
     BaseDropdown
   },
+  methods: {
+        async toDashboard() {
+            console.log('godem', this.$store.state.userDetails.type)
+            if (this.$store.state.userDetails.type === 'Club'){
+                router.push('/dashboard/club/'+this.$store.state.userDetails.id)
+            } else {
+                router.push('/dashboard/user/'+this.$store.state.userDetails.id)
+            }
+        }
+    },
   computed: {
     userID(){
       return '/profile/' + this.$store.state.userDetails.id

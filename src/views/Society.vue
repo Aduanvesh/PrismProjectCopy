@@ -196,12 +196,26 @@
                             <i class="fa fa-users mr-2"></i>Membership list
                         </template>
                         <h5> Membership List</h5>
-                               <div class="container-fluid mt--7">
-                                    <div class="row">
+                               <div>
+                                   <table style="width:75%">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>University</th>
+                                    </tr>
+                                    <tr v-for="member in memberlist" v-bind:key="member.id">
+                                        <th>{{member.first_name}} {{member.last_name}} &nbsp;</th>
+                                        <th>{{member.email}}&nbsp;</th>
+                                        <th>{{member.phone_1}}&nbsp;</th>
+                                        <th>{{member.university}}</th>
+                                    </tr>
+                                    </table>
+                                   <!-- <div class="row">
                                         <div class="col">
                                             <projects-table title="Light Table"></projects-table>
                                         </div>
-                                    </div>
+                                    </div> -->
                                </div>
                     </tab-pane>
                 </card>
@@ -213,7 +227,7 @@
 <script>
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
-import ProjectsTable from './Tables/ProjectsTable'
+//import ProjectsTable from './Tables/ProjectsTable'
 import router from '../router'
 
 
@@ -235,7 +249,7 @@ const cardsData = [
   export default {
     name: 'tables',
     components: {
-      ProjectsTable
+      //ProjectsTable
     },
 
     data () {
