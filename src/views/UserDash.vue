@@ -2,7 +2,7 @@
     <div class="section section-shaped section-lg my-0">
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-           <p class="h1" style="color: white;"> Hi, {{user}} </p>
+           <p class="h1" style="color: white;"> Hi, {{this.user}} </p>
                 <div class="col-12 offset-10">
                     <tabs :fill="false" circle>
                         <tab-pane>
@@ -23,8 +23,10 @@
                         <template slot="title"> 
                             <i class="fa fa-university mr-2"></i>Clubs and Societies
                         </template>
+                         <modal>
+                        </modal>
                             <p> Needs to display a card for each item in database for which the user follows </p>
-                            <li v-for="cards in cardsLinks" v-bind:key="cards.title"> {{cards.title}} ({{cards.details}}) </li>
+                            <li v-for="cards in cardsLinks" v-bind:key="cards.title"> <a v-bind:href="cards.link">{{cards.title}} ({{cards.details}}) </a> </li>
                     </tab-pane>
 
                     <tab-pane key="tab2">
@@ -193,6 +195,7 @@
 <script>
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
+import Modal from '../views/SearchClub.vue'
 
 const cardsData = [
   {
@@ -211,10 +214,11 @@ const cardsData = [
 
   export default {
     components: {
-
+        Modal
     },
     data () {
         return {
+        user: '...',
         cardsLinks: cardsData,
         first: true,
         second: true,
@@ -233,7 +237,8 @@ const cardsData = [
     },
     methods: {
         async retrieveMembership () {
-        const cards = this.$store.dispatch('getCards')
+        this.user = this.$store.state.userDetails.firstName
+        const cards = this.$store.dispatch('getMemberships')
             .then(function (data) {
             const cardsData = []
             for (var i = 0; i < data.length; i++) {
@@ -251,7 +256,7 @@ const cardsData = [
             } else {
                 card.details = data[i].memberCount + ' members'
             }
-            card.link = '/code-network-membership'
+            card.link = '/profile/' + data[i].userlink
             cardsData.push(card)
             }
                 return cardsData
@@ -263,7 +268,7 @@ const cardsData = [
         
     },
     created() {
-        this.retrieveMembership()
+       setTimeout(() => this.retrieveMembership(), 5000)
     }
   }
 </script>

@@ -58,6 +58,7 @@ export default new Vuex.Store({
               name: payload.title,
               userlink: userID,
               members: [],
+              events:[],
               details: ''
             })
             }
@@ -110,7 +111,7 @@ export default new Vuex.Store({
                       lastName: doc.data().last_name,
                       id: userID
                     })
-                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID) {
+                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID && !router.currentRoute.fullPath.includes('profile')) {
                     router.push('/dashboard/user/'+userID)
                   }
                 } else {
@@ -121,7 +122,7 @@ export default new Vuex.Store({
                     type: 'Club',
                     id: userID
                   })
-                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID) {
+                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID && !router.currentRoute.fullPath.includes('profile')) {
                     router.push('/dashboard/club/'+userID)
                   }
                 }
@@ -188,7 +189,7 @@ export default new Vuex.Store({
         }
       },
 
-      async getCards () {
+      async getMemberships () {
         const userID = firebase.auth().currentUser.uid
         const targetUser = firebase.firestore().collection('users').doc(userID)
         const targetArray = await targetUser.get()
@@ -344,7 +345,7 @@ export default new Vuex.Store({
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const targetArray = await club.get()
         .then(doc => {
-          
+          console.log(doc.data(), this.state.userDetails.linkid)
           return doc.data().members
         })
         console.log('thickem', targetArray)

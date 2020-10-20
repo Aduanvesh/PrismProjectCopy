@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <base-button type="default" size="sm" class="float-right">Follow</base-button>
+                                    <button type="default" size="sm" class="float-right" @click="addToClub">Follow</button>
                                 </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
@@ -132,6 +132,16 @@ methods: {
       } else {
         this.name = this.fullname
       }
+    },
+
+    async addToClub () {
+        if (this.$store.userDetails.type = 'user'){
+            const check = this.$store.dispatch('joinClubCode', this.$route.params.id)
+            const result = await check.then(function (defs, messageError) {
+                return defs
+            })
+            console.log(result)
+        }
     }
   },
   computed: {
@@ -140,7 +150,7 @@ methods: {
       }
   },
     created () {
-    this.checkUserPage()
+    //this.checkUserPage()
     console.log('profile')
   }
 }

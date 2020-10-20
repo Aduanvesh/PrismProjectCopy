@@ -6,7 +6,7 @@
                 <div class="col-12 offset-10">
                     <tabs :fill="false" circle>
                         <tab-pane>
-                            <a href="/profile/undefined">Go to profile</a>
+                            <a @click="goProfile">Go to profile</a>
                             <span slot="title" class="nav-link-icon d-block"><i class="ni ni-atom"></i></span>
                         </tab-pane>
                         <tab-pane>
@@ -196,12 +196,26 @@
                             <i class="fa fa-users mr-2"></i>Membership list
                         </template>
                         <h5> Membership List</h5>
-                               <div class="container-fluid mt--7">
-                                    <div class="row">
+                               <div>
+                                   <table style="width:75%">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>University</th>
+                                    </tr>
+                                    <tr v-for="member in memberlist" v-bind:key="member.id">
+                                        <th>{{member.first_name}} {{member.last_name}} &nbsp;</th>
+                                        <th>{{member.email}}&nbsp;</th>
+                                        <th>{{member.phone_1}}&nbsp;</th>
+                                        <th>{{member.university}}</th>
+                                    </tr>
+                                    </table>
+                                   <!-- <div class="row">
                                         <div class="col">
                                             <projects-table title="Light Table"></projects-table>
                                         </div>
-                                    </div>
+                                    </div> -->
                                </div>
                     </tab-pane>
                 </card>
@@ -213,7 +227,9 @@
 <script>
 import Cards from '../views/components/Cards.vue'
 import store from 'main'
-import ProjectsTable from './Tables/ProjectsTable'
+//import ProjectsTable from './Tables/ProjectsTable'
+import router from '../router'
+
 
 const cardsData = [
   {
@@ -233,7 +249,7 @@ const cardsData = [
   export default {
     name: 'tables',
     components: {
-      ProjectsTable
+      //ProjectsTable
     },
 
     data () {
@@ -334,6 +350,11 @@ const cardsData = [
             this.memberlist = clubMembers
             console.log('membercheck:', this.memberlist)
             
+        },
+
+        async goProfile () {
+            console.log('test123')
+            this.$router.push("/profile/" + this.$store.state.userDetails.id)
         }
     },
     created() {
