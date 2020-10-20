@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="row">
                                     <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
-                                    <div class="col-auto mr-auto mt-3">Memberships</div>
+                                    <div class="col-auto mr-auto mt-3">Active Memberships</div>
                                         <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus"></base-button>
                                 </div>
                                 <div class="row">
@@ -59,7 +59,7 @@
                         </template>
                                 <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                 <div class="row">
-                                    <div class="col-auto mr-auto">Active Tickets</div>
+                                    <div class="col-auto mr-auto">Active Events</div>
                                     <!-- <div class="col-auto mb-3"> -->
                                         <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
                                     <!-- </div> -->
@@ -74,7 +74,7 @@
                                     </div>
                                 </div>
                                     <div class="row pt-5">
-                                        <div class="col-md-6 mb-5 mb-md-3"> Past Tickets </div>
+                                        <div class="col-md-6 mb-5 mb-md-3"> Past Events </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
