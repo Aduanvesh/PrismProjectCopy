@@ -53,14 +53,13 @@
             <!-- End -->
             <modal :show.sync="modals.edit">
               <h6 slot="header" class="modal-title" id="modal-title-default">{{event.name}}</h6>
-                <base-input :placeholder="event.name">
-                </base-input>
-                <base-input placeholder="Description">
-                </base-input>
+               <form role="form" @submit.prevent="editThis">
+                <input :placeholder="event.name" v-model="editForm.name">
+                <input placeholder="Description" v-model="editForm.description">
                 <p>Time and Date</p>
                   <div class="input-daterange datepicker align-items-center">
                       <div class="">
-                              <base-input addon-left-icon="ni ni-calendar-grid-58">
+                              <input addon-left-icon="ni ni-calendar-grid-58">
                                   <flat-picker slot-scope="{focus, blur}"
                                               @on-open="focus"
                                               @on-close="blur"
@@ -68,28 +67,32 @@
                                               class="form-control datepicker"
                                               v-model="dates.range">
                                   </flat-picker>
-                              </base-input>
+                             
                           </div>
                       </div>
                 <p>Location</p>
-                  <base-input placeholder="Location">
-                  </base-input>
+                  <input placeholder="Location">
+                  
                 <p>Price</p>
-                  <base-input
+                  <input v-model="editForm.price"
                   placeholder="$0.00"
                   addon-left-icon="fa fa-tag">
-                  </base-input>
+                  
                 <p>Capacity</p>
-                  <base-input
+                  <input v-model="editForm.capacity"
                   placeholder="0"
                   addon-left-icon="fa fa-users">
-                  </base-input>                
-
-                <template slot="footer">
-                    <base-button type="primary">Save changes</base-button>
-                    <base-button type="link" class="ml-auto" @click="modals.edit = false">Close
-                    </base-button>
-                </template>
+                           
+                <div class="text-center">
+                  
+                    <button type="submit">Save changes</button>
+                    <button type="link" class="ml-auto" @click="modals.edit = false">Close
+                    </button>
+               
+                </div>
+                </form>    
+                
+               
             </modal>
         </div>
         <slot v-if="noBody"></slot>
@@ -117,6 +120,12 @@ export default {
         view: false,
         edit: false,
         delete: false
+      },
+      editForm: {
+        id:'',
+        name:'',
+        description:'',
+        price: -1
       },
       event: {
         name: 'Title',
@@ -190,6 +199,12 @@ export default {
     async deleteThis () {
       console.log('idcheck:', this.id)
       this.$store.dispatch('deleteEvent', this.id)
+    },
+
+    async editThis () {
+      this.editForm.id = this.id
+      console.log(this.editForm)
+      this.$store.dispatch('updateEvent', this.editForm)
     }
   }
 };
