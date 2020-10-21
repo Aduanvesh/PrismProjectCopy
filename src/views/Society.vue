@@ -18,6 +18,7 @@
                 </div>
            <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
+                    <!-- Tabs begin here -->
                     <tab-pane key="tab1">
                         <template slot="title"> 
                             <i class="fa fa-university mr-2"></i>{{user}}
@@ -69,6 +70,9 @@
                                         <card class="card-options--hover shadow" options="true" :link="cards.link" :img="cards.image">
                                             <template slot="header">
                                                 {{cards.title}}
+                                            </template>
+                                            <template slot="button1">
+                                                test123
                                             </template>
                                         </card>
                                     </div>

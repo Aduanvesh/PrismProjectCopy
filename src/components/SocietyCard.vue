@@ -6,30 +6,32 @@
          {'shadow': shadow},
          {[`shadow-${shadowSize}`]: shadowSize},
          {[`bg-gradient-${gradient}`]: gradient},
-         {[`bg-${type}`]: type}
+         {[`bg-${type}`]: type},
        ]">
 
         <div class="card-header" :class="headerClasses" v-if="$slots.header">
             <slot name="header">
             </slot>
         </div>
-        <!-- Had a 'card-body' class in it before... -->
-        <div class="" :class="bodyClasses" v-if="!noBody">
+        <div class="card-body" :class="bodyClasses" v-if="!noBody">
             <slot></slot>
-            <!-- Below has been added by Ed -->
-            <!-- style="max-height: 200px; max-width: 200px; object-fit: cover; width: 100%;" -->
             <div v-if="img">
               <img :src="img" class="card-img-crop" >
             </div>
             <!-- Below has been added by Ed -->
               <!-- Needs to have the element for when hover, show in css -->
+
               <div v-if="options" class=""> 
                 <ul class="nav nav-pills-circle justify-content-center">
                   <li class="nav-item">
                     <a class="nav-link nav-white-highlight"
                        href="#" @click.prevent="modals.edit = true"
                     >
-                    Edit
+                    
+                    <div class="" :class="bodyClasses" v-if="$slots.button1">
+                      <slot name="button1">
+                      </slot>
+                    </div>
                     </a>
                   </li>
                   <li class="nav-item">
