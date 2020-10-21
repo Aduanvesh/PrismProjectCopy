@@ -415,9 +415,26 @@ export default new Vuex.Store({
 
     async updateEvent (a = {}, payload) {
       const targetEvent = firebase.firestore().collection('events').doc(payload.id)
-      targetEvent.update({
-        events: payload.id
-      })
+      if (payload.name != undefined){
+        targetEvent.update({
+          event_name: payload.name,
+        })
+      }
+      if (payload.event_description != undefined){
+        targetEvent.update({
+          event_description: payload.description,
+        })
+      }
+      if (payload.price != undefined && payload.price != -1){
+        targetEvent.update({
+          price: payload.price,
+        })
+      }
+      if (payload.capacity != undefined){
+        targetEvent.update({
+          capacity: payload.capacity
+        })
+      }
     },
 
     async joinEvent (a = {}, payload) {
