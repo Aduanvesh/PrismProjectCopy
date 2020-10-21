@@ -56,7 +56,7 @@
 
                     <tab-pane key="tab2">
                         <template slot="title">
-                            <i class="ni ni-calendar-grid-58 mr-2"></i>Events TESTE TESTWS
+                            <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                                 <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                 <div class="row">
@@ -72,7 +72,7 @@
                                                 {{cards.title}}
                                             </template>
                                             <template slot="button1">
-                                                test123
+                                                <p> Test </p>
                                             </template>
                                         </card>
                                     </div>
