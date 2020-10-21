@@ -56,7 +56,7 @@
 
                     <tab-pane key="tab2">
                         <template slot="title">
-                            <i class="ni ni-calendar-grid-58 mr-2"></i>Events
+                            <i class="ni ni-calendar-grid-58 mr-2"></i>Events TESTE TESTWS
                         </template>
                                 <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                 <div class="row">
