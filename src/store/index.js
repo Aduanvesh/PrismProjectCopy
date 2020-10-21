@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
 import * as firebase from 'firebase'
+import SocietyDashboard from "../views/Society";
 // import VueRouter from 'vue-router'
 
 // import VueRouter from 'vue-router'
@@ -58,6 +59,7 @@ export default new Vuex.Store({
               name: payload.title,
               userlink: userID,
               members: [],
+              membership_types: [],
               events:[],
               details: ''
             })
@@ -208,8 +210,6 @@ export default new Vuex.Store({
         console.log('final array:', finalArray)
         return finalArray
       },
-
-
     
     async getEvents () {
       const userID = firebase.auth().currentUser.uid
@@ -328,6 +328,59 @@ export default new Vuex.Store({
       }
     },
 
+    async getMembershipTypes (a = {}, payload) {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const FinalArray = []
+      const targetMem = await club.collection('membership_types').get()
+        .then(querySnapshot => {
+          querySnapshot.docs.forEach(doc => {
+            FinalArray.push(doc.data())
+          })
+        })
+      return FinalArray
+    }, 
+
+    async createMembershipType (a = {}, payload) {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetMem = club.collection('membership_types').doc()
+      targetMem.set({
+        members: [],
+        price: 0,
+        origin: this.state.userDetails.linkid
+      })
+    }, 
+
+    async deleteMembershipType (a = {}, payload) {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetMem = club.collection('membership_types').doc(payload)
+      targetMem.delete().then(function() {
+        console.log("Document successfully deleted!")
+      }).catch(function(error) {
+        console.error("Error removing document: ", error)
+      })
+    },
+
+    async getClubEvents () {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const snapshot = await club.get()
+        .then(doc => {
+          if (doc.exists){
+            return doc.data().events 
+          }
+        })
+      const finalArray = []
+      for (var i = 0; i < snapshot.length; i++) {
+        console.log(snapshot[i])
+        const snapshotev = await firebase.firestore().collection('events').doc(snapshot[i]).get()
+          .then(doc => {
+            return doc.data()
+          })
+            finalArray.push(snapshotev)
+      }
+      console.log(finalArray)
+      return finalArray
+    },
+
     async createEvent (a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const targetEvent = firebase.firestore().collection('events').doc()
@@ -339,7 +392,45 @@ export default new Vuex.Store({
         id: targetEvent.id,
         linked_account: this.state.userDetails.linkid
       })
+      club.update({
+        events: firebase.firestore.FieldValue.arrayUnion(targetEvent.id)
+      })
     }, 
+
+    async deleteEvent (a = {}, payload) {
+      console.log('delete:', payload)
+      const targetEvent = firebase.firestore().collection('events').doc(payload)
+      const snapshot = await targetEvent.get()
+          .then(doc => {
+            if (doc.exists){
+              return doc.data() 
+            }
+          })
+          console.log('delete2:', snapshot.linked_account)
+      const targetMembership = firebase.firestore().collection('memberships').doc(snapshot.linked_account)
+      targetMembership.update({
+        events: firebase.firestore.FieldValue.arrayRemove(payload)
+      })
+    },
+
+    async updateEvent (a = {}, payload) {
+      const targetEvent = firebase.firestore().collection('events').doc(payload.id)
+      targetEvent.update({
+        events: payload.id
+      })
+    },
+
+    async joinEvent (a = {}, payload) {
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      const targetEvent = firebase.firestore().collection('events').doc(payload)
+      targetUser.update({
+        events: firebase.firestore.FieldValue.arrayUnion(payload)
+      })
+      targetEvent.update ({
+        members: firebase.firestore.FieldValue.arrayUnion(userID)
+      })
+    },
 
     async getClubMembers () {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
@@ -363,17 +454,7 @@ export default new Vuex.Store({
       return memberArray
     },
 
-    async joinEvent (a = {}, payload) {
-      const userID = firebase.auth().currentUser.uid
-      const targetUser = firebase.firestore().collection('users').doc(userID)
-      const targetEvent = firebase.firestore().collection('events').doc(payload)
-      targetUser.update({
-        events: firebase.firestore.FieldValue.arrayUnion(payload)
-      })
-      targetEvent.update ({
-        members: firebase.firestore.FieldValue.arrayUnion(userID)
-      })
-    }
+    
 
   },
   getters: {
