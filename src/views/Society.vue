@@ -104,16 +104,16 @@
                         </div>
                         </div>
                     </tab-pane>
-                    <tab-pane key="tab4">
+                   <!-- <tab-pane key="tab4">
                         <template slot="title">
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
-                                        <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
+                                        TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete'
                                         <div class="row">
                                             <div class="col-auto mr-auto">Active Tickets</div>
-                                            <!-- <div class="col-auto mb-3"> -->
+                                            <div class="col-auto mb-3"> 
                                                 <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
-                                            <!-- </div> -->
+                                            </div> 
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
@@ -133,7 +133,7 @@
                                                     </card>
                                                 </div>
                                             </div>
-                    </tab-pane>
+                    </tab-pane> -->
                     <tab-pane key="tab5">
                         <template slot="title">
                             <i class="fa fa-users mr-2"></i>Membership list
