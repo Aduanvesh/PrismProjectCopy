@@ -41,7 +41,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link nav-white-highlight"
-                       href="#" @click.prevent="modals.delete = true"
+                       href="#" @click.prevent="deleteThis"
                     >
                     Delete
                     </a>
@@ -103,6 +103,7 @@
 import Modal from "@/components/Modal.vue";
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
+import store from 'main'
 
 export default {
   name: "card",
@@ -126,6 +127,11 @@ export default {
     };
   },
   props: {
+    id: {
+      type: String,
+      default: "",
+      description: "id of event"
+    },
     type: {
       type: String,
       description: "Card type"
@@ -178,6 +184,12 @@ export default {
     footerClasses: {
       type: [String, Object, Array],
       description: "Card footer css classes"
+    }
+  },
+  methods: {
+    async deleteThis () {
+      console.log('idcheck:', this.id)
+      this.$store.dispatch('deleteEvent', this.id)
     }
   }
 };
