@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "sociit"
+    "default": "sociit",
+    "sociit-app": "sociit"
+  },
+  "targets": {
+    "sociit": {
+      "hosting": {
+        "sociit": [
+          "sociit.web.app"
+        ]
+      }
+    }
   }
 }
