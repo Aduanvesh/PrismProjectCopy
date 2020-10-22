@@ -9,17 +9,12 @@
             <modal :show.sync="modals.modal1">
                 <h6 slot="header" class="modal-title" id="modal-title-default">Find Club</h6>
 
-                <p>Put in club code below</p>
+                <p>Enter the unique ID below:</p>
                     <template>
                         <form role="form" @submit.prevent="joinClub">
-                           <div class="input-group-text">
-                                <span class="input-group-text">
-                                    <i class="ni ni-zoom-split-in"> </i>
-                                </span>
                                 <input aria-describedby="addon-right addon-left" placeholder="Enter Code" v-model="code" class="form-control">
-                            </div>
                             
-                            <div class="text-center">
+                            <div class="text-center pt-3">
                                     <button type="submit" class="btn btn-1 btn-primary">Join</button>
                             </div>
                         </form>

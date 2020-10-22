@@ -12,6 +12,7 @@ import Dashboard from "./views/UserDash.vue";
 import SocietyDashboard from "./views/Society.vue";
 import Event from "./views/Event.vue";
 import Kiosk from "./views/Kiosk.vue";
+import Upload from "./views/ImageUpload.vue";
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
@@ -54,6 +55,13 @@ export default new VueRouter({
         header: AppHeader,
         default: PasswordReset,
         //footer: AppFooter
+      }
+    },
+    {
+      path: "/upload",
+      name: "upload",
+      components: {
+        default: Upload,
       }
     },
     {
