@@ -304,7 +304,7 @@ const cardsEventData = [
                 capacity: 0,
                 dates: "2018-07-17 to 2018-07-19",
             },
-
+            memberlist: [],
             user: this.$store.state.userDetails.title ? this.$store.state.userDetails.title : 'Student Society',
             cardsLinks: cardsData,
             cardsEventsLinks: cardsEventData, 
