@@ -14,11 +14,11 @@
           :show.sync="modals.delete"
           gradient="danger"
           modal-classes="modal-danger modal-dialog-centered">
-          <h6 slot="header" class="modal-title" id="modal-title-notification">Your attention is required</h6>
+          <h6 slot="header" class="modal-title" id="modal-title-notification">Would you like to delete <i>{{name}}</i>?</h6>
           <div class="py-3 text-center">
               <i class="fa fa-trash-o fa-3x"></i>
               <h4 class="heading mt-4">Would you really like to delete this?</h4>
-              <p>Users will no longer be able to access the public copy of this file once it has been deleted.</p>
+              <p>Users will no longer be able to access the public copy of <i>{{name}}</i> once it has been deleted.</p>
           </div>
           <template slot="footer">
               <base-button type="white">Ok, Got it</base-button>
@@ -58,9 +58,9 @@
         </modal>
 
             <modal :show.sync="modals.edit">
-              <h6 slot="header" class="modal-title" id="modal-title-default">{{event.name}}</h6>
+              <h6 slot="header" class="modal-title" id="modal-title-default">Edit: {{name}}</h6>
                <form role="form" @submit.prevent="editThis">
-                <input :placeholder="event.name" v-model="editForm.name">
+                <input :placeholder="name" v-model="editForm.name">
                 <input placeholder="Description" v-model="editForm.description">
                 <p>Time and Date</p>
                   <div class="input-daterange datepicker align-items-center">
@@ -180,11 +180,8 @@ export default {
         description:'',
         price: -1
       },
-      event: {
-        name: 'Title',
-      },
       dates: {
-        range: "2020-01-09 to 2020-01-09"
+        range: "2020-01-09 to 2020-01-10"
       }
     };
   },
@@ -193,6 +190,11 @@ export default {
       type: String,
       default: "",
       description: "id of event"
+    },
+    name: {
+        type: String,
+        default: 'Untitled',
+        description: "Name of the file, event or membership"
     },
     type: {
       type: String,

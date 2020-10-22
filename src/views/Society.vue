@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                        <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image">
+                                        <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
                                             <template slot="header">
                                                 {{cards.name}}
                                             </template>
