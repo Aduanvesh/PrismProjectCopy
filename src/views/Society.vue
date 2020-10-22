@@ -119,8 +119,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <card class="card-options--hover shadow" options="true" link="/event/undefined" img="/img/theme/lcard.png">
-                                            </card>
                                         </div>
                                     </div>
                     </tab-pane>
