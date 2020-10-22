@@ -117,7 +117,10 @@ export default new Vuex.Store({
                       lastName: doc.data().last_name,
                       id: userID
                     })
-                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID && !router.currentRoute.fullPath.includes('profile') && !router.currentRoute.fullPath.includes('event')) {
+                  if (router.currentRoute.fullPath !== '/dashboard/user/'+userID 
+                  && !router.currentRoute.fullPath.includes('profile') 
+                  && !router.currentRoute.fullPath.includes('event')
+                  ) {
                     router.push('/dashboard/user/'+userID)
                   }
                 } else {
@@ -128,7 +131,7 @@ export default new Vuex.Store({
                     type: 'Club',
                     id: userID
                   })
-                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID && !router.currentRoute.fullPath.includes('profile') && !router.currentRoute.fullPath.includes('event')) {
+                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID && !router.currentRoute.fullPath.includes('profile') && !router.currentRoute.fullPath.includes('event') && !router.currentRoute.fullPath.includes('upload')) {
                     router.push('/dashboard/club/'+userID)
                   }
                 }
@@ -450,15 +453,19 @@ export default new Vuex.Store({
     async createEvent (a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const targetEvent = firebase.firestore().collection('events').doc()
+      console.log('INSIDE THE CREATE EVENT')
       targetEvent.set({
         date_created: new Date(),
         event_description: payload.description,
         location: payload.location,
-        date: payload.times,
-        event_name: payload.title,
+        date: payload.dates,
+        startTime: payload.startTime,
+        endTime: payload.endTime,
+        event_name: payload.event_name,
         price: payload.price,
         catering: payload.extras.catering,
         membersOnly: payload.extras.membersOnly,
+        capacity: payload.capacity,
         id: targetEvent.id,
         linked_account: this.state.userDetails.linkid
       })
