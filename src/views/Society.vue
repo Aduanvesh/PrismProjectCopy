@@ -108,7 +108,6 @@
                             <i class="fa fa-university mr-2"></i>{{user}}
                         </template>
                                 <div class="row">
-                                    <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
                                     <div class="col-auto mr-auto mb-3">Edit Page</div>
                                 </div>
                                 <div class="row">
@@ -123,7 +122,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
                                     <div class="col-auto mr-auto mt-3">Active Memberships</div>
                                         <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus"></base-button>
                                 </div>
@@ -142,7 +140,6 @@
                         <template slot="title">
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
-                                <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                 <div class="row">
                                     <div class="col-auto mr-auto">Active Events</div>
                                         <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus" @click="modals.add = true">
@@ -150,13 +147,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                        <div v-if="cards.name != null">
+                                        <!-- <div v-if="cards.name != null"> -->
                                             <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
                                                 <template slot="header">
                                                     {{cards.name}}
                                                 </template>
                                             </card>
-                                        </div>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                                     <div class="row pt-5">
