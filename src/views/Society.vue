@@ -1,44 +1,87 @@
 <template>
     <div class="section section-shaped section-lg my-0">
-                    <modal :show.sync="modals.add">
-              <h6 slot="header" class="modal-title" id="modal-title-default">New Event</h6>
-                <base-input placeholder="New Event">
-                </base-input>
-                <base-input placeholder="Description">
-                </base-input>
-                <p>Time and Date</p>
-                  <div class="input-daterange datepicker align-items-center">
-                      <div class="">
-                              <base-input addon-left-icon="ni ni-calendar-grid-58">
-                                  <flat-picker slot-scope="{focus, blur}"
-                                              @on-open="focus"
-                                              @on-close="blur"
-                                              :config="{allowInput: true, mode: 'range',}"
-                                              class="form-control datepicker"
-                                              v-model="dates.range">
-                                  </flat-picker>
-                              </base-input>
-                          </div>
-                      </div>
-                <p>Location</p>
-                  <base-input placeholder="Location">
-                  </base-input>
-                <p>Price</p>
-                  <base-input
-                  placeholder="$0.00"
-                  addon-left-icon="fa fa-tag">
-                  </base-input>
-                <p>Capacity</p>
-                  <base-input
-                  placeholder="0"
-                  addon-left-icon="fa fa-users">
-                  </base-input>                
-
-                <template slot="footer">
-                    <base-button type="primary">Save changes</base-button>
-                    <base-button type="link" class="ml-auto" @click="modals.add = false">Close
-                    </base-button>
-                </template>
+        <!-- Create a new event modal -->
+            <modal :show.sync="modals.add">
+                <div>
+                    <h6 slot="header" class="modal-title mb-3" id="modal-title-default">New Event</h6>
+                    <form>
+                    <p>Title and Description</p>
+                    <base-input 
+                        v-model="event.title"
+                        type="text"
+                        placeholder="Title"
+                        class="field"> 
+                    </base-input>
+                    <base-input 
+                        v-model="event.description"
+                        type="text"
+                        placeholder="Description"
+                        class="field">
+                    </base-input>
+                    <p>Time and Date</p>
+                        <select v-model="times">
+                            <option
+                            v-for="option in times"
+                            :value="option"
+                            :key="option"
+                            :selected="option === times"
+                            >{{ option }}</option>
+                        </select>
+                        <div class="calendar">
+                                <base-input addon-left-icon="ni ni-calendar-grid-58">
+                                    <flat-picker slot-scope="{focus, blur}"
+                                                @on-open="focus"
+                                                @on-close="blur"
+                                                :config="{allowInput: true, mode: 'range',}"
+                                                class="form-control datepicker"
+                                                v-model="event.dates">
+                                    </flat-picker>
+                                </base-input>
+                        </div>
+                    <p></p>
+                    <p>Location</p>
+                    <base-input 
+                        v-model="event.location"
+                        type="text"
+                        placeholder="Location"
+                        class="field"
+                    >
+                    </base-input>
+                    <p>Price</p>
+                    <base-input 
+                        v-model="event.price"
+                        type="text"
+                        placeholder="$0.00"
+                        class="field"
+                    >
+                    </base-input>
+                    <p>Capacity</p>
+                    <base-input 
+                        v-model="event.capacity"
+                        type="text"
+                        placeholder="0"
+                        class="field"
+                    >
+                    </base-input>
+        <h6>Extras</h6>
+        <div>
+            <base-checkbox
+            type="checkbox"
+            v-model="event.extras.catering"
+            class="field"
+            ><p>Collect dietary requirements?</p></base-checkbox>
+        </div>
+        <div>
+            <base-checkbox
+            type="checkbox"
+            v-model="event.extras.membersOnly"
+            class="field"
+            ><p>Member only event?</p></base-checkbox>
+            
+        </div>
+        <base-button type="submit" @click="onSubmit">Submit</base-button>
+        </form>
+    </div>
             </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
@@ -224,8 +267,6 @@
 </template>
 
 <script>
-// import cards has been replaced with a new 'SocietyCard' component made by me.
-// import Cards from '../views/components/Cards.vue'
 import SocietyCard from '../components/SocietyCard.vue'
 import Modal from "@/components/Modal.vue";
 import store from 'main';
@@ -275,6 +316,49 @@ const cardsEventData = [
     
     data () {
         return {
+            times: [
+            '1:00',
+            '1:30',
+            '2:00',
+            '2:30',
+            '3:00',
+            '3:30',
+            '4:00',
+            '4:30',
+            '5:00',
+            '5:30',
+            '6:00',
+            '6:30',
+            '7:00',
+            '7:30',
+            '8:00',
+            '8:30',
+            '9:00',
+            '9:30',
+            '10:00',
+            '10:30',
+            '11:00',
+            '11:30',
+            '12:00',
+            '12:30',
+            ],
+      event: {
+        category: '',
+        title: '',
+        description: '',
+        location: '',
+        times: '',
+        extras: {
+          catering: false,
+          membersOnly: false
+        },
+        price: '',
+        capacity: 0,
+        dates: {
+        range: "2020-01-09 to 2020-01-10"
+        },
+      },
+
         user: 'Code Network', //return actual user's name i.e. 'QUTLS'
         cardsLinks: cardsData,
         cardsEventsLinks: cardsEventData, 
@@ -290,23 +374,29 @@ const cardsEventData = [
           },
         ],
 
-        dates: {
-        range: "2020-01-09 to 2020-01-09"
-        },
-
         modals: {
         add: false,
         delete: false,
         },
 
         switches: {
-            membershipsVisible: false,
-            
-        }
-        
+            membershipsVisible: false, 
+        },
+
         }
     },
+
     methods: {
+
+        onSubmit(evt){
+            evt.preventDefault()
+            alert(JSON.stringify(this.event))
+            this.$store.dispatch('createEvent', this.event)
+        },
+
+        //temporary add
+        
+        //end temporary add
         
         async retrieveMembership () {
         const cards = this.$store.dispatch('getMembershipTypes')
