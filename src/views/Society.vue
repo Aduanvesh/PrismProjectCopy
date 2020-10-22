@@ -295,8 +295,8 @@ const cardsEventData = [
                 endTime: '',
 
                 extras: {
-                catering: false,
-                membersOnly: false
+                    catering: false,
+                    membersOnly: false
                 },
                 price: '',
                 capacity: 0,
@@ -314,19 +314,21 @@ const cardsEventData = [
 
     methods: {
 
-        initialiseEventData()
+        async initialiseEventData(event)
         {
-            for (key in event) {
-                                if (event.hasOwnProperty(key)) {
-                                    event[key] = null;
-                                }
-                            }
+            for (var key in event) {
+                if (event.hasOwnProperty(key)) {
+                    event[key] = null;
+                }
+            }
         },
 
         onSubmit(evt){
             evt.preventDefault()
             alert(JSON.stringify(this.event))
             this.$store.dispatch('createEvent', this.event)
+            this.initialiseEventData(this.event)
+
         },
         
         async retrieveMembership () {
@@ -355,7 +357,7 @@ const cardsEventData = [
         },
         
         async getMembers () {
-            const clubMembers = await this.$store.dispatch('getClubMembers')
+            const clubMembers = await this.$store.dispatch('getClubMembers', this.$store.state.userDetails.id)
             this.memberlist = clubMembers
             console.log('membercheck:', this.memberlist)
             
