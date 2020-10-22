@@ -402,6 +402,9 @@ export default new Vuex.Store({
         date: payload.times,
         event_name: payload.title,
         price: payload.price,
+        capacity: payload.capacity,
+        dietr: payload.dietr,
+        memberonly: payload.memberonly,
         id: targetEvent.id,
         linked_account: this.state.userDetails.linkid
       })

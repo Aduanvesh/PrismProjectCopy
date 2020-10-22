@@ -21,7 +21,7 @@
               <p>Users will no longer be able to access the public copy of <i>{{name}}</i> once it has been deleted.</p>
           </div>
           <template slot="footer">
-              <base-button type="white" @click="deleteThis; modals.delete = false">Ok, Got it</base-button>
+              <button type="white" @click="deleteThis">Ok, Got it</button>
               <base-button type="link"
                           text-color="white"
                           class="ml-auto"
@@ -335,8 +335,9 @@ export default {
       },
     
     async deleteThis () {
-      console.log('idcheck:', this.id)
+      console.log('iddeletecheck:', this.id)
       this.$store.dispatch('deleteEvent', this.id)
+       setTimeout(() =>  this.$router.go(), 100)
     },
 
     async editThis () {
