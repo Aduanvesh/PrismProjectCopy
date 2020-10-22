@@ -288,18 +288,18 @@ const cardsEventData = [
                     '12:30',
             ],
             event: {
-                title: 'Title',
-                description: 'Description',
-                location: 'Brisbane',
-                startTime: '1:00',
-                endTime: '2:00',
+                title: '',
+                description: '',
+                location: '',
+                startTime: '',
+                endTime: '',
 
                 extras: {
                 catering: false,
                 membersOnly: false
                 },
-                price: '$1.00',
-                capacity: 10,
+                price: '',
+                capacity: 0,
                 dates: "2018-07-17 to 2018-07-19",
             },
             memberlist: [],
