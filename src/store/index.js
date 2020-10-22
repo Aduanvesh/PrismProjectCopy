@@ -406,7 +406,7 @@ export default new Vuex.Store({
         date: payload.dates,
         startTime: payload.startTime,
         endTime: payload.endTime,
-        event_name: payload.title,
+        event_name: payload.event_name,
         price: payload.price,
         capacity: payload.capacity,
         dietr: payload.extras.catering,
