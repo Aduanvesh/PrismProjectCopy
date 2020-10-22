@@ -21,7 +21,7 @@
               <p>Users will no longer be able to access the public copy of <i>{{name}}</i> once it has been deleted.</p>
           </div>
           <template slot="footer">
-              <button type="white" @click="deleteThis">Ok, Got it</button>
+              <base-button type="white" @click="onDelete">Ok, Got it</base-button>
               <base-button type="link"
                           text-color="white"
                           class="ml-auto"
@@ -333,6 +333,11 @@ export default {
         alert(JSON.stringify(this.edit))
         editThis()
       },
+
+    onDelete(){
+      modals.delete = false
+      deleteThis()
+    },
     
     async deleteThis () {
       console.log('iddeletecheck:', this.id)
