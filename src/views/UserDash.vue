@@ -10,9 +10,6 @@
                         </tab-pane>
                         <tab-pane>
                             <span slot="title" class="nav-link-icon d-block"><i class="fa fa-keyboard-o"></i></span>
-                            <a href="https://www.sketchapp.com/" target="_blank" data-toggle="tooltip" data-original-title="[Coming Soon] Sketch - Digital design toolkit">
-                                    <img v-lazy="'https://s3.amazonaws.com/creativetim_bucket/tim_static_images/presentation-page/sketch.jpg'" class="img-fluid opacity-5">
-                                </a>
                         </tab-pane>
 
                     </tabs>
@@ -23,10 +20,31 @@
                         <template slot="title"> 
                             <i class="fa fa-university mr-2"></i>Clubs and Societies
                         </template>
-                         <modal>
-                        </modal>
-                            <p> Needs to display a card for each item in database for which the user follows </p>
-                            <li v-for="cards in cardsLinks" v-bind:key="cards.title"> <a v-bind:href="cards.link">{{cards.title}} ({{cards.details}}) </a> </li>
+                        <div class="col-auto mr-auto mt-3 mb-3">Following</div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3" v-for="element in following" v-bind:key="element.uid">
+                                            <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name">
+                                                <template slot="header">
+                                                    {{element.name}}
+                                                </template>
+                                                <template slot="footer">
+                                                    <div class="d-flex flex-row">
+                                                        {{element.recentEvent.name}}
+                                                    </div>
+                                                    <div class="d-flex flex-row-reverse">
+                                                    <p> Most Recent Event: 
+                                                        <base-button outline @click="goTo(element.recentEvent.url)">   
+                                                        {{element.recentEvent.name}} </base-button></p>
+                                                    </div>
+                                                </template>
+                                            </card>
+                                    </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse">
+                            <div class="col-auto pt-5">
+                                <modal></modal>
+                            </div>
+                        </div>
                     </tab-pane>
 
                     <tab-pane key="tab2">
@@ -34,75 +52,35 @@
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                             <div class="row">
-                                <p> Upcoming </p>
-                                    <div class="col-md-6 mb-3"></div>
-                                    <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
-                                        <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
-                                        <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
+                            <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
                             </div>
-                            <div class="row pt-5">
-                                <p> Following </p>
-                                <div class="col-md-6 mb-5 mb-md-0"></div>
-                                        <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
-                                        <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
-                                        <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
-                                        <!-- Card Element (V-for each) -->
-                                        <div class="col-md-6 mb-3">
-                                            <div class="card card-lift--hover shadow border-0">
-                                            <router-link to="/profile" title="Profile Page">
-                                                <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                            </router-link>   
-                                            </div>
-                                        </div>
-                                        <!-- End card element -->
+                                <div class="row">
+                                    <!-- <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
+                                            <card class="card-lift--hover shadow" :link="cards.url" :img="cards.image">
+                                                <template slot="header">
+                                                    {{cards.name}}
+                                                </template>
+                                            </card>
+                                    </div> -->
+                                    <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.url">
+                                            <card class="card-lift--hover shadow" :link="element.url" img="/img/theme/lcard.png" :name="element.name">
+                                                <template slot="header">
+                                                    {{element.event.name}}
+                                                </template>
+                                            </card>
+                                    </div>
+                                </div>
+                            <div class="row">
+                            <div class="col-auto mr-auto mt-3 mb-3">Following</div>
+                            </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3" v-for="element in following" v-bind:key="element.uid">
+                                            <card class="card-lift--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name">
+                                                <template slot="header">
+                                                    {{element.recentEvent.name}}
+                                                </template>
+                                            </card>
+                                    </div>
                             </div>
                     </tab-pane>
 
@@ -130,61 +108,31 @@
                         <template slot="title">
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
-                                        <div class="row">
-                                            <p> My Tickets </p>
-                                            <div class="col-md-6 mb-5 mb-md-0">
-                                            </div>
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            <!-- End card element -->
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            <!-- End card element -->
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            <!-- End card element -->
-                                        </div>
-                                        <div class="row pt-5">
-                                            <p> Following </p>
-                                            <div class="col-md-6 mb-5 mb-md-0">
-                                            </div>
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            <!-- End card element -->
-                                            <!-- Card Element (V-for each) -->
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            <!-- End card element -->
-                                        </div>
+                            <div class="row">
+                            <div class="col-auto mr-auto mt-3 mb-3">My Memberships</div>
+                            </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3" v-for="element in memberships" v-bind:key="element.name">
+                                            <card class="card-lift--hover shadow" img="/img/theme/lcard.png" :name="element.name">
+                                                <template slot="header">
+                                                    {{element.name}}
+                                                </template>
+                                            </card>
+                                    </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-auto mr-auto mt-3 mb-3">My Tickets</div>
+                            </div>
+                                <!-- NOT FINISHED. LOOK AT CODE. -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3" v-for="element in memberships" v-bind:key="element.name">
+                                            <card class="card-lift--hover shadow" img="/img/theme/lcard.png" :name="element.name">
+                                                <template slot="header">
+                                                    {{element.name}}
+                                                </template>
+                                            </card>
+                                    </div>
+                            </div>
                     </tab-pane>
                 </card>
             </tabs>
@@ -218,24 +166,100 @@ const cardsData = [
     },
     data () {
         return {
-        user: '...',
-        cardsLinks: cardsData,
-        first: true,
-        second: true,
-        layout: false,
-        moreContent: true,
-        drawer: false,
-        drawerR: false,
-        lorem: 'hello, this is a test',
-        membership: {
-            name: '',
-            type: '',
-            price: '',
-            details: ''
-        }
+            user: '...',
+            cardsLinks: cardsData,
+            // cardsEventsLinks: cardsEventData, 
+            
+            memberships: {
+                membership: {
+                    name: 'L Card',
+                    type: '',
+                    price: '',
+                    details: ''
+                },
+            },
+
+            following: {
+                club: {
+                    name: 'QUTLS',
+                    uid: '123',
+                    recentEvent: 
+                        {
+                            name: 'Law Ball',
+                            url: '/event'
+                        
+                        }
+                },
+
+                club2: {
+                    name: 'Code Network',
+                    uid: '234',
+                    recentEvent: 
+                        {
+                            name: 'Code Network Evening',
+                            url: '/event'
+                        
+                        }
+                }
+            },
+            //Subscribed means: has membership to
+            subscribed: {
+                club: {
+                    name: 'QUTLS',
+                    url: '/',
+                    event: {
+                            name: 'My rad event',
+                            date: '15/11/20',
+                            url: '/'
+                    }
+                }
+            },
+
+            tickets: {
+                club: {
+                    name: 'QUTLS',
+                        club_tickets: 
+                            {
+                                ticket_details: {
+                                    name: 'Ticket to Law Ball',
+                                    date: '25/12/20',
+                                    url: '/',
+                                    ticket_id: '12345',
+                                },
+                                ticket_details2: {
+                                    name: 'Ticket to pub crawl',
+                                    date: '24/12/20',
+                                    url: '/',
+                                    ticket_id: '09876',
+                                }
+                            },
+                    name: 'Code Network',
+                            club_tickets: 
+                            {
+                                ticket_details: {
+                                    name: 'Ticket to Networking Event',
+                                    date: '25/12/20',
+                                    url: '/',
+                                    ticket_id: '0123',
+                                },
+                                ticket_details2: {
+                                    name: 'Ticket to pub crawl',
+                                    date: '24/12/20',
+                                    url: '/',
+                                    ticket_id: '5678',
+                                }
+                            }
+                }
+            }
         }
     },
     methods: {
+
+        goTo(url)
+        {   
+            window.location.href = url
+        },
+
         async retrieveMembership () {
         this.user = this.$store.state.userDetails.firstName
         const cards = this.$store.dispatch('getMemberships')
@@ -274,6 +298,42 @@ const cardsData = [
                 this.retrieveMembership()
             } 
         },
+
+        // 1. Get following club events
+        // 2. Get subscribed club memberships
+        // 3. Get tickets owned by user
+        // 4. Get following club profile pages.
+
+        // //BELOW NEEDS TO BE RELEVANT FOR A USER TYPE. 
+        // //I HAVE COPIED THE EXACT SAME CODE USED BY SOCIETIES. PLEASE UPDATE!!!!!
+
+        // async getEvents () {
+        //     const eventCards = this.$store.dispatch('getClubEvents')
+        //         .then(function (data) {
+        //         const cardsData = []
+        //         for (var i = 0; i < data.length; i++) {
+        //             const card = {
+        //                 id: '',
+        //                 name: '',
+        //                 url: '',
+        //                 description: '',
+        //                 date_created: ''
+        //             }
+        //             card.name = data[i].event_name
+        //             card.description = data[i].event_description
+        //             card.url = '/event/' + data[i].id
+        //             card.id = data[i].id
+        //             card.date_created = data[i].date_created                
+        //         cardsData.push(card)
+        //         }
+        //             return cardsData
+        //         })
+        // this.cardsEventData = await eventCards
+        // this.cardsEventsLinks = this.cardsEventData
+        // console.log('eventcardscheck:', this.cardsEventData)
+        // }
+
+        // // END
 
     },
     created() {

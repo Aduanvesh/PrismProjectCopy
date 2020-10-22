@@ -349,6 +349,17 @@ export default new Vuex.Store({
       targetMem.set({
         members: [],
         price: 0,
+        name: payload.title,
+        origin: this.state.userDetails.linkid
+      })
+    }, 
+
+    async updateMembershipType (a = {}, payload) {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetMem = club.collection('membership_types').doc(payload.id)
+      targetMem.update({
+        price: payload.price,
+        name: payload.title,
         origin: this.state.userDetails.linkid
       })
     }, 
@@ -390,6 +401,8 @@ export default new Vuex.Store({
       targetEvent.set({
         date_created: new Date(),
         event_description: payload.description,
+        location: payload.location,
+        date: payload.times,
         event_name: payload.title,
         price: payload.price,
         id: targetEvent.id,
@@ -426,6 +439,16 @@ export default new Vuex.Store({
       if (payload.event_description != undefined){
         targetEvent.update({
           event_description: payload.description,
+        })
+      }
+      if (payload.location != undefined){
+        targetEvent.update({
+          location: payload.location,
+        })
+      }
+      if (payload.times != undefined){
+        targetEvent.update({
+          date: payload.times,
         })
       }
       if (payload.price != undefined && payload.price != -1){
