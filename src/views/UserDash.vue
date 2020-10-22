@@ -264,11 +264,20 @@ const cardsData = [
         this.cardsData = await cards
         this.cardsLinks = this.cardsData
         console.log('cardscheck:', this.cardsData)
-        }
+        },
         
+        async goLoad () {
+            console.log('loading:', this.$store.state.userDetails.email)
+            if (this.$store.state.userDetails.email === undefined){
+                  setTimeout(() => this.goLoad(), 50) 
+            } else {
+                this.retrieveMembership()
+            } 
+        },
+
     },
     created() {
-       setTimeout(() => this.retrieveMembership(), 5000)
+       this.goLoad()
     }
   }
 </script>

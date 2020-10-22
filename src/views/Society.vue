@@ -106,10 +106,10 @@
                                         </base-button>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
-                                        <card class="card-options--hover shadow" options="true" :link="cards.link" :img="cards.image">
+                                    <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
+                                        <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image">
                                             <template slot="header">
-                                                {{cards.title}}
+                                                {{cards.name}}
                                             </template>
                                         </card>
                                     </div>
@@ -146,36 +146,57 @@
                         </div>
                         </div>
                     </tab-pane>
-                    <tab-pane key="tab4">
+                  <!--  <tab-pane key="tab4">
                         <template slot="title">
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
-                                        <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
+                                        TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' 
                                         <div class="row">
                                             <div class="col-auto mr-auto">Active Tickets</div>
-                                            <!-- <div class="col-auto mb-3"> -->
+                                            <div class="col-auto mb-3"> 
                                                 <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
-                                            <!-- </div> -->
+                                            </div> 
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
-                                                <card class="card-options--hover shadow" options="true" :link="cards.link" :img="cards.image">
-                                                    <template slot="header">
-                                                        {{cards.title}}
-                                                    </template>
-                                                </card>
+                                             Card Element (V-for each) 
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card card-lift--hover shadow border-0">
+                                                <router-link to="/profile" title="Profile Page">
+                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
+                                                </router-link>   
+                                                </div>
                                             </div>
+                                             End card element
+                                             Card Element (V-for each) 
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card card-lift--hover shadow border-0">
+                                                <router-link to="/profile" title="Profile Page">
+                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
+                                                </router-link>   
+                                                </div>
+                                            </div>
+                                            End card element 
+                                             Card Element (V-for each) 
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card card-lift--hover shadow border-0">
+                                                <router-link to="/profile" title="Profile Page">
+                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
+                                                </router-link>   
+                                                </div>
+                                            </div>
+                                            End card element 
                                         </div>
                                             <div class="row pt-5">
                                                 <div class="col-md-6 mb-5 mb-md-3"> Past Tickets </div>
                                             </div>
-                                            <div class="row">
+                                                <div class="row">
+                                                Card Element (V-for each)
                                                 <div class="col-md-6 mb-3">
                                                     <card class="card-options--hover shadow" options="true" link="/event/undefined" img="/img/theme/lcard.png">
                                                     </card>
                                                 </div>
                                             </div>
-                    </tab-pane>
+                    </tab-pane> -->
                     <tab-pane key="tab5">
                         <template slot="title">
                             <i class="fa fa-users mr-2"></i>Membership list
@@ -231,6 +252,21 @@ const cardsData = [
   }
 ]
 
+const cardsEventData = [
+  {
+    title: 'QUT Code Network',
+    caption: 'Standard Membership',
+    details: '132 members',
+    link: '/code-network-membership'
+  },
+  {
+    title: 'QUT NotCode Network',
+    caption: 'Standard Membership',
+    details: '132 members',
+    link: '/code-network-membership'
+  }
+]
+
   export default {
     name: 'tables',
     components: {
@@ -238,11 +274,12 @@ const cardsData = [
       Modal,
       flatPicker
     },
-
+    
     data () {
         return {
         user: 'Code Network', //return actual user's name i.e. 'QUTLS'
         cardsLinks: cardsData,
+        cardsEventsLinks: cardsEventData, 
         memberlist: 
             [
           {
@@ -272,28 +309,25 @@ const cardsData = [
         }
     },
     methods: {
+        
         async retrieveMembership () {
-        const cards = this.$store.dispatch('getCards')
+        const cards = this.$store.dispatch('getMembershipTypes')
             .then(function (data) {
-            const cardsData = []
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].details)
-                const card = {
-                title: '',
-                caption: '',
-                details: '',
-                link: ''
-            }
-                card.title = data[i].name
-                card.caption = data[i].type
-            if (data[i].memberCount === 1) {
-                card.details = '1 member'
-            } else {
-                card.details = data[i].memberCount + ' members'
-            }
-            card.link = '/code-network-membership'
-            cardsData.push(card)
-            }
+                const cardsData = []
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].details)
+                    const card = {
+                        title: '',
+                        caption: '',
+                        price: '',
+                        members: []
+                    }
+                    card.title = data[i].name
+                    card.caption = data[i].description
+                    card.price = data[i].price
+                    card.members = data[i].members
+                    cardsData.push(card)
+                }
                 return cardsData
             })
         this.cardsData = await cards
@@ -309,13 +343,48 @@ const cardsData = [
         },
 
         async goProfile () {
-            console.log('test123')
             this.$router.push("/profile/" + this.$store.state.userDetails.id)
+        },
+
+        async goLoad () {
+            console.log('loading:', this.$store.state.userDetails.email)
+            if (this.$store.state.userDetails.email === undefined){
+                  setTimeout(() => this.goLoad(), 50) 
+            } else {
+                this.retrieveMembership()
+                this.getMembers()
+                this.getEvents()
+            } 
+        },
+
+        async getEvents () {
+            const eventCards = this.$store.dispatch('getClubEvents')
+                .then(function (data) {
+                const cardsData = []
+                for (var i = 0; i < data.length; i++) {
+                    const card = {
+                        id: '',
+                        name: '',
+                        url: '',
+                        description: '',
+                        date_created: ''
+                    }
+                    card.name = data[i].event_name
+                    card.description = data[i].event_description
+                    card.url = '/event/' + data[i].id
+                    card.id = data[i].id
+                    card.date_created = data[i].date_created                
+                cardsData.push(card)
+                }
+                    return cardsData
+                })
+        this.cardsEventData = await eventCards
+        this.cardsEventsLinks = this.cardsEventData
+        console.log('eventcardscheck:', this.cardsEventData)
         }
     },
     created() {
-        //setTimeout(() => this.retrieveMembership(), 5000)
-        setTimeout(() => this.getMembers(), 5000) 
+        this.goLoad()
     }
   }
   
