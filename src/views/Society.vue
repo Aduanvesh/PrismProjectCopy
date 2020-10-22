@@ -1,5 +1,45 @@
 <template>
     <div class="section section-shaped section-lg my-0">
+                    <modal :show.sync="modals.add">
+              <h6 slot="header" class="modal-title" id="modal-title-default">New Event</h6>
+                <base-input placeholder="New Event">
+                </base-input>
+                <base-input placeholder="Description">
+                </base-input>
+                <p>Time and Date</p>
+                  <div class="input-daterange datepicker align-items-center">
+                      <div class="">
+                              <base-input addon-left-icon="ni ni-calendar-grid-58">
+                                  <flat-picker slot-scope="{focus, blur}"
+                                              @on-open="focus"
+                                              @on-close="blur"
+                                              :config="{allowInput: true, mode: 'range',}"
+                                              class="form-control datepicker"
+                                              v-model="dates.range">
+                                  </flat-picker>
+                              </base-input>
+                          </div>
+                      </div>
+                <p>Location</p>
+                  <base-input placeholder="Location">
+                  </base-input>
+                <p>Price</p>
+                  <base-input
+                  placeholder="$0.00"
+                  addon-left-icon="fa fa-tag">
+                  </base-input>
+                <p>Capacity</p>
+                  <base-input
+                  placeholder="0"
+                  addon-left-icon="fa fa-users">
+                  </base-input>                
+
+                <template slot="footer">
+                    <base-button type="primary">Save changes</base-button>
+                    <base-button type="link" class="ml-auto" @click="modals.add = false">Close
+                    </base-button>
+                </template>
+            </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
            <p class="h1" style="color: white;"> Hi, {{user}} </p>
@@ -16,8 +56,10 @@
 
                     </tabs>
                 </div>
+
            <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
+                    <!-- Tabs begin here -->
                     <tab-pane key="tab1">
                         <template slot="title"> 
                             <i class="fa fa-university mr-2"></i>{{user}}
@@ -60,9 +102,8 @@
                                 <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                 <div class="row">
                                     <div class="col-auto mr-auto">Active Events</div>
-                                    <!-- <div class="col-auto mb-3"> -->
-                                        <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
-                                    <!-- </div> -->
+                                        <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus" @click="modals.add = true">
+                                        </base-button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
@@ -91,8 +132,9 @@
                         <h5> Payments</h5>
                         <div class="row">
                             <div class="col-3">
-                                <card>Item 1</card>
-                                <card>Item 2</card>
+                                <!-- v-for events, tickets etc. -->
+                                <card>Membership Sales</card>
+                                <card>Ticket Sales</card>
                                 <card>Item 3</card>
                                 <card>Item 4</card>
                         </div>
@@ -175,18 +217,6 @@
                                         <th>{{member.university}}</th>
                                     </tr>
                                     </table>
-                                   <!-- <div class="row">
-                                        <div class="col">
-                                            <projects-table title="Light Table"
-                                            img="String"
-                                            first_name="TESTTTEST"
-                                            budget="String"
-                                            status="String"
-                                            statusType="String"
-                                            completion= "String"
-                                            ></projects-table>
-                                        </div>
-                                    </div> -->
                                </div>
                     </tab-pane>
                 </card>
@@ -199,7 +229,10 @@
 // import cards has been replaced with a new 'SocietyCard' component made by me.
 // import Cards from '../views/components/Cards.vue'
 import SocietyCard from '../components/SocietyCard.vue'
-import store from 'main'
+import Modal from "@/components/Modal.vue";
+import store from 'main';
+import flatPicker from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
 //import ProjectsTable from './Tables/ProjectsTable'
 import router from '../router'
 
@@ -238,6 +271,8 @@ const cardsEventData = [
     name: 'tables',
     components: {
       //ProjectsTable
+      Modal,
+      flatPicker
     },
     
     data () {
@@ -256,6 +291,15 @@ const cardsEventData = [
             completion: 60
           },
         ],
+
+        dates: {
+        range: "2020-01-09 to 2020-01-09"
+        },
+
+        modals: {
+        add: false,
+        delete: false,
+        },
 
         switches: {
             membershipsVisible: false,

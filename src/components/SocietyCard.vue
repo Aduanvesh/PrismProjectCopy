@@ -1,4 +1,5 @@
 <template>
+    
     <div class="card"
          :class="[
          {'card-lift--hover': hover},
@@ -6,51 +7,56 @@
          {'shadow': shadow},
          {[`shadow-${shadowSize}`]: shadowSize},
          {[`bg-gradient-${gradient}`]: gradient},
-         {[`bg-${type}`]: type}
+         {[`bg-${type}`]: type},
        ]">
 
-        <div class="card-header" :class="headerClasses" v-if="$slots.header">
-            <slot name="header">
-            </slot>
-        </div>
-        <!-- Had a 'card-body' class in it before... -->
-        <div class="" :class="bodyClasses" v-if="!noBody">
-            <slot></slot>
-            <!-- Below has been added by Ed -->
-            <!-- style="max-height: 200px; max-width: 200px; object-fit: cover; width: 100%;" -->
-            <div v-if="img">
-              <img :src="img" class="card-img-crop" >
-            </div>
-            <!-- Below has been added by Ed -->
-              <!-- Needs to have the element for when hover, show in css -->
-              <div v-if="options" class=""> 
-                <ul class="nav nav-pills-circle justify-content-center">
-                  <li class="nav-item">
-                    <a class="nav-link nav-white-highlight"
-                       href="#" @click.prevent="modals.edit = true"
-                    >
-                    Edit
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link nav-white-highlight"
-                       :href="link"
-                    >
-                    View
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link nav-white-highlight"
-                       href="#" @click.prevent="deleteThis"
-                    >
-                    Delete
-                    </a>
-                  </li>                  
-                </ul>
-              </div>
-              <!-- div class body-options... list menu options here in a slot? -->
-             <!-- End -->
-            <!-- End -->
+       <modal
+          :show.sync="modals.delete"
+          gradient="danger"
+          modal-classes="modal-danger modal-dialog-centered">
+          <h6 slot="header" class="modal-title" id="modal-title-notification">Your attention is required</h6>
+          <div class="py-3 text-center">
+              <i class="fa fa-trash-o fa-3x"></i>
+              <h4 class="heading mt-4">Would you really like to delete this?</h4>
+              <p>Users will no longer be able to access the public copy of this file once it has been deleted.</p>
+          </div>
+          <template slot="footer">
+              <base-button type="white">Ok, Got it</base-button>
+              <base-button type="link"
+                          text-color="white"
+                          class="ml-auto"
+                          @click="modals.delete = false">
+                  Close
+              </base-button>
+            </template>
+        </modal>
+
+        <modal :show.sync="modals.view">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Statistics</h6>
+
+                <p>Tickets Sold:</p>
+                <p>Current Attendees:</p>
+
+                <template slot="footer">
+                    <base-button type="primary">View Event</base-button>
+                    <base-button outline type="primary" @click="modals.view = false; modals.guest = true">View Guest List</base-button>
+                    <base-button type="link" class="ml-auto" @click="modals.view = false">Close
+                    </base-button>
+                </template>
+        </modal>
+        
+        <modal :show.sync="modals.guest">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Guest List</h6>
+
+                <p>Guests:</p>
+
+                <template slot="footer">
+                    <base-button type="primary" @click="modals.view = true; modals.guest = false">View Stats</base-button>
+                    <base-button type="link" class="ml-auto" @click="modals.guest = false">Close
+                    </base-button>
+                </template>
+        </modal>
+
             <modal :show.sync="modals.edit">
               <h6 slot="header" class="modal-title" id="modal-title-default">{{event.name}}</h6>
                <form role="form" @submit.prevent="editThis">
@@ -94,6 +100,52 @@
                 
                
             </modal>
+
+        <div class="card-header" :class="headerClasses" v-if="$slots.header">
+            <slot name="header">
+            </slot>
+        </div>
+        <div class="card-body" :class="bodyClasses" v-if="!noBody">
+            <slot></slot>
+            <div v-if="img">
+              <img :src="img" class="card-img-crop" >
+            </div>
+              <div v-if="options"> 
+                <ul class="nav nav-pills-circle justify-content-center">
+                  <li class="nav-item">
+                    <div v-if="$slots.button1">
+                      <slot name="button1">
+                      </slot>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <div v-if="$slots.button2">
+                      <slot name="button2">
+                      </slot>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <div v-if="$slots.button3">
+                      <slot name="button3">
+                      </slot>
+                    </div>
+                  </li>    
+                  <li class="nav-item" v-if="options && !$slots.button1 || !$slots.button2 || !$slots.button3">
+                      <a class="nav-link nav-white-highlight" href="#" @click.prevent="modals.view = true">View</a>
+                  </li>
+                  <li class="nav-item" v-if="options && !$slots.button1 || !$slots.button2 || !$slots.button3">
+                    <a class="nav-link nav-white-highlight"
+                        href="#" @click.prevent="modals.edit = true"
+                      >Edit</a>
+                  </li> 
+                  <li class="nav-item" v-if="options && !$slots.button1 || !$slots.button2 || !$slots.button3">
+                      <a class="nav-link nav-white-highlight" href="#" @click.prevent="modals.delete = true">Delete</a>
+                  </li>             
+                </ul>
+              </div>
+              <!-- div class body-options... list menu options here in a slot? -->
+             <!-- End -->
+            <!-- End -->
         </div>
         <slot v-if="noBody"></slot>
 
@@ -119,7 +171,8 @@ export default {
       modals: {
         view: false,
         edit: false,
-        delete: false
+        delete: false,
+        guest: false,
       },
       editForm: {
         id:'',
