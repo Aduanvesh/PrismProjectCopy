@@ -346,6 +346,17 @@ export default new Vuex.Store({
       targetMem.set({
         members: [],
         price: 0,
+        name: payload.title,
+        origin: this.state.userDetails.linkid
+      })
+    }, 
+
+    async updateMembershipType (a = {}, payload) {
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetMem = club.collection('membership_types').doc(payload.id)
+      targetMem.update({
+        price: payload.price,
+        name: payload.title,
         origin: this.state.userDetails.linkid
       })
     }, 
