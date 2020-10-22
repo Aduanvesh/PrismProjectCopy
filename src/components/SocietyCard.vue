@@ -21,7 +21,7 @@
               <p>Users will no longer be able to access the public copy of <i>{{name}}</i> once it has been deleted.</p>
           </div>
           <template slot="footer">
-              <base-button type="white" @click="onDelete">Ok, Got it</base-button>
+              <base-button type="white" @click="deleteThis">Ok, Got it</base-button>
               <base-button type="link"
                           text-color="white"
                           class="ml-auto"
@@ -327,19 +327,11 @@ export default {
   },
   methods: {
 
-      onEdit(evt){
-        modals.edit = false
-        evt.preventDefault()
-        alert(JSON.stringify(this.edit))
-        editThis()
-      },
-
-    onDelete(){
-      modals.delete = false
-      deleteThis()
-    },
     
-    async deleteThis () {
+    async deleteThis (evt) {
+      evt.preventDefault()
+      alert(JSON.stringify(this.id))
+
       console.log('iddeletecheck:', this.id)
       this.$store.dispatch('deleteEvent', this.id)
        setTimeout(() =>  this.$router.go(), 100)
@@ -349,7 +341,13 @@ export default {
       this.edit.id = this.id
       console.log(this.edit)
       this.$store.dispatch('updateEvent', this.edit)
-    }
+    },
+
+    onEdit(evt){
+        evt.preventDefault()
+        alert(JSON.stringify(this.edit))
+        editThis()
+      },
   }
 };
 </script>
