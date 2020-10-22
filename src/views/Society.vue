@@ -288,8 +288,7 @@ const cardsEventData = [
                     '12:30',
             ],
             event: {
-                category: '',
-                title: '',
+                event_name: '',
                 description: '',
                 location: '',
                 startTime: '',
@@ -383,14 +382,26 @@ const cardsEventData = [
                 const cardsData = []
                 for (var i = 0; i < data.length; i++) {
                     const card = {
+                        capacity: '',
+                        date: '',
+                        date_created: '',
+                        dietr: false,
+                        endTime: '',
+                        event_description: '',
+                        event_name: '',
                         id: '',
-                        name: '',
-                        url: '',
-                        description: '',
-                        date_created: ''
+                        location: '',
+                        memberonly: false,
+                        price: '',
+                        startTime: '',
+                        url: ''
                     }
-                    card.name = data[i].event_name
-                    card.description = data[i].event_description
+                    if (data[i].event_name === undefined) {card.event_name = 'Untitled'}
+                    else {card.event_name = data[i].event_name}
+
+                    card.event_description = data[i].event_description
+
+
                     card.url = '/event/' + data[i].id
                     card.id = data[i].id
                     card.date_created = data[i].date_created                

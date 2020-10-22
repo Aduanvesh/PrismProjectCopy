@@ -403,12 +403,14 @@ export default new Vuex.Store({
         date_created: new Date(),
         event_description: payload.description,
         location: payload.location,
-        date: payload.times,
-        event_name: payload.title,
+        date: payload.dates,
+        startTime: payload.startTime,
+        endTime: payload.endTime,
+        event_name: payload.event_name,
         price: payload.price,
         capacity: payload.capacity,
-        dietr: payload.dietr,
-        memberonly: payload.memberonly,
+        dietr: payload.extras.catering,
+        memberonly: payload.extras.membersOnly,
         id: targetEvent.id,
         linked_account: this.state.userDetails.linkid
       })
