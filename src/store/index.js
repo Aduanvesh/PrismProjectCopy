@@ -45,6 +45,10 @@ export default new Vuex.Store({
                 last_name: payload.lastName,
                 phone_1: payload.phoneNumber,
                 university: payload.university,
+                memberships: [],
+                membership_types: [],
+                payments: [],
+                events: []
             })
             } else if (payload.type === 'Club') {
             targetUser.set({
@@ -371,6 +375,57 @@ export default new Vuex.Store({
       })
     },
 
+
+    async getEventTickets () {
+      const finalArray = []
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      const targetArray = await targetUser.get()
+        .then(doc => {
+          console.log('checktickets', doc.data().events)
+          return doc.data().events
+        })
+        for (var i = 0; i < targetArray.length; i++) {
+          const snapshot = await firebase.firestore().collection('events').doc(targetArray[i]).get()
+            .then(doc => {
+              return doc.data()
+            })
+          finalArray.push(snapshot)
+        }
+        console.log('final arrayticketos:', finalArray)
+        return finalArray
+    },
+
+
+    async getMembershipsTypesUser (a = {}, payload) {
+      const finalArray = []
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      const targetArray = await targetUser.get()
+        .then(doc => {
+          console.log('check', doc.data().membership_types)
+          return doc.data().membership_types
+        })
+        for (var i = 0; i < targetArray.length; i++) {
+          const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
+            .then(doc => {
+              return doc.data()
+            })
+          finalArray.push(snapshot)
+        }
+        console.log('final arraymembos:', finalArray)
+        return finalArray
+    }, 
+
+    async joinMembershipsTypesUser (a = {}, payload) {
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('users').doc(userID)
+      targetUser.update({
+        membership_types: firebase.firestore.FieldValue.arrayUnion(payload)
+      })
+    },
+
+
     async getClubEvents () {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const snapshot = await club.get()
@@ -402,6 +457,8 @@ export default new Vuex.Store({
         date: payload.times,
         event_name: payload.title,
         price: payload.price,
+        catering: payload.extras.catering,
+        membersOnly: payload.extras.membersOnly,
         id: targetEvent.id,
         linked_account: this.state.userDetails.linkid
       })
@@ -472,14 +529,20 @@ export default new Vuex.Store({
       })
     },
 
-    async getClubMembers () {
-      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+    async getClubMembers (a = {}, payload) {
+      const user = await firebase.firestore().collection('users').doc(payload)
+        const clubthing = await user.get()
+        .then(doc => {
+          return doc.data().membershiplink
+        })
+        console.log('thickem', clubthing)
+      const club = await firebase.firestore().collection('memberships').doc(clubthing)
       const targetArray = await club.get()
         .then(doc => {
-          console.log(doc.data(), this.state.userDetails.linkid)
+          console.log(doc.data(), payload)
           return doc.data().members
         })
-        console.log('thickem', targetArray)
+        
       const memberArray = []
       for (var i = 0; i < targetArray.length; i++) {
         const snapshot = await firebase.firestore().collection('users').doc(targetArray[i]).get()
