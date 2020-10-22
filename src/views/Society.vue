@@ -150,11 +150,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                        <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
-                                            <template slot="header">
-                                                {{cards.name}}
-                                            </template>
-                                        </card>
+                                        <div v-if="cards.name != null">
+                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
+                                                <template slot="header">
+                                                    {{cards.name}}
+                                                </template>
+                                            </card>
+                                        </div>
                                     </div>
                                 </div>
                                     <div class="row pt-5">
@@ -187,58 +189,7 @@
                         </div>
                         </div>
                     </tab-pane>
-                  <!--  <tab-pane key="tab4">
-                        <template slot="title">
-                            <i class="fa fa-qrcode mr-2"></i>Tickets
-                        </template>
-                                        TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' 
-                                        <div class="row">
-                                            <div class="col-auto mr-auto">Active Tickets</div>
-                                            <div class="col-auto mb-3"> 
-                                                <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
-                                            </div> 
-                                        </div>
-                                        <div class="row">
-                                             Card Element (V-for each) 
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                             End card element
-                                             Card Element (V-for each) 
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            End card element 
-                                             Card Element (V-for each) 
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            End card element 
-                                        </div>
-                                            <div class="row pt-5">
-                                                <div class="col-md-6 mb-5 mb-md-3"> Past Tickets </div>
-                                            </div>
-                                                <div class="row">
-                                                Card Element (V-for each)
-                                                <div class="col-md-6 mb-3">
-                                                    <card class="card-options--hover shadow" options="true" link="/event/undefined" img="/img/theme/lcard.png">
-                                                    </card>
-                                                </div>
-                                            </div>
-                    </tab-pane> -->
-                    <tab-pane key="tab5">
+                    <tab-pane key="tab4">
                         <template slot="title">
                             <i class="fa fa-users mr-2"></i>Membership list
                         </template>
@@ -342,61 +293,47 @@ const cardsEventData = [
             '12:00',
             '12:30',
             ],
-      event: {
-        category: '',
-        title: '',
-        description: '',
-        location: '',
-        times: '',
-        extras: {
-          catering: false,
-          membersOnly: false
-        },
-        price: '',
-        capacity: 0,
-        dates: {
-        range: "2020-01-09 to 2020-01-10"
-        },
-      },
+            event: {
+                category: '',
+                title: '',
+                description: '',
+                location: '',
+                times: '',
+                extras: {
+                catering: false,
+                membersOnly: false
+                },
+                price: '',
+                capacity: 0,
+                dates: "2018-07-17 to 2018-07-19",
+            },
 
-        user: 'Code Network', //return actual user's name i.e. 'QUTLS'
-        cardsLinks: cardsData,
-        cardsEventsLinks: cardsEventData, 
-        memberlist: 
-            [
-          {
-            img: '/img/theme/bootstrap.jpg',
-            first_name: 'Argon Design System',
-            budget: '$2500 USD',
-            status: 'pending',
-            statusType: 'warning',
-            completion: 60
-          },
-        ],
-
-        modals: {
-        add: false,
-        delete: false,
-        },
-
-        switches: {
-            membershipsVisible: false, 
-        },
-
+            user: this.$store.state.userDetails.title ? this.$store.state.userDetails.title : 'Student Society',
+            cardsLinks: cardsData,
+            cardsEventsLinks: cardsEventData, 
+            modals: {
+            add: false,
+            },
         }
     },
 
     methods: {
 
+        initialiseEventData()
+        {
+            for (key in event) {
+                                if (event.hasOwnProperty(key)) {
+                                    event[key] = null;
+                                }
+                            }
+        },
+
         onSubmit(evt){
             evt.preventDefault()
             alert(JSON.stringify(this.event))
             this.$store.dispatch('createEvent', this.event)
+            initialiseEventData()
         },
-
-        //temporary add
-        
-        //end temporary add
         
         async retrieveMembership () {
         const cards = this.$store.dispatch('getMembershipTypes')
