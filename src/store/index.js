@@ -398,6 +398,7 @@ export default new Vuex.Store({
     async createEvent (a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const targetEvent = firebase.firestore().collection('events').doc()
+      console.log('INSIDE THE CREATE EVENT')
       targetEvent.set({
         date_created: new Date(),
         event_description: payload.description,
