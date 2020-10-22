@@ -81,7 +81,6 @@
                                             </template>
                                         </card>
                                     </div>
-                                    <button @click="pay">pay</button>
                             </div>
                         </div>
                         <!-- Vue-if statement. Are there memberships to display for this society that are available for purchase? -->
