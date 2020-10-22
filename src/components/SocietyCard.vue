@@ -14,14 +14,14 @@
           :show.sync="modals.delete"
           gradient="danger"
           modal-classes="modal-danger modal-dialog-centered">
-          <h6 slot="header" class="modal-title" id="modal-title-notification">Your attention is required</h6>
+          <h6 slot="header" class="modal-title" id="modal-title-notification">Would you like to delete <i>{{name}}</i>?</h6>
           <div class="py-3 text-center">
               <i class="fa fa-trash-o fa-3x"></i>
               <h4 class="heading mt-4">Would you really like to delete this?</h4>
-              <p>Users will no longer be able to access the public copy of this file once it has been deleted.</p>
+              <p>Users will no longer be able to access the public copy of <i>{{name}}</i> once it has been deleted.</p>
           </div>
           <template slot="footer">
-              <base-button type="white">Ok, Got it</base-button>
+              <base-button type="white" @click="deleteThis; modals.delete = false">Ok, Got it</base-button>
               <base-button type="link"
                           text-color="white"
                           class="ml-auto"
@@ -56,50 +56,91 @@
                     </base-button>
                 </template>
         </modal>
-
             <modal :show.sync="modals.edit">
-              <h6 slot="header" class="modal-title" id="modal-title-default">{{event.name}}</h6>
-               <form role="form" @submit.prevent="editThis">
-                <input :placeholder="event.name" v-model="editForm.name">
-                <input placeholder="Description" v-model="editForm.description">
-                <p>Time and Date</p>
-                  <div class="input-daterange datepicker align-items-center">
-                      <div class="">
-                              <input addon-left-icon="ni ni-calendar-grid-58">
-                                  <flat-picker slot-scope="{focus, blur}"
-                                              @on-open="focus"
-                                              @on-close="blur"
-                                              :config="{allowInput: true, mode: 'range',}"
-                                              class="form-control datepicker"
-                                              v-model="dates.range">
-                                  </flat-picker>
-                             
-                          </div>
-                      </div>
-                <p>Location</p>
-                  <input placeholder="Location">
-                  
-                <p>Price</p>
-                  <input v-model="editForm.price"
-                  placeholder="$0.00"
-                  addon-left-icon="fa fa-tag">
-                  
-                <p>Capacity</p>
-                  <input v-model="editForm.capacity"
-                  placeholder="0"
-                  addon-left-icon="fa fa-users">
-                           
-                <div class="text-center">
-                  
-                    <button type="submit">Save changes</button>
-                    <button type="link" class="ml-auto" @click="modals.edit = false">Close
-                    </button>
-               
-                </div>
-                </form>    
-                
-               
-            </modal>
+                <div>
+                    <h6 slot="header" class="modal-title mb-3" id="modal-title-default">Edit: {{name}}</h6>
+                    <form>
+                    <p>Title and Description</p>
+                    <base-input 
+                        v-model="edit.title"
+                        type="text"
+                        placeholder="Title"
+                        class="field"> 
+                    </base-input>
+                    <base-input 
+                        v-model="edit.description"
+                        type="text"
+                        placeholder="Description"
+                        class="field">
+                    </base-input>
+                    <p>Time and Date</p>
+                        <select v-model="times">
+                            <option
+                            v-for="option in times"
+                            :value="option"
+                            :key="option"
+                            :selected="option === times"
+                            >{{ option }}</option>
+                        </select>
+                        <div class="calendar">
+                                <base-input addon-left-icon="ni ni-calendar-grid-58">
+                                    <flat-picker slot-scope="{focus, blur}"
+                                                @on-open="focus"
+                                                @on-close="blur"
+                                                :config="{allowInput: true, mode: 'range',}"
+                                                class="form-control datepicker"
+                                                v-model="edit.dates">
+                                    </flat-picker>
+                                </base-input>
+                        </div>
+                    <p></p>
+                    <p>Location</p>
+                    <base-input 
+                        v-model="edit.location"
+                        type="text"
+                        placeholder="Location"
+                        class="field"
+                    >
+                    </base-input>
+                    <p>Price</p>
+                    <base-input 
+                        v-model="edit.price"
+                        type="text"
+                        placeholder="$0.00"
+                        class="field"
+                    >
+                    </base-input>
+                    <p>Capacity</p>
+                    <base-input 
+                        v-model="edit.capacity"
+                        type="text"
+                        placeholder="0"
+                        class="field"
+                    >
+                    </base-input>
+        <h6>Extras</h6>
+        <div>
+            <base-checkbox
+            type="checkbox"
+            v-model="edit.extras.catering"
+            class="field"
+            ><p>Collect dietary requirements?</p></base-checkbox>
+        </div>
+        <div>
+            <base-checkbox
+            type="checkbox"
+            v-model="edit.extras.membersOnly"
+            class="field"
+            ><p>Member only event?</p></base-checkbox>
+            
+        </div>
+        <base-button type="submit" @click="onEdit">Save changes</base-button>
+        <base-button type="link" class="ml-auto" @click="modals.edit = false">Close
+        </base-button>
+        </form>
+    </div>
+  </modal>
+
 
         <div class="card-header" :class="headerClasses" v-if="$slots.header">
             <slot name="header">
@@ -174,18 +215,49 @@ export default {
         delete: false,
         guest: false,
       },
-      editForm: {
-        id:'',
-        name:'',
-        description:'',
-        price: -1
+      times: [
+            '1:00',
+            '1:30',
+            '2:00',
+            '2:30',
+            '3:00',
+            '3:30',
+            '4:00',
+            '4:30',
+            '5:00',
+            '5:30',
+            '6:00',
+            '6:30',
+            '7:00',
+            '7:30',
+            '8:00',
+            '8:30',
+            '9:00',
+            '9:30',
+            '10:00',
+            '10:30',
+            '11:00',
+            '11:30',
+            '12:00',
+            '12:30',
+            ],
+      edit: {
+        category: '',
+        title: '',
+        description: '',
+        location: '',
+        times: '',
+        extras: {
+          catering: false,
+          membersOnly: false
+        },
+        price: '',
+        capacity: 0,
+        dates: "2020-01-09 to 2020-01-10",
       },
-      event: {
-        name: 'Title',
-      },
-      dates: {
-        range: "2020-01-09 to 2020-01-09"
-      }
+
+      dates: "2020-01-09 to 2020-01-10",
+      
     };
   },
   props: {
@@ -193,6 +265,11 @@ export default {
       type: String,
       default: "",
       description: "id of event"
+    },
+    name: {
+        type: String,
+        default: 'Untitled',
+        description: "Name of the file, event or membership"
     },
     type: {
       type: String,
@@ -249,15 +326,23 @@ export default {
     }
   },
   methods: {
+
+      onEdit(evt){
+        modals.edit = false
+        evt.preventDefault()
+        alert(JSON.stringify(this.edit))
+        editThis()
+      },
+    
     async deleteThis () {
       console.log('idcheck:', this.id)
       this.$store.dispatch('deleteEvent', this.id)
     },
 
     async editThis () {
-      this.editForm.id = this.id
-      console.log(this.editForm)
-      this.$store.dispatch('updateEvent', this.editForm)
+      this.edit.id = this.id
+      console.log(this.edit)
+      this.$store.dispatch('updateEvent', this.edit)
     }
   }
 };

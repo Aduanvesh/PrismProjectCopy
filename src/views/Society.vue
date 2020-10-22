@@ -1,44 +1,87 @@
 <template>
     <div class="section section-shaped section-lg my-0">
-                    <modal :show.sync="modals.add">
-              <h6 slot="header" class="modal-title" id="modal-title-default">New Event</h6>
-                <base-input placeholder="New Event">
-                </base-input>
-                <base-input placeholder="Description">
-                </base-input>
-                <p>Time and Date</p>
-                  <div class="input-daterange datepicker align-items-center">
-                      <div class="">
-                              <base-input addon-left-icon="ni ni-calendar-grid-58">
-                                  <flat-picker slot-scope="{focus, blur}"
-                                              @on-open="focus"
-                                              @on-close="blur"
-                                              :config="{allowInput: true, mode: 'range',}"
-                                              class="form-control datepicker"
-                                              v-model="dates.range">
-                                  </flat-picker>
-                              </base-input>
-                          </div>
-                      </div>
-                <p>Location</p>
-                  <base-input placeholder="Location">
-                  </base-input>
-                <p>Price</p>
-                  <base-input
-                  placeholder="$0.00"
-                  addon-left-icon="fa fa-tag">
-                  </base-input>
-                <p>Capacity</p>
-                  <base-input
-                  placeholder="0"
-                  addon-left-icon="fa fa-users">
-                  </base-input>                
-
-                <template slot="footer">
-                    <base-button type="primary">Save changes</base-button>
-                    <base-button type="link" class="ml-auto" @click="modals.add = false">Close
-                    </base-button>
-                </template>
+        <!-- Create a new event modal -->
+            <modal :show.sync="modals.add">
+                <div>
+                    <h6 slot="header" class="modal-title mb-3" id="modal-title-default">New Event</h6>
+                    <form>
+                    <p>Title and Description</p>
+                    <base-input 
+                        v-model="event.title"
+                        type="text"
+                        placeholder="Title"
+                        class="field"> 
+                    </base-input>
+                    <base-input 
+                        v-model="event.description"
+                        type="text"
+                        placeholder="Description"
+                        class="field">
+                    </base-input>
+                    <p>Time and Date</p>
+                        <select v-model="times">
+                            <option
+                            v-for="option in times"
+                            :value="option"
+                            :key="option"
+                            :selected="option === times"
+                            >{{ option }}</option>
+                        </select>
+                        <div class="calendar">
+                                <base-input addon-left-icon="ni ni-calendar-grid-58">
+                                    <flat-picker slot-scope="{focus, blur}"
+                                                @on-open="focus"
+                                                @on-close="blur"
+                                                :config="{allowInput: true, mode: 'range',}"
+                                                class="form-control datepicker"
+                                                v-model="event.dates">
+                                    </flat-picker>
+                                </base-input>
+                        </div>
+                    <p></p>
+                    <p>Location</p>
+                    <base-input 
+                        v-model="event.location"
+                        type="text"
+                        placeholder="Location"
+                        class="field"
+                    >
+                    </base-input>
+                    <p>Price</p>
+                    <base-input 
+                        v-model="event.price"
+                        type="text"
+                        placeholder="$0.00"
+                        class="field"
+                    >
+                    </base-input>
+                    <p>Capacity</p>
+                    <base-input 
+                        v-model="event.capacity"
+                        type="text"
+                        placeholder="0"
+                        class="field"
+                    >
+                    </base-input>
+        <h6>Extras</h6>
+        <div>
+            <base-checkbox
+            type="checkbox"
+            v-model="event.extras.catering"
+            class="field"
+            ><p>Collect dietary requirements?</p></base-checkbox>
+        </div>
+        <div>
+            <base-checkbox
+            type="checkbox"
+            v-model="event.extras.membersOnly"
+            class="field"
+            ><p>Member only event?</p></base-checkbox>
+            
+        </div>
+        <base-button type="submit" @click="onSubmit">Submit</base-button>
+        </form>
+    </div>
             </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
@@ -65,7 +108,6 @@
                             <i class="fa fa-university mr-2"></i>{{user}}
                         </template>
                                 <div class="row">
-                                    <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
                                     <div class="col-auto mr-auto mb-3">Edit Page</div>
                                 </div>
                                 <div class="row">
@@ -80,7 +122,6 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <!-- <base-switch v-model="switches.membershipsVisible"></base-switch> -->
                                     <div class="col-auto mr-auto mt-3">Active Memberships</div>
                                         <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus"></base-button>
                                 </div>
@@ -99,7 +140,6 @@
                         <template slot="title">
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
-                                <!-- TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' -->
                                 <div class="row">
                                     <div class="col-auto mr-auto">Active Events</div>
                                         <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus" @click="modals.add = true">
@@ -107,11 +147,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                        <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image">
-                                            <template slot="header">
-                                                {{cards.name}}
-                                            </template>
-                                        </card>
+                                        <!-- <div v-if="cards.name != null"> -->
+                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
+                                                <template slot="header">
+                                                    {{cards.name}}
+                                                </template>
+                                            </card>
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                                     <div class="row pt-5">
@@ -144,58 +186,7 @@
                         </div>
                         </div>
                     </tab-pane>
-                  <!--  <tab-pane key="tab4">
-                        <template slot="title">
-                            <i class="fa fa-qrcode mr-2"></i>Tickets
-                        </template>
-                                        TITLE row controls: i.e. 'Tickets' ... 'Edit/Add/Delete' 
-                                        <div class="row">
-                                            <div class="col-auto mr-auto">Active Tickets</div>
-                                            <div class="col-auto mb-3"> 
-                                                <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus"></base-button>
-                                            </div> 
-                                        </div>
-                                        <div class="row">
-                                             Card Element (V-for each) 
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                             End card element
-                                             Card Element (V-for each) 
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            End card element 
-                                             Card Element (V-for each) 
-                                            <div class="col-md-6 mb-3">
-                                                <div class="card card-lift--hover shadow border-0">
-                                                <router-link to="/profile" title="Profile Page">
-                                                    <img v-lazy="'/img/theme/lcard.png'" class="card-img">
-                                                </router-link>   
-                                                </div>
-                                            </div>
-                                            End card element 
-                                        </div>
-                                            <div class="row pt-5">
-                                                <div class="col-md-6 mb-5 mb-md-3"> Past Tickets </div>
-                                            </div>
-                                                <div class="row">
-                                                Card Element (V-for each)
-                                                <div class="col-md-6 mb-3">
-                                                    <card class="card-options--hover shadow" options="true" link="/event/undefined" img="/img/theme/lcard.png">
-                                                    </card>
-                                                </div>
-                                            </div>
-                    </tab-pane> -->
-                    <tab-pane key="tab5">
+                    <tab-pane key="tab4">
                         <template slot="title">
                             <i class="fa fa-users mr-2"></i>Membership list
                         </template>
@@ -224,8 +215,6 @@
 </template>
 
 <script>
-// import cards has been replaced with a new 'SocietyCard' component made by me.
-// import Cards from '../views/components/Cards.vue'
 import SocietyCard from '../components/SocietyCard.vue'
 import Modal from "@/components/Modal.vue";
 import store from 'main';
@@ -275,38 +264,73 @@ const cardsEventData = [
     
     data () {
         return {
-        user: 'Code Network', //return actual user's name i.e. 'QUTLS'
-        cardsLinks: cardsData,
-        cardsEventsLinks: cardsEventData, 
-        memberlist: 
-            [
-          {
-            img: '/img/theme/bootstrap.jpg',
-            first_name: 'Argon Design System',
-            budget: '$2500 USD',
-            status: 'pending',
-            statusType: 'warning',
-            completion: 60
-          },
-        ],
+            times: [
+            '1:00',
+            '1:30',
+            '2:00',
+            '2:30',
+            '3:00',
+            '3:30',
+            '4:00',
+            '4:30',
+            '5:00',
+            '5:30',
+            '6:00',
+            '6:30',
+            '7:00',
+            '7:30',
+            '8:00',
+            '8:30',
+            '9:00',
+            '9:30',
+            '10:00',
+            '10:30',
+            '11:00',
+            '11:30',
+            '12:00',
+            '12:30',
+            ],
+            event: {
+                category: '',
+                title: '',
+                description: '',
+                location: '',
+                times: '',
+                extras: {
+                catering: false,
+                membersOnly: false
+                },
+                price: '',
+                capacity: 0,
+                dates: "2018-07-17 to 2018-07-19",
+            },
 
-        dates: {
-        range: "2020-01-09 to 2020-01-09"
-        },
-
-        modals: {
-        add: false,
-        delete: false,
-        },
-
-        switches: {
-            membershipsVisible: false,
-            
-        }
-        
+            user: this.$store.state.userDetails.title ? this.$store.state.userDetails.title : 'Student Society',
+            cardsLinks: cardsData,
+            cardsEventsLinks: cardsEventData, 
+            modals: {
+            add: false,
+            },
         }
     },
+
     methods: {
+
+        initialiseEventData()
+        {
+            for (key in event) {
+                                if (event.hasOwnProperty(key)) {
+                                    event[key] = null;
+                                }
+                            }
+        },
+
+        onSubmit(evt){
+            evt.preventDefault()
+            alert(JSON.stringify(this.event))
+            this.$store.dispatch('createEvent', this.event)
+            initialiseEventData()
+        },
         
         async retrieveMembership () {
         const cards = this.$store.dispatch('getMembershipTypes')
