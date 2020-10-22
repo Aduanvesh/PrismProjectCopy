@@ -81,6 +81,7 @@
                                             </template>
                                         </card>
                                     </div>
+                                    <button @click="pay">pay</button>
                             </div>
                         </div>
                         <!-- Vue-if statement. Are there memberships to display for this society that are available for purchase? -->
@@ -119,6 +120,10 @@
 import Modal from "./components/JavascriptComponents/Purchase.vue";
 import store from 'main'
 import router from '../router'
+import axios from 'axios'
+const Stripe = require('stripe')
+
+var stripe = Stripe('pk_test_51HXhlkFstnSXI8cOMPrnlik0YSKVWKFf6AsDEp4EkVHicnxJ1yrvfcSAMgsF1yjgSEFWzobOLxbgt4JwLiAPe5VB00qt7OnWrF')
 
 export default {
 name: "components",
@@ -127,6 +132,7 @@ components: {
 },
 data() {
     return {
+        sessionId:'',
         followers: 22,
         up_coming_events: 10,
         society_name: "QUT Law Society",
@@ -180,6 +186,22 @@ methods: {
             })
             console.log(result)
         }
+    },
+
+    async pay () {
+        
+        stripe.redirectToCheckout({ sessionId: this.sessionId })
+            .then(function(result) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using `error.message`.
+            if (result.error) {
+                alert(result.error.message);
+            }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+         });
     }
   },
   computed: {
@@ -190,6 +212,14 @@ methods: {
     created () {
     //this.checkUserPage()
     console.log('profile')
+    axios.post('')
+        .then(response => {
+            this.sessionId = response.data
+            console.log('Response:', response.data)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
   }
 }
 </script>
