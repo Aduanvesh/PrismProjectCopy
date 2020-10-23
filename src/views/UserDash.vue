@@ -26,11 +26,11 @@
                                             <!-- <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name"> -->
                                                 <card class="card-options--hover shadow" img="/img/theme/lcard.png"> 
                                                 <template slot="header">
-                                                    {{element.name}}
+                                                    {{element.title}}
                                                 </template>
                                                 <template slot="footer">
                                                     <div class="d-flex flex-row">
-                                                        {{element.caption}}
+                                                       <i> {{element.caption}} </i>
                                                     </div>
                                                     <div class="d-flex flex-row-reverse">
                                                    <!-- <p> Most Recent Event: 
@@ -53,7 +53,7 @@
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                             <div class="row">
-                            <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
+                           <!-- <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
                             </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.id">
@@ -62,7 +62,7 @@
                                                     {{element.event.name}}
                                                 </template>
                                             </card>
-                                    </div>
+                                    </div> -->
                                 </div>
                             <div class="row">
                             <div class="col-auto mr-auto mt-3 mb-3">Following</div>
@@ -84,18 +84,24 @@
                         </template>
                         <h5> Payments</h5>
                         <div class="row">
-                            <div class="col-3">
-                                <card>Item 1</card>
-                                <card>Item 2</card>
-                                <card>Item 3</card>
-                                <card>Item 4</card>
-                        </div>
-                        <div class="col-9">
-                                <card style="height: 100%;">
-                                <card>Law Ball Ticket: $100</card>
-                                <card>Refund: $50</card>
-                                </card>
-                        </div>
+                        <table style="width:75%">
+                                    <tr>
+                                        <th>Payment ID</th>
+                                        <th>Status</th>
+                                        <th>Payee</th>
+                                        <th>Date submitted</th>
+                                        <th>Date paid</th>
+                                        <th>Payment</th>
+                                    </tr>
+                                    <tr v-for="payment in payments" v-bind:key="payment.id">
+                                        <th>{{payment.id}}</th>
+                                        <th>{{payment.status}}</th>
+                                        <th>{{payment.payee}}</th>
+                                        <th>{{payment.date1}}</th>
+                                        <th>{{payment.date2}}</th>
+                                        <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
+                                    </tr>
+                                    </table>
                         </div>
                     </tab-pane>
                     <tab-pane key="tab4">
@@ -103,7 +109,7 @@
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
                             <div class="row">
-                            <div class="col-auto mr-auto mt-3 mb-3">My Memberships</div>
+                            <div class="col-auto mr-auto mt-3 mb-3">My Premium Memberships</div>
                             </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="element in memberships" v-bind:key="element.title">
@@ -139,6 +145,7 @@ import store from 'main'
 import Modal from '../views/SearchClub.vue'
 
 const cardsData = [
+
 ]
 
   export default {
@@ -151,56 +158,22 @@ const cardsData = [
             cardsLinks: cardsData,
             // cardsEventsLinks: cardsEventData, 
             
+            payments: [
+            
+            ],
+
             events: [
-                {
-                    name: 'Law Ball',
-                    url: '/event',
-                    id: '123'        
-                }
+                
             ],
 
             memberships: {
-                membership: {
-                    name: 'L Card',
-                    type: '',
-                    price: '',
-                    details: ''
-                },
+               
             },
 
             following: [
-                //  {
-                //     name: 'QUTLS',
-                //     id: '123',
-                //     recentEvent: 
-                //     {
-                //         name: 'Law Ball',
-                //         url: '/event'
-                //     }
-                // },
-                // {
-                //     name: 'Code Network',
-                //     id: '234',
-                //     recentEvent: 
-                //     {
-                //         name: 'Code Network Evening',
-                //         url: '/event'
-                //     }
-                // }
-            ],
-            //Subscribed means: has membership to
-            subscribed: {
-                club: {
-                    name: 'QUTLS',
-                    url: '/',
-                    event: {
-                            name: 'My rad event',
-                            date: '15/11/20',
-                            url: '/'
-                    }
-                }
-            },
 
+            ],
+            
             tickets: {
                 
             }
@@ -217,7 +190,6 @@ const cardsData = [
         this.user = this.$store.state.userDetails.firstName
         const cards = this.$store.dispatch('getMemberships')
             .then(function (data) {
-                console.log('lol:', data)
             const cardsData = []
             for (var i = 0; i < data.length; i++) {
                 
@@ -228,12 +200,7 @@ const cardsData = [
                 link: ''
             }
                 card.title = data[i].name
-                card.caption = data[i].type
-            if (data[i].memberCount === 1) {
-                card.details = '1 member'
-            } else {
-                card.details = data[i].memberCount + ' members'
-            }
+                card.caption = data[i].details
             card.url = '/profile/' + data[i].userlink
             cardsData.push(card)
             }
@@ -241,7 +208,36 @@ const cardsData = [
             })
         this.following = await cards
         
-        console.log('cardscheck:', this.following)
+        console.log('cardscheckfollowing:', this.following)
+        },
+
+         async retrievePayments () {
+            const pays = this.$store.dispatch('getPayments')
+            .then(function (data) {
+            const Arpayments = []
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].details)
+                const card = {
+                id: '',
+                status: '',
+                payee: '',
+                date1: '',
+                date2: '',
+            }
+                
+                card.id = data[i].id
+                card.status = data[i].status
+                card.payee = data[i].payee
+                card.date1 = data[i].date1
+                card.date2 = data[i].date2
+
+            Arpayments.push(card)
+            }
+                return Arpayments
+            })
+        this.payments = await pays
+
+        console.log('paymentcheck:', this.payments)
         },
         
         async retrieveMembershipTypes () {
@@ -277,13 +273,13 @@ const cardsData = [
                 this.retrieveMembershipTypes()
                 this.retrieveEvents()
                 this.retrieveEventsTickets()
+                this.retrievePayments()
             } 
         },
 
         async retrieveEventsTickets () {
             const cards = this.$store.dispatch('getEventTickets')
             .then(function (data) {
-            console.log('lolt234234234:', data)
             const cardsData = []
             for (var i = 0; i < data.length; i++) {
                 
