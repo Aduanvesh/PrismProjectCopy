@@ -2,8 +2,13 @@
    <header class="header-global">
       <base-nav class="navbar-main" transparent type="" effect="light" expand>
          <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" v-on:click.native="toDashboard" to="/">
-            <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
-            <span class="text-white alpha-7">Sociit</span>
+            <div v-if="currentPath === '/'">
+            <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+            </div>
+            <div v-else>
+               <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
+               <span class="text-white alpha-7">Sociit</span>
+            </div>
          </router-link>
          <div class="row" slot="content-header" slot-scope="{closeMenu}">
             <div class="col-6 collapse-brand">
@@ -22,7 +27,12 @@
             <base-dropdown class="nav-item" menu-classes="dropdown-menu-xl">
                <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
                <i class="ni ni-ui-04 d-lg-none"></i>
-               <span class="nav-link-inner--text">Menu</span>
+               <div v-if="currentPath === '/'">
+                  <span class="nav-link-inner--text" style="color: black;">Menu</span>
+               </div>
+               <div v-else>
+                  <span class="nav-link-inner--text">Menu</span>
+               </div>
                </a>
                <div class="dropdown-menu-inner">
                   <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
@@ -35,7 +45,9 @@
                         <p class="description d-none d-md-inline-block mb-0">Search for a club on Sociit</p>
                      </div>
                   </a>
-                  <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
+                  <!-- Dashboard Menu Item -->
+                  <div v-if="userExists">
+                  <a href="/" v-on:click.native="toDashboard"
                      class="media d-flex align-items-center">
                      <div class="icon icon-shape bg-gradient-warning rounded-circle-no-outline text-white">
                         <i class="ni ni-ui-04"></i>
@@ -45,23 +57,42 @@
                         <p class="description d-none d-md-inline-block mb-0">Go to the dashboard</p>
                      </div>
                   </a>
+                  </div>
+                  <div v-else-if="currentPath === '/'">
+                  <a href="/login"
+                     class="media d-flex align-items-center">
+                     <div class="icon icon-shape bg-gradient-warning rounded-circle-no-outline text-white">
+                        <i class="ni ni-ui-04"></i>
+                     </div>
+                     <div class="media-body ml-3">
+                        <h5 class="heading text-warning mb-md-1">Dashboard</h5>
+                        <p class="description d-none d-md-inline-block mb-0">Login or register to see the dashboard</p>
+                     </div>
+                  </a>
+                  <!-- End Dashboard Menu Item -->
+                  </div>
                </div>
             </base-dropdown>
             <base-dropdown tag="li" class="nav-item">
                <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
                <i class="ni ni-collection d-lg-none"></i>
-               <span class="nav-link-inner--text">Pages</span>
-               </a>
-               <router-link v-on:click.native="toDashboard" to="/" class="dropdown-item">Dashboard</router-link>
-               <router-link :to="userID"  class="dropdown-item">Profile</router-link>
-               <!-- V-if statement here -->
-               <div v-if="!userExists">
-                  <router-link to="/login" class="dropdown-item">Login</router-link>
-                  <router-link to="/register" class="dropdown-item">Register</router-link>
+               <div v-if="currentPath === '/'">
+                  <span class="nav-link-inner--text" style="color: black;">Pages</span>
                </div>
                <div v-else>
-                  <router-link to="/" v-on:click.native="$store.dispatch('signoutUser')" class="dropdown-item">Logout</router-link>
+                  <span class="nav-link-inner--text">Pages</span>
                </div>
+               </a>
+                  <div v-if="userExists">
+                     <router-link v-on:click.native="toDashboard" to="/" class="dropdown-item">Dashboard</router-link>
+                     <router-link :to="userID"  class="dropdown-item">Profile</router-link>
+                     <!-- V-if statement here -->
+                     <router-link to="/" v-on:click.native="$store.dispatch('signoutUser')" class="dropdown-item">Logout</router-link>
+                  </div>
+                  <div v-else>
+                        <router-link to="/login" class="dropdown-item">Login</router-link>
+                        <router-link to="/register" class="dropdown-item">Register</router-link>
+                  </div>
             </base-dropdown>
          </ul>
          <div class = "white" v-if="userExists">
@@ -114,13 +145,13 @@ export default {
     BaseDropdown
   },
 
-//   data: {
-//       mainlogo: {
-//           loggedIn: '',
-//           loggedOut: ''
-//       },
+  data: {
+      // mainlogo: {
+      //     loggedIn: '',
+      //     loggedOut: ''
+      // },
 
-//   },
+  },
 
   methods: {
         async toDashboard() {
@@ -133,6 +164,12 @@ export default {
         }
     },
   computed: {
+
+   currentPath() {
+      console.log(this.$route)
+      return router.currentRoute.fullPath
+   },
+
     userID(){
       return '/profile/' + this.$store.state.userDetails.id
     },
