@@ -25,7 +25,7 @@
             </div>
          <div class="row" slot="content-header" slot-scope="{closeMenu}">
             <div class="col-6 collapse-brand">
-               <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
+               <a href="/">
                <div class="row align-items-center">
                <img src="/img/brand/logoblk.svg">
                <h2 class="mt-2"> Sociit </h2>
@@ -48,7 +48,7 @@
                </div>
                </a>
                <div class="dropdown-menu-inner">
-                  <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
+                  <a href="/"
                      class="media d-flex align-items-center">
                      <div class="icon icon-shape bg-gradient-primary rounded-circle-no-outline text-white">
                         <i class="ni ni-spaceship"></i>
