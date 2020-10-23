@@ -48,7 +48,6 @@
                             <h3>{{society_name}}
                                 <span class="font-weight-light"></span>
                             </h3>
-                            <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{location}}</div>
                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{subtitle}}</div>
                             <div><i class="ni education_hat mr-2"></i>{{university}}</div>
                             <div><i class="fade"></i>#{{$route.params.id}}</div>
@@ -136,7 +135,6 @@ data() {
         up_coming_events: 10,
         society_name: "QUT Law Society",
         subtitle: "Law Society",
-        location: "Brisbane, Queensland",
         university: "Queensland University of Technology",
         bio: "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
         memberlist: [],
@@ -196,6 +194,18 @@ methods: {
             } 
         },
 
+    async getDetails () {
+        const clubDetails = await this.$store.dispatch('getClubDetails', this.$route.params.id)
+            .then(function (data) { 
+                return data
+            })
+        this.society_name = clubDetails.name
+        this.subtitle = clubDetails.details
+        this.up_coming_events = clubDetails.events.length
+        this.bio = clubDetails.description
+        console.log('lolma', this.society_name)
+    },
+
     async getMembers () {
         const clubMembers = await this.$store.dispatch('getClubMembers', this.$route.params.id)
         this.memberlist = clubMembers
@@ -226,6 +236,7 @@ methods: {
     created () {
     //this.checkUserPage()
     this.getMembers()
+    this.getDetails()
     /*axios.post('')
         .then(response => {
             this.sessionId = response.data
