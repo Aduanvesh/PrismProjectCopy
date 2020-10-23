@@ -3,7 +3,7 @@ import Router from "vue-router";
 import AppHeader from "./layout/AppHeader";
 import AppFooter from "./layout/AppFooter";
 import Components from "./views/Components.vue";
-import Landing from "./views/Landing.vue";
+//import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import PasswordReset from "./views/PasswordReset.vue";
 import Register from "./views/Register.vue";
@@ -30,15 +30,15 @@ export default new VueRouter({
         footer: AppFooter
       }
     },
-    {
-      path: "/landing",
-      name: "landing",
-      components: {
-        header: AppHeader,
-        default: Landing,
-        footer: AppFooter
-      }
-    },
+    // {
+    //   path: "/landing",
+    //   name: "landing",
+    //   components: {
+    //     header: AppHeader,
+    //     default: Landing,
+    //     footer: AppFooter
+    //   }
+    // },
     {
       path: "/login",
       name: "login",

@@ -1,18 +1,31 @@
 <template>
    <header class="header-global">
       <base-nav class="navbar-main" transparent type="" effect="light" expand>
-         <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" v-on:click.native="toDashboard" to="/">
-            <div v-if="currentPath === '/'">
-            <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+            <div v-if="userExists">
+               <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" v-on:click.native="toDashboard" to="/">
+                  <div v-if="currentPath === '/'">
+                  <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+                  </div>
+                  <div v-else>
+                     <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
+                     <span class="text-white alpha-7">Sociit</span>
+                  </div>
+               </router-link>
             </div>
             <div v-else>
-               <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
-               <span class="text-white alpha-7">Sociit</span>
+            <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" to="/">
+                  <div v-if="currentPath === '/'">
+                  <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+                  </div>
+                  <div v-else>
+                     <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
+                     <span class="text-white alpha-7">Sociit</span>
+                  </div>
+               </router-link>
             </div>
-         </router-link>
          <div class="row" slot="content-header" slot-scope="{closeMenu}">
             <div class="col-6 collapse-brand">
-               <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
+               <a href="/">
                <div class="row align-items-center">
                <img src="/img/brand/logoblk.svg">
                <h2 class="mt-2"> Sociit </h2>
@@ -35,7 +48,7 @@
                </div>
                </a>
                <div class="dropdown-menu-inner">
-                  <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
+                  <a href="/"
                      class="media d-flex align-items-center">
                      <div class="icon icon-shape bg-gradient-primary rounded-circle-no-outline text-white">
                         <i class="ni ni-spaceship"></i>
@@ -115,18 +128,34 @@
             </ul>
          </div >
          <div v-else>
+         <div v-if="currentPath === '/'">
             <ul class="navbar-nav ml-lg-auto">
-               <li class="nav-item d-none d-lg-block ml-lg-4">
-                  <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login" style="color: #800080">
-                     <span class="nav-link-inner--text">Login</span>
-                  </router-link>
-               </li>
-               <li class="nav-item d-none d-lg-block ml-lg-4">
-                  <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register" style="color: #800080">
-                     <span class="nav-link-inner--text">Register</span>
-                  </router-link>
-               </li>
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login" style="color: #800080">
+                        <span class="nav-link-inner--text">Login</span>
+                     </router-link>
+                  </li>
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register" style="color: #800080">
+                        <span class="nav-link-inner--text">Register</span>
+                     </router-link>
+                  </li>
             </ul>
+         </div>
+         <div v-else>
+            <ul class="navbar-nav ml-lg-auto">
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login">
+                        <span class="nav-link-inner--text">Login</span>
+                     </router-link>
+                  </li>
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register">
+                        <span class="nav-link-inner--text">Register</span>
+                     </router-link>
+                  </li>
+            </ul>
+         </div>
          </div>
       </base-nav>
    </header>
