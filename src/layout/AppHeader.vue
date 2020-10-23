@@ -23,19 +23,31 @@
                   </div>
                </router-link>
             </div>
+         
          <div class="row" slot="content-header" slot-scope="{closeMenu}">
             <div class="col-6 collapse-brand">
-               <a href="/">
-               <div class="row align-items-center">
-               <img src="/img/brand/logoblk.svg">
-               <h2 class="mt-2"> Sociit </h2>
+               <div v-if="userExists">
+                  <router-link to="/" v-on:click.native="toDashboard">
+                     <div class="row align-items-center">
+                        <img src="/img/brand/logoblk.svg">
+                        <h2 class="mt-2"> Sociit </h2>
+                     </div>
+                  </router-link>
                </div>
-               </a>
+               <div v-else>
+                  <a href="/">
+                     <div class="row align-items-center">
+                        <img src="/img/brand/logoblk.svg">
+                        <h2 class="mt-2"> Sociit </h2>
+                     </div>
+                  </a>
+               </div>
             </div>
             <div class="col-6 collapse-close">
                <close-button @click="closeMenu"></close-button>
             </div>
          </div>
+
          <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
             <base-dropdown class="nav-item" menu-classes="dropdown-menu-xl">
                <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
