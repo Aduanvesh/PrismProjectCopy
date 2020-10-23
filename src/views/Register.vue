@@ -1,14 +1,7 @@
 <template>
     <section class="section section-shaped section-lg my-0">
-        <div class="shape shape-style-1 bg-gradient-default">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="shape shape-style-1 bg-gradient-default" id="registerbackgroundimg">
+            <img src="img/theme/loginwallpaper.jpg" class="img-fluid animated" alt="">         
         </div>
         <div class="container pt-lg-md">
             <div class="row justify-content-center">
@@ -320,6 +313,10 @@ export default {
 }
 </script>
 <style>
+
+#registerbackgroundimg {
+  background: radial-gradient(circle, rgba(43,36,66,1) 0%, rgba(34,26,51,1) 100%, rgba(0,212,255,1) 100%) !important;
+}
 .first-name, .last-name, .email, .password, .phone-number, .university, .title {
     text-align: center;
     padding-bottom: 25px;

@@ -1,14 +1,7 @@
 <template>
-    <section class="section section-shaped section-lg my-0">
-        <div class="shape shape-style-1 bg-gradient-default">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+    <section class="section section-shaped section-lg my-0" id="loginpage">
+        <div class="shape shape-style-1 bg-gradient-default" id="loginbackgroundimg">
+            <img src="img/theme/loginwallpaper.jpg" class="img-fluid animated" alt="">         
         </div>
         <div class="container pt-lg-md">
             <div class="row justify-content-center">
@@ -175,6 +168,13 @@ export default {
 }
 </script>
 <style>
+#loginpage {
+  height: 100vh;
+}
+
+#loginbackgroundimg {
+  background: radial-gradient(circle, rgba(43,36,66,1) 0%, rgba(34,26,51,1) 100%, rgba(0,212,255,1) 100%) !important;
+}
 .password, .login{
     text-align: center;
     padding-bottom: 25px;
@@ -184,8 +184,8 @@ export default {
   background: #800080;
   color: #fff;
   border-radius: 20px;
+  border: 0px;
   padding: 8px 25px;
-  margin: 0 0 0 30px;
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
 }
@@ -193,6 +193,7 @@ export default {
 .my-4:hover {
   background: #b82598;
   color: #fff;
+  animation-duration: 2s;
 }
 
 </style>
