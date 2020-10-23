@@ -334,7 +334,7 @@ export default {
 
       console.log('iddeletecheck:', this.id)
       this.$store.dispatch('deleteEvent', this.id)
-       setTimeout(() =>  this.$router.go(), 100)
+       //setTimeout(() =>  this.$router.go(), 100)
     },
 
     async editThis () {
@@ -343,10 +343,10 @@ export default {
       this.$store.dispatch('updateEvent', this.edit)
     },
 
-    onEdit(evt){
+    async onEdit(evt){
         evt.preventDefault()
         alert(JSON.stringify(this.edit))
-        editThis()
+        this.editThis()
       },
   }
 };

@@ -467,7 +467,7 @@ export default new Vuex.Store({
     async createEvent (a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const targetEvent = firebase.firestore().collection('events').doc()
-      console.log('INSIDE THE CREATE EVENT')
+      console.log('INSIDE THE CREATE EVENT', payload)
       targetEvent.set({
         date_created: new Date(),
         event_description: payload.description,
@@ -506,9 +506,10 @@ export default new Vuex.Store({
 
     async updateEvent (a = {}, payload) {
       const targetEvent = firebase.firestore().collection('events').doc(payload.id)
-      if (payload.name != undefined){
+      console.log('eventsdata:', payload)
+      if (payload.title != undefined){
         targetEvent.update({
-          event_name: payload.name,
+          event_name: payload.title,
         })
       }
       if (payload.event_description != undefined){
