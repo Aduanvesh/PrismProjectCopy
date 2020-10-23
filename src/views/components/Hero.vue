@@ -66,6 +66,8 @@ section {
 }
 
 /*Hero Section*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i');
+
 #hero {
   width: 100%;
   height: 70vh;
@@ -78,12 +80,13 @@ section {
   font-weight: 700;
   line-height: 56px;
   color: black;
+  font-family: "Raleway", sans-serif;
 }
 
 #hero h2 {
   color: #484848;
   margin-bottom: 50px;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 #hero .btn-get-started {
@@ -96,11 +99,12 @@ section {
   border-radius: 50px;
   transition: 0.5s;
   color: #800080;
-  border: 2px solid #b82598;
+  border: 2px solid #800080;
 }
 
 #hero .btn-get-started:hover {
   background: #b82598;
+  border: 2px solid #b82598;
   color: #fff;
 }
 
