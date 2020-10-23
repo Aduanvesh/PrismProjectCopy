@@ -1,15 +1,28 @@
 <template>
    <header class="header-global">
       <base-nav class="navbar-main" transparent type="" effect="light" expand>
-         <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" v-on:click.native="toDashboard" to="/">
-            <div v-if="currentPath === '/'">
-            <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+            <div v-if="userExists">
+               <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" v-on:click.native="toDashboard" to="/">
+                  <div v-if="currentPath === '/'">
+                  <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+                  </div>
+                  <div v-else>
+                     <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
+                     <span class="text-white alpha-7">Sociit</span>
+                  </div>
+               </router-link>
             </div>
             <div v-else>
-               <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
-               <span class="text-white alpha-7">Sociit</span>
+            <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" to="/">
+                  <div v-if="currentPath === '/'">
+                  <img src="/img/brand/logoblk.svg" class="mr-lg-2" alt="Sociit Logo">
+                  </div>
+                  <div v-else>
+                     <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
+                     <span class="text-white alpha-7">Sociit</span>
+                  </div>
+               </router-link>
             </div>
-         </router-link>
          <div class="row" slot="content-header" slot-scope="{closeMenu}">
             <div class="col-6 collapse-brand">
                <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
