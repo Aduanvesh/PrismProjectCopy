@@ -49,7 +49,7 @@ export default {
             const result = await check.then(function (defs, messageError) {
                 return defs
             })
-            console.log(result)
+            console.log('search:', result)
             if (result === 'success'){
                 this.modals.modal1 = false
             }

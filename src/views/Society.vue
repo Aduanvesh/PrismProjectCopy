@@ -19,12 +19,20 @@
                         class="field">
                     </base-input>
                     <p>Time and Date</p>
-                        <select v-model="times">
+                        <select v-model="event.startTime">
                             <option
                             v-for="option in times"
                             :value="option"
                             :key="option"
-                            :selected="option === times"
+                            :selected="option === event.startTime"
+                            >{{ option }}</option>
+                        </select>
+                        <select v-model="event.endTime">
+                            <option
+                            v-for="option in times"
+                            :value="option"
+                            :key="option"
+                            :selected="option === event.endTime"
                             >{{ option }}</option>
                         </select>
                         <div class="calendar">
@@ -147,13 +155,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                        <!-- <div v-if="cards.name != null"> -->
+                                        <div v-if="cards.name != null"> 
+                                            <!-- Above, weak workaround to hide null events. -->
                                             <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
                                                 <template slot="header">
                                                     {{cards.name}}
                                                 </template>
                                             </card>
-                                        <!-- </div> -->
+                                        </div>
                                     </div>
                                 </div>
                                     <div class="row pt-5">
@@ -225,33 +234,9 @@ import router from '../router'
 
 
 const cardsData = [
-  {
-    title: 'QUT Code Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  },
-  {
-    title: 'QUT NotCode Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  }
 ]
 
 const cardsEventData = [
-  {
-    title: 'QUT Code Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  },
-  {
-    title: 'QUT NotCode Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  }
 ]
 
   export default {
@@ -265,40 +250,41 @@ const cardsEventData = [
     data () {
         return {
             times: [
-            '1:00',
-            '1:30',
-            '2:00',
-            '2:30',
-            '3:00',
-            '3:30',
-            '4:00',
-            '4:30',
-            '5:00',
-            '5:30',
-            '6:00',
-            '6:30',
-            '7:00',
-            '7:30',
-            '8:00',
-            '8:30',
-            '9:00',
-            '9:30',
-            '10:00',
-            '10:30',
-            '11:00',
-            '11:30',
-            '12:00',
-            '12:30',
+                    '1:00',
+                    '1:30',
+                    '2:00',
+                    '2:30',
+                    '3:00',
+                    '3:30',
+                    '4:00',
+                    '4:30',
+                    '5:00',
+                    '5:30',
+                    '6:00',
+                    '6:30',
+                    '7:00',
+                    '7:30',
+                    '8:00',
+                    '8:30',
+                    '9:00',
+                    '9:30',
+                    '10:00',
+                    '10:30',
+                    '11:00',
+                    '11:30',
+                    '12:00',
+                    '12:30',
             ],
             event: {
-                category: '',
-                title: '',
+                event_name: '',
                 description: '',
                 location: '',
-                times: '',
+                startTime: '',
+                endTime: '',
+
                 extras: {
-                catering: false,
-                membersOnly: false
+                    catering: false,
+                    membersOnly: false
                 },
                 price: '',
                 capacity: 0,
@@ -316,20 +302,21 @@ const cardsEventData = [
 
     methods: {
 
-        initialiseEventData()
+        async initialiseEventData(event)
         {
-            for (key in event) {
-                                if (event.hasOwnProperty(key)) {
-                                    event[key] = null;
-                                }
-                            }
+            for (var key in event) {
+                if (event.hasOwnProperty(key)) {
+                    event[key] = null;
+                }
+            }
         },
 
         onSubmit(evt){
             evt.preventDefault()
             alert(JSON.stringify(this.event))
             this.$store.dispatch('createEvent', this.event)
-            initialiseEventData()
+            this.initialiseEventData(this.event)
+
         },
         
         async retrieveMembership () {
@@ -358,7 +345,7 @@ const cardsEventData = [
         },
         
         async getMembers () {
-            const clubMembers = await this.$store.dispatch('getClubMembers')
+            const clubMembers = await this.$store.dispatch('getClubMembers', this.$store.state.userDetails.id)
             this.memberlist = clubMembers
             console.log('membercheck:', this.memberlist)
             
@@ -385,14 +372,26 @@ const cardsEventData = [
                 const cardsData = []
                 for (var i = 0; i < data.length; i++) {
                     const card = {
+                        capacity: '',
+                        date: '',
+                        date_created: '',
+                        dietr: false,
+                        endTime: '',
+                        event_description: '',
+                        event_name: '',
                         id: '',
-                        name: '',
-                        url: '',
-                        description: '',
-                        date_created: ''
+                        location: '',
+                        memberonly: false,
+                        price: '',
+                        startTime: '',
+                        url: ''
                     }
-                    card.name = data[i].event_name
-                    card.description = data[i].event_description
+                    if (data[i].event_name === undefined) {card.event_name = 'Untitled'}
+                    else {card.event_name = data[i].event_name}
+
+                    card.event_description = data[i].event_description
+
+
                     card.url = '/event/' + data[i].id
                     card.id = data[i].id
                     card.date_created = data[i].date_created                

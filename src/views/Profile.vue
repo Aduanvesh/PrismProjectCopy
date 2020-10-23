@@ -34,7 +34,7 @@
                             <div class="col-lg-4 order-lg-1">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
-                                        <span class="heading">{{followers}}</span>
+                                        <span class="heading">{{memberlist.length}}</span>
                                         <span class="description">Followers</span>
                                     </div>
                                     <div>
@@ -81,7 +81,6 @@
                                             </template>
                                         </card>
                                     </div>
-                                    <button @click="pay">pay</button>
                             </div>
                         </div>
                         <!-- Vue-if statement. Are there memberships to display for this society that are available for purchase? -->
@@ -140,7 +139,7 @@ data() {
         location: "Brisbane, Queensland",
         university: "Queensland University of Technology",
         bio: "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
-    
+        memberlist: [],
         eventData: 
             [
           {
@@ -188,7 +187,22 @@ methods: {
         }
     },
 
-    async pay () {
+     async goLoad () {
+            console.log('loading:', this.$store.state.userDetails.email)
+            if (this.$store.state.userDetails.email === undefined){
+                  setTimeout(() => this.goLoad(), 50) 
+            } else {
+                
+            } 
+        },
+
+    async getMembers () {
+        const clubMembers = await this.$store.dispatch('getClubMembers', this.$route.params.id)
+        this.memberlist = clubMembers
+        console.log('membercheck:', this.memberlist)
+    },
+
+    /*async pay () {
         
         stripe.redirectToCheckout({ sessionId: this.sessionId })
             .then(function(result) {
@@ -202,7 +216,7 @@ methods: {
             .catch(function(error) {
                 console.error('Error:', error);
          });
-    }
+    }*/
   },
   computed: {
       fullname() {
@@ -211,15 +225,15 @@ methods: {
   },
     created () {
     //this.checkUserPage()
-    console.log('profile')
-    axios.post('')
+    this.getMembers()
+    /*axios.post('')
         .then(response => {
             this.sessionId = response.data
             console.log('Response:', response.data)
         })
         .catch(error => {
             console.error('Error:', error);
-        })
+        })*/
   }
 }
 </script>

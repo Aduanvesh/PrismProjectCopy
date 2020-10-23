@@ -16,25 +16,26 @@
                 </div>
            <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
-                    <tab-pane key="tab1">
+                      <tab-pane key="tab1">
                         <template slot="title"> 
                             <i class="fa fa-university mr-2"></i>Clubs and Societies
                         </template>
                         <div class="col-auto mr-auto mt-3 mb-3">Following</div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="element in following" v-bind:key="element.uid">
-                                            <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name">
+                                            <!-- <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name"> -->
+                                                <card class="card-options--hover shadow" img="/img/theme/lcard.png"> 
                                                 <template slot="header">
-                                                    {{element.name}}
+                                                    {{element.title}}
                                                 </template>
                                                 <template slot="footer">
                                                     <div class="d-flex flex-row">
-                                                        {{element.recentEvent.name}}
+                                                       <i> {{element.caption}} </i>
                                                     </div>
                                                     <div class="d-flex flex-row-reverse">
-                                                    <p> Most Recent Event: 
+                                                   <!-- <p> Most Recent Event: 
                                                         <base-button outline @click="goTo(element.recentEvent.url)">   
-                                                        {{element.recentEvent.name}} </base-button></p>
+                                                        {{element.recentEvent.name}} </base-button></p> -->
                                                     </div>
                                                 </template>
                                             </card>
@@ -45,63 +46,62 @@
                                 <modal></modal>
                             </div>
                         </div>
-                    </tab-pane>
+                    </tab-pane> 
 
-                    <tab-pane key="tab2">
+                <tab-pane key="tab2">
                         <template slot="title">
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                             <div class="row">
-                            <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
+                           <!-- <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
                             </div>
                                 <div class="row">
-                                    <!-- <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                            <card class="card-lift--hover shadow" :link="cards.url" :img="cards.image">
-                                                <template slot="header">
-                                                    {{cards.name}}
-                                                </template>
-                                            </card>
-                                    </div> -->
-                                    <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.url">
+                                    <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.id">
                                             <card class="card-lift--hover shadow" :link="element.url" img="/img/theme/lcard.png" :name="element.name">
                                                 <template slot="header">
                                                     {{element.event.name}}
                                                 </template>
                                             </card>
-                                    </div>
+                                    </div> -->
                                 </div>
                             <div class="row">
                             <div class="col-auto mr-auto mt-3 mb-3">Following</div>
                             </div>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="element in following" v-bind:key="element.uid">
-                                            <card class="card-lift--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name">
+                                    <div class="col-md-6 mb-3" v-for="element in events" v-bind:key="element.id">
+                                            <card class="card-lift--hover shadow" :link="element.url" img="/img/theme/lcard.png" :name="element.name">
                                                 <template slot="header">
-                                                    {{element.recentEvent.name}}
+                                                    {{element.name}}
                                                 </template>
                                             </card>
                                     </div>
                             </div>
-                    </tab-pane>
+                    </tab-pane> 
 
-                    <tab-pane key="tab3">
+                   <tab-pane key="tab3">
                         <template slot="title">
                             <i class="ni ni-money-coins mr-2"></i>Payments
                         </template>
                         <h5> Payments</h5>
                         <div class="row">
-                            <div class="col-3">
-                                <card>Item 1</card>
-                                <card>Item 2</card>
-                                <card>Item 3</card>
-                                <card>Item 4</card>
-                        </div>
-                        <div class="col-9">
-                                <card style="height: 100%;">
-                                <card>Law Ball Ticket: $100</card>
-                                <card>Refund: $50</card>
-                                </card>
-                        </div>
+                        <table style="width:75%">
+                                    <tr>
+                                        <th>Payment ID</th>
+                                        <th>Status</th>
+                                        <th>Payee</th>
+                                        <th>Date submitted</th>
+                                        <th>Date paid</th>
+                                        <th>Payment</th>
+                                    </tr>
+                                    <tr v-for="payment in payments" v-bind:key="payment.id">
+                                        <th>{{payment.id}}</th>
+                                        <th>{{payment.status}}</th>
+                                        <th>{{payment.payee}}</th>
+                                        <th>{{payment.date1}}</th>
+                                        <th>{{payment.date2}}</th>
+                                        <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
+                                    </tr>
+                                    </table>
                         </div>
                     </tab-pane>
                     <tab-pane key="tab4">
@@ -109,31 +109,30 @@
                             <i class="fa fa-qrcode mr-2"></i>Tickets
                         </template>
                             <div class="row">
-                            <div class="col-auto mr-auto mt-3 mb-3">My Memberships</div>
+                            <div class="col-auto mr-auto mt-3 mb-3">My Premium Memberships</div>
                             </div>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="element in memberships" v-bind:key="element.name">
-                                            <card class="card-lift--hover shadow" img="/img/theme/lcard.png" :name="element.name">
+                                    <div class="col-md-6 mb-3" v-for="element in memberships" v-bind:key="element.title">
+                                            <card class="card-lift--hover shadow" img="/img/theme/lcard.png" :name="element.title">
                                                 <template slot="header">
-                                                    {{element.name}}
+                                                    {{element.title}}
                                                 </template>
                                             </card>
                                     </div>
                             </div>
                             <div class="row">
                             <div class="col-auto mr-auto mt-3 mb-3">My Tickets</div>
-                            </div>
-                                <!-- NOT FINISHED. LOOK AT CODE. -->
+                            </div> 
                                 <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="element in memberships" v-bind:key="element.name">
-                                            <card class="card-lift--hover shadow" img="/img/theme/lcard.png" :name="element.name">
+                                    <div class="col-md-6 mb-3" v-for="element in tickets" v-bind:key="element.title">
+                                            <card class="card-lift--hover shadow" img="/img/theme/lcard.png" :name="element.title">
                                                 <template slot="header">
-                                                    {{element.name}}
+                                                    {{element.title}}
                                                 </template>
                                             </card>
                                     </div>
                             </div>
-                    </tab-pane>
+                    </tab-pane> 
                 </card>
             </tabs>
         </div>
@@ -146,18 +145,7 @@ import store from 'main'
 import Modal from '../views/SearchClub.vue'
 
 const cardsData = [
-  {
-    title: 'QUT Code Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  },
-  {
-    title: 'QUT NotCode Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  }
+
 ]
 
   export default {
@@ -170,86 +158,24 @@ const cardsData = [
             cardsLinks: cardsData,
             // cardsEventsLinks: cardsEventData, 
             
+            payments: [
+            
+            ],
+
+            events: [
+                
+            ],
+
             memberships: {
-                membership: {
-                    name: 'L Card',
-                    type: '',
-                    price: '',
-                    details: ''
-                },
+               
             },
 
-            following: {
-                club: {
-                    name: 'QUTLS',
-                    uid: '123',
-                    recentEvent: 
-                        {
-                            name: 'Law Ball',
-                            url: '/event'
-                        
-                        }
-                },
+            following: [
 
-                club2: {
-                    name: 'Code Network',
-                    uid: '234',
-                    recentEvent: 
-                        {
-                            name: 'Code Network Evening',
-                            url: '/event'
-                        
-                        }
-                }
-            },
-            //Subscribed means: has membership to
-            subscribed: {
-                club: {
-                    name: 'QUTLS',
-                    url: '/',
-                    event: {
-                            name: 'My rad event',
-                            date: '15/11/20',
-                            url: '/'
-                    }
-                }
-            },
-
+            ],
+            
             tickets: {
-                club: {
-                    name: 'QUTLS',
-                        club_tickets: 
-                            {
-                                ticket_details: {
-                                    name: 'Ticket to Law Ball',
-                                    date: '25/12/20',
-                                    url: '/',
-                                    ticket_id: '12345',
-                                },
-                                ticket_details2: {
-                                    name: 'Ticket to pub crawl',
-                                    date: '24/12/20',
-                                    url: '/',
-                                    ticket_id: '09876',
-                                }
-                            },
-                    name: 'Code Network',
-                            club_tickets: 
-                            {
-                                ticket_details: {
-                                    name: 'Ticket to Networking Event',
-                                    date: '25/12/20',
-                                    url: '/',
-                                    ticket_id: '0123',
-                                },
-                                ticket_details2: {
-                                    name: 'Ticket to pub crawl',
-                                    date: '24/12/20',
-                                    url: '/',
-                                    ticket_id: '5678',
-                                }
-                            }
-                }
+                
             }
         }
     },
@@ -266,7 +192,60 @@ const cardsData = [
             .then(function (data) {
             const cardsData = []
             for (var i = 0; i < data.length; i++) {
-                console.log(data[i].details)
+                
+                const card = {
+                title: '',
+                caption: '',
+                details: '',
+                link: ''
+            }
+                card.title = data[i].name
+                card.caption = data[i].details
+            card.url = '/profile/' + data[i].userlink
+            cardsData.push(card)
+            }
+                return cardsData
+            })
+        this.following = await cards
+        
+        console.log('cardscheckfollowing:', this.following)
+        },
+
+         async retrievePayments () {
+            const pays = this.$store.dispatch('getPayments')
+            .then(function (data) {
+            const Arpayments = []
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].details)
+                const card = {
+                id: '',
+                status: '',
+                payee: '',
+                date1: '',
+                date2: '',
+            }
+                
+                card.id = data[i].id
+                card.status = data[i].status
+                card.payee = data[i].payee
+                card.date1 = data[i].date1
+                card.date2 = data[i].date2
+
+            Arpayments.push(card)
+            }
+                return Arpayments
+            })
+        this.payments = await pays
+
+        console.log('paymentcheck:', this.payments)
+        },
+        
+        async retrieveMembershipTypes () {
+            const cards = this.$store.dispatch('getMembershipsTypesUser')
+            .then(function (data) {
+            const cardsData = []
+            for (var i = 0; i < data.length; i++) {
+                
                 const card = {
                 title: '',
                 caption: '',
@@ -275,28 +254,50 @@ const cardsData = [
             }
                 card.title = data[i].name
                 card.caption = data[i].type
-            if (data[i].memberCount === 1) {
-                card.details = '1 member'
-            } else {
-                card.details = data[i].memberCount + ' members'
-            }
-            card.link = '/profile/' + data[i].userlink
+            card.url = '/profile/' + data[i].userlink
             cardsData.push(card)
             }
                 return cardsData
             })
-        this.cardsData = await cards
-        this.cardsLinks = this.cardsData
-        console.log('cardscheck:', this.cardsData)
+        this.memberships = await cards
+        console.log('cardscheckmembos:', this.memberships)
         },
-        
+
+
         async goLoad () {
             console.log('loading:', this.$store.state.userDetails.email)
             if (this.$store.state.userDetails.email === undefined){
                   setTimeout(() => this.goLoad(), 50) 
             } else {
                 this.retrieveMembership()
+                this.retrieveMembershipTypes()
+                this.retrieveEvents()
+                this.retrieveEventsTickets()
+                this.retrievePayments()
             } 
+        },
+
+        async retrieveEventsTickets () {
+            const cards = this.$store.dispatch('getEventTickets')
+            .then(function (data) {
+            const cardsData = []
+            for (var i = 0; i < data.length; i++) {
+                
+                const card = {
+                title: '',
+                caption: '',
+                details: '',
+                link: ''
+            }
+                card.title = data[i].event_name
+                card.caption = data[i].type
+            card.url = '/profile/' + data[i].userlink
+            cardsData.push(card)
+            }
+                return cardsData
+            })
+        this.tickets = await cards
+        console.log('cardschecktickets:', this.tickets)
         },
 
         // 1. Get following club events
@@ -304,36 +305,30 @@ const cardsData = [
         // 3. Get tickets owned by user
         // 4. Get following club profile pages.
 
-        // //BELOW NEEDS TO BE RELEVANT FOR A USER TYPE. 
-        // //I HAVE COPIED THE EXACT SAME CODE USED BY SOCIETIES. PLEASE UPDATE!!!!!
-
-        // async getEvents () {
-        //     const eventCards = this.$store.dispatch('getClubEvents')
-        //         .then(function (data) {
-        //         const cardsData = []
-        //         for (var i = 0; i < data.length; i++) {
-        //             const card = {
-        //                 id: '',
-        //                 name: '',
-        //                 url: '',
-        //                 description: '',
-        //                 date_created: ''
-        //             }
-        //             card.name = data[i].event_name
-        //             card.description = data[i].event_description
-        //             card.url = '/event/' + data[i].id
-        //             card.id = data[i].id
-        //             card.date_created = data[i].date_created                
-        //         cardsData.push(card)
-        //         }
-        //             return cardsData
-        //         })
-        // this.cardsEventData = await eventCards
-        // this.cardsEventsLinks = this.cardsEventData
-        // console.log('eventcardscheck:', this.cardsEventData)
-        // }
-
-        // // END
+    async retrieveEvents () {
+            const eventsarray = this.$store.dispatch('getEvents')
+            .then(function (data) {
+                
+                const ArEvents = []
+                for (var i = 0; i < data.length; i++) {
+                    //console.log(data[i].details)
+                    const card = {
+                        id: '',
+                        name: '',
+                        date: '',
+                        event_description: ''
+                    }
+                card.id = data[i].id
+                card.name = data[i].event_name
+                card.date = new Date(data[i].date_created.seconds * 1000)
+                card.event_description = data[i].event_description
+                card.url = '/event/' + data[i].id
+                ArEvents.push(card)
+                }
+                    return ArEvents
+                })
+            this.events = await eventsarray
+        },
 
     },
     created() {
