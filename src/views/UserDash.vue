@@ -171,7 +171,7 @@ const cardsData = [
             },
 
             following: [
-                
+
             ],
             
             tickets: {
