@@ -1,69 +1,133 @@
 <template>
-    <section class="section section-components pb-0" id="section-components">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <!-- Basic elements -->
-                    <h2 class="mb-5">
-                        <span>Basic Elements</span>
-                    </h2>
-                    <!-- Buttons -->
-                    <h3 class="h4 text-success font-weight-bold mb-4">Buttons</h3>
-                    <!-- Button styles -->
-                    <div>
-                        <base-button type="primary">Button</base-button>
-                        <base-button class="btn-3" type="primary" icon="ni ni-bag-17">Button</base-button>
-                        <base-button class="btn-2" type="primary" icon="ni ni-bag-17"></base-button>
+    <!--About Us Section-->
+    <section id="about" class="about">
+      <div class="container">
 
-                        <!-- Button wizes -->
-                        <div class="mb-3 mt-5">
-                            <small class="text-uppercase font-weight-bold">Pick your size</small>
-                        </div>
-
-                        <base-button type="primary" size="sm">Small</base-button>
-                        <base-button type="primary">Regular</base-button>
-                        <base-button type="primary" size="lg">Large Button</base-button>
-
-                    </div>
-                    <!-- Button colors -->
-                    <div class="mb-3 mt-5">
-                        <small class="text-uppercase font-weight-bold">Pick your color</small>
-                    </div>
-                    <base-button class="btn-1" type="primary">Primary</base-button>
-                    <base-button class="btn-1" type="info">Info</base-button>
-                    <base-button class="btn-1" type="success">Success</base-button>
-                    <base-button class="btn-1" type="warning">Warning</base-button>
-                    <base-button class="btn-1" type="danger">Danger</base-button>
-                    <base-button class="btn-1" type="neutral">Neutral</base-button>
-
-                    <div class="mb-3 mt-5">
-                        <small class="text-uppercase font-weight-bold">Outline</small>
-                    </div>
-
-                    <base-button class="btn-1" outline type="primary">Outline Primary</base-button>
-                    <base-button class="btn-1" outline type="info">Outline Info</base-button>
-                    <base-button class="btn-1" outline type="success">Outline Success</base-button>
-                    <base-button class="btn-1" outline type="warning">Outline Warning</base-button>
-                    <base-button class="btn-1" outline type="danger">Outline Danger</base-button>
-                    <base-button class="btn-1" outline type="neutral">Outline Neutral</base-button>
-                    <!-- Button links -->
-                    <div class="mb-3 mt-5">
-                        <small class="text-uppercase font-weight-bold">Links</small>
-                    </div>
-                    <a href="#" class="btn btn-link text-default">Default</a>
-                    <a href="#" class="btn btn-link text-primary">Primary</a>
-                    <a href="#" class="btn btn-link text-info">Info</a>
-                    <a href="#" class="btn btn-link text-success">Success</a>
-                    <a href="#" class="btn btn-link text-warning">Warning</a>
-                    <a href="#" class="btn btn-link text-danger">Danger</a>
-                </div>
-            </div>
+        <div class="section-title" data-aos="fade-up">
+          <h2>About Us</h2>
         </div>
-    </section>
 
+        <div class="row content">
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
+            <p>
+              The Sociit App provides easy connection to your societies, simple payment processing, and so much more with no fuss or problems.
+            </p>
+            <ul>
+              <li><i class="fa fa-check" aria-hidden="true"></i> Quick and easy payment transactions for your ticketing needs</li>
+              <li><i class="fa fa-check" aria-hidden="true"></i> Secure payment processing</li>
+              <li><i class="fa fa-check" aria-hidden="true"></i> Create and customise your own events</li>
+            </ul>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <p>
+              Creating an event for your society has never been easier. With the Sociit Apps easy to use application, you can know everything about your event without having to worry.
+            </p>
+            <a href="#" class="btn-learn-more">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section><!--End About Us Section-->
 </template>
 <script>
 export default {};
 </script>
 <style>
+/* All Sections General */
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  background-color: #f7fbfe;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+  color: #222222;
+}
+
+.section-title h2::before, .section-title h2::after {
+  content: '';
+  width: 50px;
+  height: 2px;
+  background: #800080;
+  display: inline-block;
+}
+
+.section-title h2::before {
+  margin: 0 15px 10px 0;
+}
+
+.section-title h2::after {
+  margin: 0 0 10px 15px;
+}
+
+.section-title p {
+  margin: 15px 0 0 0;
+}
+
+/* About Us */
+.about .content h3 {
+  font-weight: 600;
+  font-size: 26px;
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  padding-left: 28px;
+  position: relative;
+}
+
+.about .content ul li + li {
+  margin-top: 10px;
+}
+
+.about .content ul i {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 20px;
+  color: #800080;
+  line-height: 1;
+}
+
+.about .content p:last-child {
+  margin-bottom: 0;
+}
+
+.about .content .btn-learn-more {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 50px;
+  transition: 0.3s;
+  line-height: 1;
+  color: #800080;
+  -webkit-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+  margin-top: 6px;
+  border: 2px solid #b82598;
+}
+
+.about .content .btn-learn-more:hover {
+  background: #b82598;
+  color: #fff;
+  text-decoration: none;
+}
 </style>
