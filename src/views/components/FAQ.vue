@@ -27,7 +27,7 @@
           </div>
           <div class="col-lg-7">
             <p>
-              One the ticket has been purchased and you have recieved confirmation, the ticket should appear in your student wallet.
+              Once the ticket has been purchased and you have recieved confirmation, the ticket should appear in your student wallet.
             </p>
           </div>
         </div><!-- End F.A.Q Item-->
@@ -35,11 +35,11 @@
         <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
           <div class="col-lg-5">
             <i class="ri-question-line"></i>
-            <h4>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?</h4>
+            <h4>I forgot my password how do I get it back?</h4>
           </div>
           <div class="col-lg-7">
             <p>
-              Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus.
+              Head to the login page and underneath the bottom left corner of the sign in tab will be a forgot password button. Simply go through the password recovery process from there :)
             </p>
           </div>
         </div><!-- End F.A.Q Item-->
@@ -47,27 +47,14 @@
         <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
           <div class="col-lg-5">
             <i class="ri-question-line"></i>
-            <h4>Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?</h4>
+            <h4>I accidentally purchased a membership/ticket twice, can I get it refunded?</h4>
           </div>
           <div class="col-lg-7">
             <p>
-              Aperiam itaque sit optio et deleniti eos nihil quidem cumque. Voluptas dolorum accusantium sunt sit enim. Provident consequuntur quam aut reiciendis qui rerum dolorem sit odio. Repellat assumenda soluta sunt pariatur error doloribus fuga.
+              Just reach out directly to your society, club or college.
             </p>
           </div>
         </div><!-- End F.A.Q Item-->
-
-        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
-          <div class="col-lg-5">
-            <i class="ri-question-line"></i>
-            <h4>Tempus quam pellentesque nec nam aliquam sem et tortor consequat?</h4>
-          </div>
-          <div class="col-lg-7">
-            <p>
-              Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-            </p>
-          </div>
-        </div><!-- End F.A.Q Item-->
-
       </div>
     </section><!-- End F.A.Q Section -->
 

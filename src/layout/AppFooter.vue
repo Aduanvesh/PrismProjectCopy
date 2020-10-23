@@ -36,4 +36,16 @@ export default {
 };
 </script>
 <style>
+.footer {
+    padding-top: 0px;
+}
+
+.footer a {
+    color:  #800080;
+}
+
+.footer a:hover {
+    color:  #b82598;
+}
+
 </style>

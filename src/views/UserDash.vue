@@ -1,6 +1,6 @@
 <template>
-    <div class="section section-shaped section-lg my-0">
-    <div class="shape shape-style-1 bg-gradient-default"></div>
+    <div class="section section-shaped section-lg my-0" id="userdashboardbgdiv">
+    <div class="shape shape-style-1 bg-gradient-default" id="userdashboardbg"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
            <p class="h1" style="color: white;"> Hi, {{this.user}} </p>
                 <div class="col-12 offset-10">
@@ -337,4 +337,11 @@ const cardsData = [
   }
 </script>
 
-<style></style>
+<style>
+#userdashboardbg {
+    background: linear-gradient(180deg, rgba(36,37,70,1) 0%, rgba(112,79,112,1) 59%, rgba(205,104,64,1) 100%) !important;
+}
+#userdashboardbgdiv{
+    height: 100vh;
+}
+</style>
