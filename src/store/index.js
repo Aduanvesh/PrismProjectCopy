@@ -96,7 +96,7 @@ export default new Vuex.Store({
           .catch(error => {
             console.log(error.message)
           })
-          router.push('/landing')
+          router.push('/')
     },
 
         // code that detects when the user authenticated has changed
