@@ -9,8 +9,8 @@
             <div class="col-6 collapse-brand">
                <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
                <div class="row align-items-center">
-               <img src="/img/brand/sociit.png">
-               <!-- <h2 class="mt-2"> Sociit </h2> -->
+               <img src="/img/brand/logoblk.svg">
+               <h2 class="mt-2"> Sociit </h2>
                </div>
                </a>
             </div>
@@ -113,6 +113,15 @@ export default {
     CloseButton,
     BaseDropdown
   },
+
+//   data: {
+//       mainlogo: {
+//           loggedIn: '',
+//           loggedOut: ''
+//       },
+
+//   },
+
   methods: {
         async toDashboard() {
             console.log('godem', this.$store.state.userDetails.type)
