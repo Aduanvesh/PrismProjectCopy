@@ -179,4 +179,20 @@ export default {
     text-align: center;
     padding-bottom: 25px;
 }
+
+.my-4 {
+  background: #800080;
+  color: #fff;
+  border-radius: 20px;
+  padding: 8px 25px;
+  margin: 0 0 0 30px;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.my-4:hover {
+  background: #b82598;
+  color: #fff;
+}
+
 </style>
