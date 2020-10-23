@@ -150,16 +150,16 @@
                         </template>
                                 <div class="row">
                                     <div class="col-auto mr-auto">Active Events</div>
-                                        <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus" @click="modals.add = true">
+                                        <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus" @click="initialiseEventData">
                                         </base-button>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.name">
-                                        <div v-if="cards.name != null"> 
+                                    <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.id">
+                                        <div v-if="cards.event_name != null"> 
                                             <!-- Above, weak workaround to hide null events. -->
-                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.name">
+                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name">
                                                 <template slot="header">
-                                                    {{cards.name}}
+                                                    {{cards.event_name}}
                                                 </template>
                                             </card>
                                         </div>
@@ -304,19 +304,23 @@ const cardsEventData = [
 
         async initialiseEventData(event)
         {
-            for (var key in event) {
-                if (event.hasOwnProperty(key)) {
-                    event[key] = null;
+            this.modals.add = true;
+            console.log('shoomba')
+            for (var key in this.event) {
+                if (this.event.hasOwnProperty(key) && key != 'extras') {
+                    console.log(key)
+                    this.event[key] = null;
                 }
             }
         },
 
-        onSubmit(evt){
+        async onSubmit(evt){
             evt.preventDefault()
             alert(JSON.stringify(this.event))
+            console.log('checkeroni', this.event)
             this.$store.dispatch('createEvent', this.event)
-            this.initialiseEventData(this.event)
-
+            //this.initialiseEventData(this.event)
+           
         },
         
         async retrieveMembership () {
@@ -386,7 +390,7 @@ const cardsEventData = [
                         startTime: '',
                         url: ''
                     }
-                    if (data[i].event_name === undefined) {card.event_name = 'Untitled'}
+                    if (data[i].event_name === undefined || data[i].event_name === '') {card.event_name = 'Untitled'}
                     else {card.event_name = data[i].event_name}
 
                     card.event_description = data[i].event_description
