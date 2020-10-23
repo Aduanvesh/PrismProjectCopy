@@ -115,18 +115,34 @@
             </ul>
          </div >
          <div v-else>
+         <div v-if="currentPath === '/'">
             <ul class="navbar-nav ml-lg-auto">
-               <li class="nav-item d-none d-lg-block ml-lg-4">
-                  <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login" style="color: #800080">
-                     <span class="nav-link-inner--text">Login</span>
-                  </router-link>
-               </li>
-               <li class="nav-item d-none d-lg-block ml-lg-4">
-                  <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register" style="color: #800080">
-                     <span class="nav-link-inner--text">Register</span>
-                  </router-link>
-               </li>
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login" style="color: #800080">
+                        <span class="nav-link-inner--text">Login</span>
+                     </router-link>
+                  </li>
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register" style="color: #800080">
+                        <span class="nav-link-inner--text">Register</span>
+                     </router-link>
+                  </li>
             </ul>
+         </div>
+         <div v-else>
+            <ul class="navbar-nav ml-lg-auto">
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/login">
+                        <span class="nav-link-inner--text">Login</span>
+                     </router-link>
+                  </li>
+                  <li class="nav-item d-none d-lg-block ml-lg-4">
+                     <router-link slot="brand" class="btn btn-neutral btn-icon" to="/register">
+                        <span class="nav-link-inner--text">Register</span>
+                     </router-link>
+                  </li>
+            </ul>
+         </div>
          </div>
       </base-nav>
    </header>
