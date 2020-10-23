@@ -7,7 +7,7 @@
                     <form>
                     <p>Title and Description</p>
                     <base-input 
-                        v-model="event.title"
+                        v-model="event.event_name"
                         type="text"
                         placeholder="Title"
                         class="field"> 
@@ -319,6 +319,7 @@ const cardsEventData = [
             alert(JSON.stringify(this.event))
             console.log('checkeroni', this.event)
             this.$store.dispatch('createEvent', this.event)
+            this.modals.add = false;
             //this.initialiseEventData(this.event)
            
         },
@@ -390,7 +391,7 @@ const cardsEventData = [
                         startTime: '',
                         url: ''
                     }
-                    if (data[i].event_name === undefined || data[i].event_name === '') {card.event_name = 'Untitled'}
+                    if (data[i].event_name === undefined || data[i].event_name === '' || data[i].event_name === null) {card.event_name = 'Untitled'}
                     else {card.event_name = data[i].event_name}
 
                     card.event_description = data[i].event_description
