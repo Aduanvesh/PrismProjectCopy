@@ -1,8 +1,8 @@
 <template>
     <div>
         <hero></hero>
-        <about-us></about-us>
-        <inputs></inputs>
+        <AboutUs></AboutUs>
+        <Counts></Counts>
         <custom-controls></custom-controls>
         <navigation></navigation>
         <javascript-components></javascript-components>
@@ -14,8 +14,8 @@
 </template>
 <script>
 import Hero from "./components/Hero";
-import BasicElements from "./components/AboutUs";
-import Inputs from "./components/Inputs";
+import AboutUs from "./components/AboutUs";
+import Counts from "./components/Counts";
 import CustomControls from "./components/CustomControls";
 import Navigation from "./components/Navigation";
 import JavascriptComponents from "./components/JavascriptComponents";
@@ -29,7 +29,7 @@ export default {
   components: {
     Hero,
     AboutUs,
-    Inputs,
+    Counts,
     CustomControls,
     Navigation,
     JavascriptComponents,
