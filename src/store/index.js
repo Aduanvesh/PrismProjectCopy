@@ -65,7 +65,8 @@ export default new Vuex.Store({
               members: [],
               membership_types: [],
               events:[],
-              details: ''
+              details: '',
+              description: ''
             })
             }
             router.push('/dashboard')
@@ -198,12 +199,25 @@ export default new Vuex.Store({
         }
       },
 
+      async getClubDetails (a = {}, payload) {
+        const snapshot = await firebase.firestore().collection('users').doc(payload).get()
+          .then(doc => {
+            console.log('check', doc.data().membershiplink)
+            return doc.data().membershiplink
+          })
+          const club = await firebase.firestore().collection('memberships').doc(snapshot).get()
+          .then(doc => {
+            console.log('supercheck', doc.data())
+            return doc.data()
+          })
+          return club
+      },
+
       async getMemberships () {
         const userID = firebase.auth().currentUser.uid
         const targetUser = firebase.firestore().collection('users').doc(userID)
         const targetArray = await targetUser.get()
           .then(doc => {
-            console.log('check', doc.data().memberships)
             return doc.data().memberships
           })
         const finalArray = []
