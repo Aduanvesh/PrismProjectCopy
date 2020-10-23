@@ -20,7 +20,9 @@
                         <template slot="title"> 
                             <i class="fa fa-university mr-2"></i>Clubs and Societies
                         </template>
-                        <div class="col-auto mr-auto mt-3 mb-3">Following</div>
+                        <div class="row">
+                        <div class="col-auto mr-auto mb-3">Following</div>
+                        </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="element in following" v-bind:key="element.uid">
                                             <!-- <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name"> -->
@@ -53,7 +55,7 @@
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                             <div class="row">
-                           <!-- <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
+                           <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
                             </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.id">
@@ -62,7 +64,7 @@
                                                     {{element.event.name}}
                                                 </template>
                                             </card>
-                                    </div> -->
+                                    </div>
                                 </div>
                             <div class="row">
                             <div class="col-auto mr-auto mt-3 mb-3">Following</div>

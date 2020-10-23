@@ -174,14 +174,6 @@ export default {
     BaseDropdown
   },
 
-  data: {
-      // mainlogo: {
-      //     loggedIn: '',
-      //     loggedOut: ''
-      // },
-
-  },
-
   methods: {
         async toDashboard() {
             console.log('godem', this.$store.state.userDetails.type)
