@@ -3,8 +3,8 @@
         <hero></hero>
         <AboutUs></AboutUs>
         <Counts></Counts>
-        <custom-controls></custom-controls>
-        <navigation></navigation>
+        <Services></Services>
+        <FAQ></FAQ>
         <javascript-components></javascript-components>
         <icons></icons>
         <examples></examples>
@@ -16,8 +16,8 @@
 import Hero from "./components/Hero";
 import AboutUs from "./components/AboutUs";
 import Counts from "./components/Counts";
-import CustomControls from "./components/CustomControls";
-import Navigation from "./components/Navigation";
+import Services from "./components/Services";
+import FAQ from "./components/FAQ";
 import JavascriptComponents from "./components/JavascriptComponents";
 import Carousel from "./components/Carousel";
 import Icons from "./components/Icons";
@@ -30,8 +30,8 @@ export default {
     Hero,
     AboutUs,
     Counts,
-    CustomControls,
-    Navigation,
+    Services,
+    FAQ,
     JavascriptComponents,
     Carousel,
     Icons,
