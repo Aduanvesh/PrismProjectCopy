@@ -84,26 +84,30 @@
                         <template slot="title">
                             <i class="ni ni-money-coins mr-2"></i>Payments
                         </template>
-                        <h5> Payments</h5>
                         <div class="row">
-                        <table style="width:75%">
-                                    <tr>
-                                        <th>Payment ID</th>
-                                        <th>Status</th>
-                                        <th>Payee</th>
-                                        <th>Date submitted</th>
-                                        <th>Date paid</th>
-                                        <th>Payment</th>
-                                    </tr>
-                                    <tr v-for="payment in payments" v-bind:key="payment.id">
-                                        <th>{{payment.id}}</th>
-                                        <th>{{payment.status}}</th>
-                                        <th>{{payment.payee}}</th>
-                                        <th>{{payment.date1}}</th>
-                                        <th>{{payment.date2}}</th>
-                                        <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
-                                    </tr>
-                                    </table>
+                        <div class="col-auto mr-auto mb-3">Payments</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="col-12">
+                                            <tr>
+                                                <th>Payment ID</th>
+                                                <th>Status</th>
+                                                <th>Payee</th>
+                                                <th>Date Submitted</th>
+                                                <th>Date Paid</th>
+                                                <th>Payment</th>
+                                            </tr>
+                                            <tr v-for="payment in payments" v-bind:key="payment.id">
+                                                <th>{{payment.id}}</th>
+                                                <th>{{payment.status}}</th>
+                                                <th>{{payment.payee}}</th>
+                                                <th>{{payment.date1}}</th>
+                                                <th>{{payment.date2}}</th>
+                                                <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
+                                            </tr>
+                                </table>
+                            </div>
                         </div>
                     </tab-pane>
                     <tab-pane key="tab4">
