@@ -5,11 +5,7 @@
         <Counts></Counts>
         <Services></Services>
         <FAQ></FAQ>
-        <javascript-components></javascript-components>
-        <icons></icons>
-        <examples></examples>
-        <download-section></download-section>
-        <carousel></carousel>
+        <ContactUs></ContactUs>
     </div>
 </template>
 <script>
@@ -18,11 +14,7 @@ import AboutUs from "./components/AboutUs";
 import Counts from "./components/Counts";
 import Services from "./components/Services";
 import FAQ from "./components/FAQ";
-import JavascriptComponents from "./components/JavascriptComponents";
-import Carousel from "./components/Carousel";
-import Icons from "./components/Icons";
-import Examples from "./components/Examples";
-import DownloadSection from "./components/DownloadSection";
+import ContactUs from "./components/ContactUs";
 
 export default {
   name: "components",
@@ -32,11 +24,7 @@ export default {
     Counts,
     Services,
     FAQ,
-    JavascriptComponents,
-    Carousel,
-    Icons,
-    Examples,
-    DownloadSection
+    ContactUs
   }
 };
 </script>
