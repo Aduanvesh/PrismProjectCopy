@@ -2,7 +2,7 @@
     <header class="header-global">
         <base-nav class="navbar-main" transparent type="" effect="light" expand>
 
-            <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" to="/">
+            <router-link slot="brand" class="navbar-brand mr-lg-5 align-items-stretch" v-on:click.native="toDashboard" to="/">
                     <img src="/img/brand/logo.svg" class="mr-lg-2" alt="Sociit Logo">
                     <span class="text-white alpha-7">Sociit</span>
             </router-link>
@@ -22,29 +22,27 @@
                 <base-dropdown class="nav-item" menu-classes="dropdown-menu-xl">
                     <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
                         <i class="ni ni-ui-04 d-lg-none"></i>
-                        <span class="nav-link-inner--text">Components</span>
+                        <span class="nav-link-inner--text">Menu</span>
                     </a>
                     <div class="dropdown-menu-inner">
                         <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
                            class="media d-flex align-items-center">
-                            <div class="icon icon-shape bg-gradient-primary rounded-circle text-white">
+                            <div class="icon icon-shape bg-gradient-primary rounded-circle-no-outline text-white">
                                 <i class="ni ni-spaceship"></i>
                             </div>
                             <div class="media-body ml-3">
-                                <h6 class="heading text-primary mb-md-1">Getting started</h6>
-                                <p class="description d-none d-md-inline-block mb-0">Get started with Bootstrap, the
-                                    world's most popular framework for building responsive sites.</p>
+                                <h6 class="heading text-primary mb-md-1">Find a Club</h6>
+                                <p class="description d-none d-md-inline-block mb-0">Search for a club on Sociit</p>
                             </div>
                         </a>
                         <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/"
                            class="media d-flex align-items-center">
-                            <div class="icon icon-shape bg-gradient-warning rounded-circle text-white">
+                            <div class="icon icon-shape bg-gradient-warning rounded-circle-no-outline text-white">
                                 <i class="ni ni-ui-04"></i>
                             </div>
                             <div class="media-body ml-3">
-                                <h5 class="heading text-warning mb-md-1">Components</h5>
-                                <p class="description d-none d-md-inline-block mb-0">Learn how to use Argon
-                                    compiling Scss, change brand colors and more.</p>
+                                <h5 class="heading text-warning mb-md-1">Dashboard</h5>
+                                <p class="description d-none d-md-inline-block mb-0">Go to the dashboard</p>
                             </div>
                         </a>
                     </div>
@@ -52,14 +50,18 @@
                 <base-dropdown tag="li" class="nav-item">
                     <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
                         <i class="ni ni-collection d-lg-none"></i>
-                        <span class="nav-link-inner--text">Examples</span>
+                        <span class="nav-link-inner--text">Pages</span>
                     </a>
-                    <router-link to="/landing" class="dropdown-item">Landing</router-link>
-                    <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
+                    <router-link v-on:click.native="toDashboard" to="/" class="dropdown-item">Dashboard</router-link>
                     <router-link :to="userID"  class="dropdown-item">Profile</router-link>
-                    <router-link to="/event/undefined"  class="dropdown-item">Event</router-link>
+                    <!-- V-if statement here -->
+                    <div v-if="!userExists">
                     <router-link to="/login" class="dropdown-item">Login</router-link>
                     <router-link to="/register" class="dropdown-item">Register</router-link>
+                    </div>
+                    <div v-else>
+                    <router-link to="/" v-on:click.native="$store.dispatch('signoutUser')" class="dropdown-item">Logout</router-link>
+                    </div>
                 </base-dropdown>
             </ul>
             <div class = "white" v-if="userExists"> 
@@ -69,7 +71,12 @@
                         {{user}}
                     </li>
                     <li class="nav-item d-none d-lg-block ml-lg-4">    
-                        <img alt="Profile Settings" class="img-fluid rounded-circle shadow" data-src="img/theme/team-2-800x800.jpg" src="/img/theme/team-2-800x800.jpg" lazy="loaded" style="width: 50px;">
+                        <img alt="Profile Settings" 
+                             class="img-fluid rounded-circle shadow" 
+                             data-src="img/theme/team-2-800x800.jpg" 
+                             src="/img/theme/team-2-800x800.jpg" 
+                             lazy="loaded" 
+                             style="max-width: 50px; max-height: 50px;">
                     </li>
                     <li class="nav-item d-none d-lg-block ml-lg-4">
                         <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
