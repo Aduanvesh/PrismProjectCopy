@@ -139,18 +139,6 @@ import store from 'main'
 import Modal from '../views/SearchClub.vue'
 
 const cardsData = [
-  {
-    title: 'QUT Code Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  },
-  {
-    title: 'QUT NotCode Network',
-    caption: 'Standard Membership',
-    details: '132 members',
-    link: '/code-network-membership'
-  }
 ]
 
   export default {
@@ -181,24 +169,24 @@ const cardsData = [
             },
 
             following: [
-                 {
-                    name: 'QUTLS',
-                    id: '123',
-                    recentEvent: 
-                    {
-                        name: 'Law Ball',
-                        url: '/event'
-                    }
-                },
-                {
-                    name: 'Code Network',
-                    id: '234',
-                    recentEvent: 
-                    {
-                        name: 'Code Network Evening',
-                        url: '/event'
-                    }
-                }
+                //  {
+                //     name: 'QUTLS',
+                //     id: '123',
+                //     recentEvent: 
+                //     {
+                //         name: 'Law Ball',
+                //         url: '/event'
+                //     }
+                // },
+                // {
+                //     name: 'Code Network',
+                //     id: '234',
+                //     recentEvent: 
+                //     {
+                //         name: 'Code Network Evening',
+                //         url: '/event'
+                //     }
+                // }
             ],
             //Subscribed means: has membership to
             subscribed: {

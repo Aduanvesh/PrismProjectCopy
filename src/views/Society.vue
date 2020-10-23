@@ -234,21 +234,9 @@ import router from '../router'
 
 
 const cardsData = [
-  {
-    title: 'Membership Title',
-    caption: 'Standard Membership',
-    details: '100 members',
-    link: '/null'
-  }
 ]
 
 const cardsEventData = [
-  {
-    title: 'Event Title',
-    caption: 'Event Info',
-    details: '100 members',
-    link: '/null'
-  },
 ]
 
   export default {
