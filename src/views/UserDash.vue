@@ -2,7 +2,7 @@
     <div class="section section-shaped section-lg my-0" id="userdashboardbgdiv">
     <div class="shape shape-style-1 bg-gradient-default" id="userdashboardbg"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-           <p class="h1" style="color: white;"> Hi, {{this.user}} </p>
+           <h1 class="h1 pl-sm-3 pl-3" style="color: white;"> Hi, {{this.user}} </h1>
                 <div class="col-12 offset-10">
                     <tabs :fill="false" circle>
                         <tab-pane>
