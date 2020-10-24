@@ -55,7 +55,7 @@
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                             <div class="row">
-                           <div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
+                           <!--<div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
                             </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.id">
@@ -66,7 +66,7 @@
                                             </card>
                                     </div>
                                 </div>
-                            <div class="row">
+                            <div class="row">-->
                             <div class="col-auto mr-auto mt-3 mb-3">Following</div>
                             </div>
                                 <div class="row">
@@ -325,7 +325,8 @@ const cardsData = [
                         event_description: ''
                     }
                 card.id = data[i].id
-                card.name = data[i].event_name
+                if (data[i].event_name === undefined || data[i].event_name === '' || data[i].event_name === null) {card.name = 'Untitled Event'}
+                else {card.name = data[i].event_name}
                 card.date = new Date(data[i].date_created.seconds * 1000)
                 card.event_description = data[i].event_description
                 card.url = '/event/' + data[i].id
