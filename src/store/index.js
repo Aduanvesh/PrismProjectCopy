@@ -362,23 +362,68 @@ export default new Vuex.Store({
       if (this.state.userDetails.type === 'Club'){
         return 'failed because clubs cannot purchase this'
       } else {
+        const targetUser = await firebase.firestore().collection('users').doc(userID)
+        const check = await targetUser.get()
+          .then(doc => {
+            return doc.data().membership_types
+          })
         const membership = await firebase.firestore().collection('membership_types').doc(payload)
-        membership.update({
-          members: firebase.firestore.FieldValue.arrayUnion(userID)
-        })
         const membershipclubid = await membership.get()
           .then(doc => {
             return doc.data().membershiplink
         })
-        const targetUser = await firebase.firestore().collection('users').doc(userID)
-        targetUser.update({
-          membership_types: firebase.firestore.FieldValue.arrayUnion(membershipclubid)
+        if (check.includes(membershipclubid)) {
+          return 'already have this purchased'
+        }
+        const membershipdata = await membership.get()
+          .then(doc => {
+            return doc.data()
         })
+        membership.update({
+          members: firebase.firestore.FieldValue.arrayUnion(userID)
+        })
+        const paras = {}
+        paras.date1 = new Date()
+        paras.date2 = new Date()
+        paras.payee = membershipdata.name
+        paras.payeeid = membershipclubid
+        paras.payerid = userID
+        paras.status = 'paid'
+        paras.amount = membershipdata.price
+        //this.createPayment(paras)
+
+        console.log('checkor:', paras)
+        const targetpayment = await firebase.firestore().collection('payments').doc()
+        targetpayment.set({
+        date1: paras.date1,
+        date2: paras.date2,
+        id: targetpayment.id,
+        payee: paras.payee,
+        payeeid: paras.payeeid,
+        payerid: paras.payerid,
+        status: paras.status,   
+        amount: paras.amount
+      })
+        targetUser.update({
+          membership_types: firebase.firestore.FieldValue.arrayUnion(membershipclubid),
+          payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
+        })
+
       }
     },
 
-    async createPayment () {
-
+    async createPayment (a = {}, payload) {
+      const targetpayment = await firebase.firestore().collection('payments').doc()
+      targetpayment.set({
+        date1: payload.date1,
+        date2: payload.date2,
+        id: targetpayment.id,
+        payee: payload.payee,
+        payeeid: payload.payeeid,
+        payerid: payload.payerid,
+        status: payload.status,   
+        amount: payload.amount
+      })
     },
 
     async getMembershipTypes (a = {}, payload) {

@@ -96,7 +96,7 @@
                                                 <th>Payee</th>
                                                 <th>Date Submitted</th>
                                                 <th>Date Paid</th>
-                                                <th>Payment</th>
+                                                <th>Amount</th>
                                             </tr>
                                             <tr v-for="payment in payments" v-bind:key="payment.id">
                                                 <th>{{payment.id}}</th>
@@ -104,6 +104,7 @@
                                                 <th>{{payment.payee}}</th>
                                                 <th>{{payment.date1}}</th>
                                                 <th>{{payment.date2}}</th>
+                                                <th>{{payment.amount}}</th>
                                                 <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
                                             </tr>
                                 </table>
@@ -229,13 +230,17 @@ const cardsData = [
                 payee: '',
                 date1: '',
                 date2: '',
+                amount: ''
             }
                 
                 card.id = data[i].id
                 card.status = data[i].status
                 card.payee = data[i].payee
-                card.date1 = data[i].date1
-                card.date2 = data[i].date2
+                const dateholder = new Date(data[i].date1.seconds * 1000)
+                card.date1 = dateholder.getDate().toString() + '/' + dateholder.getMonth().toString() + '/' + dateholder.getYear().toString()
+                dateholder = new Date(data[i].date2.seconds * 1000)
+                card.date2 = dateholder.getDate().toString() + '/' + dateholder.getMonth().toString() + '/' + dateholder.getYear().toString()
+                card.amount = '$' + (data[i].amount/100).toString()
 
             Arpayments.push(card)
             }
