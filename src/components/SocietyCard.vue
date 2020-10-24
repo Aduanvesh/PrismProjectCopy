@@ -74,12 +74,20 @@
                         class="field">
                     </base-input>
                     <p>Time and Date</p>
-                        <select v-model="times">
+                        <select v-model="edit.startTime">
                             <option
                             v-for="option in times"
                             :value="option"
                             :key="option"
-                            :selected="option === times"
+                            :selected="option === edit.startTime"
+                            >{{ option }}</option>
+                        </select>
+                        <select v-model="edit.endTime">
+                            <option
+                            v-for="option in times"
+                            :value="option"
+                            :key="option"
+                            :selected="option === edit.endTime"
                             >{{ option }}</option>
                         </select>
                         <div class="calendar">
@@ -246,6 +254,8 @@ export default {
         category: '',
         title: '',
         description: '',
+        startTime: '',
+        endTime: '',
         location: '',
         times: '',
         extras: {
