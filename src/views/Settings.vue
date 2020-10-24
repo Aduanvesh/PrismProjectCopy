@@ -83,29 +83,24 @@
                                 <h6 class="heading-small text-muted">Sociit Settings</h6>
                                 <div class="pb-4">
                                     <label> Theme Colour </label>
-
-                                            
-                                    
-                 
-
                                     <div class="row">
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-green text-white" icon="fa fa-hand-pointer-o" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-warning text-white" icon="fa fa-hand-pointer-o" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-primary text-white" icon="fa fa-hand-pointer-o" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-gray text-white" icon="fa fa-hand-pointer-o" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-green text-white" icon="fa fa-hand-pointer-o" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
                                         </div> 
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-green text-white" icon="fa fa-hand-pointer-o" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
                                         </div>                                         
                                     </div>
                                 </div>
