@@ -1,12 +1,11 @@
 <template>
     <div class="profile-page">
-            <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-primary"
-                     style="min-height: 600px; background-image: url(/img/theme/img-2-1200x1000.jpg); background-size: cover; background-position: center top;">
-            <!-- Mask -->
-            <span class="mask bg-gradient-success opacity-8"></span>
+        <div class="shape shape-style-1 bg-secondary">
+            <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-gradient-default"
+                     style="min-height: 600px; background-size: cover; background-position: center top;">
             </base-header>
             <div class="container">
-                <card shadow class="card-profile mt--300" no-body>
+                <card shadow class="card-profile mt--300 mb-5 pb-5" type="secondary" no-body>
                     <div class="px-4">
                         <div class="row justify-content-center">
                             <div class="col-lg-3">
@@ -16,20 +15,13 @@
                                     </a>
                                 </div>
                             </div>
-                            <!-- <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center col-12 col-sm-6 col-sm">
-                                <div class="card-profile-actions py-4 mt-lg-0"> -->
                                 <div class="container pt-5">
                                     <div class="row justify-content-between">
                                         <div class="col-auto mr-auto">
-                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="addToClub">Follow</base-button>
-                                        </div>
-                                        <div class="col-auto">
-                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="scrollPage('events')">View Events</base-button>
+                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Profile Banner</base-button>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- </div>
-                            </div> -->
                             <div class="col-lg-4 order-lg-1 pt-lg-5 pt-4 pt-md-3">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
@@ -43,83 +35,169 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center mt-2">
+                        <div class="text-center mt-2 mb-4">
                             <h3>{{society_name}}
                                 <span class="font-weight-light"></span>
                             </h3>
-                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{subtitle}}</div>
-                            <div><i class="ni education_hat mr-2"></i>{{university}}</div>
-                            <div><i class="fade"></i>#{{$route.params.id}}</div>
+                            <div class="pl-lg-4">
+                            <base-input alternative=""
+                                        label="Subtitle"
+                                        :placeholder="subtitle"
+                                        input-classes="form-control-alternative"
+                                        v-model="model.subtitle"
+                                        class="p-1"
+                            />
+                            </div>
+                            <div class="pl-lg-4">
+                                <base-input alternative=""
+                                            label="University"
+                                            placeholder="University"
+                                            input-classes="form-control-alternative"
+                                            v-model="model.university"
+                                            class="p-1"
+                                />
+                            </div>
                         </div>
-                        <div class="mt-5 py-5 border-top text-center">
-                            <div class="h6"> Bio </div>
-                            <div class="row justify-content-center">
-                                <div class="col-lg-9">
-                                    <p>{{bio}}</p>
-                                    <a href="#">Show more</a>
-                                    
+                                    <div class="pl-lg-4 text-center">
+                                        <base-input alternative=""
+                                                    class="p-1"
+                                                    label="Bio"
+                                                    >
+                                            <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>
+                                        </base-input>
+                                    </div>
+                    </div>
+                    <!-- INSERTION -->
+                </card>
+                <div class="">
+                    <card shadow type="secondary">
+                        <div slot="header" class=" border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Account Settings</h3>
                                 </div>
                             </div>
                         </div>
-                        <!-- To do:
-                            - Turn cards into a component
-                            - Make cards all the same size/dimensions in CSS
-                            - Validate the images people upload and scale etc so that they're within the card and ticket dimensions
-                            - Create a colour/image generator for blank cards (where a user has provided no image)
-                            - Ability to remove add sections
-                         -->
-                        <!-- Vue-if statement. Are there tickets to display for this society that are available for purchase? -->
-                        <div class="mt-5 py-5 border-top text-center">
-                            <div class="h6 mb-4 mb-lg-5" id="events"> Events </div>
-                            <div class="row justify-content-center">
-                                    <div class="col-md-6 mb-3" v-for="cards in eventData" v-bind:key="cards.title">
-                                        <card class="card-options--hover shadow" :link="cards.link" :img="cards.image">
-                                            <template slot="header">
-                                                {{cards.title}}
-                                            </template>
-                                        </card>
-                                    </div>
-                            </div>
-                        </div>
-                        <!-- Vue-if statement. Are there memberships to display for this society that are available for purchase? -->
-                        <div class="mt-5 py-5 border-top text-center">
-                            <div class="h6"> Memberships </div>
-                            <div class="row justify-content-center">
-                                    <div class="container container-lg">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-5 mb-md-3">         
-                                                
-                                                    
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-6 mb-3" v-for="cards in membershipData" v-bind:key="cards.title">
-                                                <modal :link="cards.link">
-                                                    <template slot="modal-button-wrapper">
-                                                        <card class="card-options--hover shadow" :link="cards.link" :img="cards.image">
-                                                            <template slot="header">
-                                                                {{cards.title}}
-                                                            </template>
-                                                        </card>
-                                                    </template>
-                                                </modal>
+                        <template>
+                            <form @submit.prevent>
+                                <h6 class="heading-small text-muted mb-4">Sociit Settings</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                                    <base-input alternative=""
+                                                                label="Dashboard Theme"
+                                                                placeholder="Username"
+                                                                input-classes="form-control-alternative"
+                                                                v-model="model.username"
+                                                                class="p-1"
+                                                    />
                                         </div>
                                     </div>
-                            </div>
-                        </div>
-                    </div>
-                </card>
+                                </div>
+                                <h6 class="heading-small text-muted mb-4">User information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <base-input alternative=""
+                                                        label="Username"
+                                                        placeholder="Username"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.username"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <base-input alternative=""
+                                                        label="Email address"
+                                                        placeholder="jesse@example.com"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.email"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <base-input alternative=""
+                                                        label="First name"
+                                                        placeholder="First name"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.firstName"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <base-input alternative=""
+                                                        label="Last name"
+                                                        placeholder="Last name"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.lastName"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="" />
+                                <!-- Address -->
+                                <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                                <div class="pl-lg-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <base-input alternative=""
+                                                        label="Address"
+                                                        placeholder="Home Address"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.address"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <base-input alternative=""
+                                                        label="City"
+                                                        placeholder="City"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.city"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <base-input alternative=""
+                                                        label="Country"
+                                                        placeholder="Country"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.country"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <base-input alternative=""
+                                                        label="Postal code"
+                                                        placeholder="Postal code"
+                                                        input-classes="form-control-alternative"
+                                                        v-model="model.zipCode"
+                                                        class="p-1"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="" />
+                                <!-- Description -->
+                            </form>
+                        </template>
+                    </card>
+                </div>
             </div>
+        </div>
     </div>
 </template>
 <script>
 import Modal from "./components/JavascriptComponents/Purchase.vue";
 import store from 'main'
 import router from '../router'
-import axios from 'axios'
-const Stripe = require('stripe')
-
-var stripe = Stripe('pk_test_51HXhlkFstnSXI8cOMPrnlik0YSKVWKFf6AsDEp4EkVHicnxJ1yrvfcSAMgsF1yjgSEFWzobOLxbgt4JwLiAPe5VB00qt7OnWrF')
+// import axios from 'axios'
+// const Stripe = require('stripe')
 
 export default {
 name: "components",
@@ -129,45 +207,29 @@ components: {
 data() {
     return {
         sessionId:'',
-        followers: 22,
-        up_coming_events: 10,
+        followers: 0,
+        up_coming_events: 0,
         society_name: "QUT Law Society",
         subtitle: "Law Society",
         university: "Queensland University of Technology",
-        bio: "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
+        bio: "",
         memberlist: [],
-        eventData: 
-            [
-          {
-            title: 'Event Title 1',
-            image: '/img/theme/lcard.png',
-            link: '/event/',
-          },
-          {
-            title: 'Event Title 2',
-            image: '/img/theme/lcard.png',
-            link: '/event/',
-          },
-        ],
-
-        membershipData: 
-            [
-          {
-            title: 'Membership Title 1',
-            image: '/img/theme/lcard.png',
-            id: '1231245',
-          },
-        ],
+        model: {
+          username: '',
+          university: '',
+          email: '',
+          firstName: '',
+          lastName: '',
+          address: '',
+          city: '',
+          country: '',
+          zipCode: '',
+          about: '',
+          subtitle: '',
+        }
     };
-// need to pass data 'down the tree' 
-// card image, card title, etc --> modal (Purchase.vue)
 },
 methods: {
-
-
-    scrollPage(div) {
-        window.location.href = '#'+ div
-    },
 
     async addToClub () {
         if (this.$store.userDetails.type = 'user'){
