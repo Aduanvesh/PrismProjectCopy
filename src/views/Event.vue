@@ -1,20 +1,10 @@
 <template>
     <div class="profile-page">
-        <!-- <section class="section-profile-cover section-shaped my-0">
-            <div class="shape shape-style-1 shape-primary alpha-4">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </section> -->
-        <section class="section-profile-cover section-shaped my-0">
-        <img v-lazy="'/img/theme/cloudland.jpg'" class="col-12"/>
-        </section>
-        <section class="section section-skew">
+        <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-primary"
+                     style="min-height: 600px; background-image: url(/img/theme/cloudland.jpg); background-size: cover; background-position: center top;">
+            <!-- Mask -->
+            <span class="mask bg-gradient-success opacity-8"></span>
+        </base-header>
             <div class="container">
                 <card shadow class="card-profile mt-300" no-body>
                     <div class="px-4">
@@ -71,7 +61,6 @@
                     </div>
                 </card>
             </div>
-        </section>
     </div>
 </template>
 <script>
@@ -97,14 +86,23 @@ data() {
 },
 methods: {
 
-},
+    async checkUserPage () {
+      const check = await this.$store.dispatch('checkUser', this.$route.params.id)
+      if (check !== 'in') {
+        router.push('/')
+      } else {
+        this.name = this.fullname
+      }
+    }
+  },
   computed: {
       fullname() {
           return this.$store.state.userDetails.firstName + ' ' + this.$store.state.userDetails.lastName
       }
   },
     created () {
-    console.log('events')
+    this.checkUserPage()
+    console.log('profile')
   }
 }
 </script>
