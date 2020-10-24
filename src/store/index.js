@@ -121,6 +121,8 @@ export default new Vuex.Store({
                   if (router.currentRoute.fullPath !== '/dashboard/user/'+userID 
                   && !router.currentRoute.fullPath.includes('profile') 
                   && !router.currentRoute.fullPath.includes('event')
+                  && !router.currentRoute.fullPath.includes('upload')
+                  && !router.currentRoute.fullPath.includes('settings')
                   ) {
                     router.push('/dashboard/user/'+userID)
                   }
@@ -132,7 +134,12 @@ export default new Vuex.Store({
                     type: 'Club',
                     id: userID
                   })
-                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID && !router.currentRoute.fullPath.includes('profile') && !router.currentRoute.fullPath.includes('event') && !router.currentRoute.fullPath.includes('upload')) {
+                  if (router.currentRoute.fullPath !== '/dashboard/club/'+userID 
+                  && !router.currentRoute.fullPath.includes('profile') 
+                  && !router.currentRoute.fullPath.includes('event') 
+                  && !router.currentRoute.fullPath.includes('upload')
+                  && !router.currentRoute.fullPath.includes('settings')
+                  ) {
                     router.push('/dashboard/club/'+userID)
                   }
                 }
