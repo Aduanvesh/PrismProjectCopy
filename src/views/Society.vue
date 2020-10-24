@@ -93,12 +93,12 @@
             </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-            <div class="container-fluid">
+            <div class="container-fluid mb-3 mb-l-5">
                 <div class="row">
-                    <div class="col-auto mr-auto">
+                    <div class="col-auto mr-auto my-auto">
                         <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
                     </div>
-                    <div class="col-auto">
+                    <div class="col-auto my-auto">
                         <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
                         <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-keyboard-o" rounded icon-only></base-button>
                     </div>
