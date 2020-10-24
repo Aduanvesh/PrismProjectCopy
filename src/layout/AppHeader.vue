@@ -30,7 +30,7 @@
                   <router-link to="/" v-on:click.native="toDashboard">
                      <div class="row align-items-center">
                         <img src="/img/brand/logoblk.svg">
-                        <h2 class="mt-2"> Sociit </h2>
+                        <h2 class="mt-2 display-2 "> Sociit </h2>
                      </div>
                   </router-link>
                </div>

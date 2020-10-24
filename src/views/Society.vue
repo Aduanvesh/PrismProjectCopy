@@ -93,9 +93,11 @@
             </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-            <h1 class="h1 pl-sm-3 pl-3" style="color: white;"> Hi, {{this.user}} </h1>
-                <div class="col-12 offset-10">
-                    <tabs :fill="false" circle>
+            <div class="container-fluid d-flex align-items-center">
+                <div class="row">
+                    <div class="col-lg-7 col-md-10">
+                        <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
+                        <tabs :fill="false" circle>
                         <tab-pane>
                             <a @click="goProfile">Go to profile</a>
                             <span slot="title" class="nav-link-icon d-block"><i class="ni ni-atom"></i></span>
@@ -104,10 +106,10 @@
                             <a href="/kiosk/undefined/">Go to Kiosk Mode</a>
                             <span slot="title" class="nav-link-icon d-block"><i class="fa fa-keyboard-o"></i></span>
                         </tab-pane>
-
                     </tabs>
+                    </div>
                 </div>
-
+            </div>
            <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
                     <!-- Tabs begin here -->
