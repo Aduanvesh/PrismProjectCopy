@@ -136,7 +136,7 @@
                                     <input placeholder="Phone Number"
                                                 addon-left-icon="ni ni-lock-circle-open"
                                                 v-model="signupForm.phoneNumber"
-                                                class="form-control">
+                                                class="form-control" type = "number">
                                     </div>
                                     Please select a university from the options below:
                                     <div class = "university">

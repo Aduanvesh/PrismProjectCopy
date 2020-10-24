@@ -24,7 +24,7 @@
                         <div class="col-auto mr-auto mb-3">Following</div>
                         </div>
                                 <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="element in following" v-bind:key="element.uid">
+                                    <div class="col-md-6 mb-3" v-for="element in following" @click="goToPage(element.url)" v-bind:key="element.uid">
                                             <!-- <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name"> -->
                                                 <card class="card-options--hover shadow" img="/img/theme/lcard.png"> 
                                                 <template slot="header">
@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import Cards from '../views/components/Cards.vue'
+//import Cards from '../views/components/Cards.vue'
 import store from 'main'
 import Modal from '../views/SearchClub.vue'
 
@@ -191,6 +191,11 @@ const cardsData = [
         goTo(url)
         {   
             window.location.href = url
+        },
+
+        async goToPage(url){
+          this.$router.push(url)  
+          console.log('smog')
         },
 
         async retrieveMembership () {
