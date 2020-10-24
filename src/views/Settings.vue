@@ -18,7 +18,7 @@
                                 <div class="container pt-5">
                                     <div class="row justify-content-between">
                                         <div class="col-auto mr-auto">
-                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Profile Banner</base-button>
+                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Banner</base-button>
                                         </div>
                                     </div>
                                 </div>
