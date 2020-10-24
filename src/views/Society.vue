@@ -58,7 +58,7 @@
                     <p>Price</p>
                     <base-input 
                         v-model="event.price"
-                        type="text"
+                        type="number"
                         placeholder="$0.00"
                         class="field"
                     >
@@ -66,7 +66,7 @@
                     <p>Capacity</p>
                     <base-input 
                         v-model="event.capacity"
-                        type="text"
+                        type="number"
                         placeholder="0"
                         class="field"
                     >
@@ -153,7 +153,9 @@
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.id">
                                         <div v-if="cards.event_name != null"> 
                                             <!-- Above, weak workaround to hide null events. -->
-                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name">
+                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name"
+                                            :cateringProp="cards.catering" :memberProp="cards.memberonly" :location="cards.location" :price="cards.price" 
+                                            :capacity="cards.capacity" :description="cards.event_description">
                                                 <template slot="header">
                                                     {{cards.event_name}}
                                                 </template>
@@ -176,19 +178,25 @@
                         </template>
                         <h5> Payments</h5>
                         <div class="row">
-                            <div class="col-3">
-                                <!-- v-for events, tickets etc. -->
-                                <card>Membership Sales</card>
-                                <card>Ticket Sales</card>
-                                <card>Item 3</card>
-                                <card>Item 4</card>
-                        </div>
-                        <div class="col-9">
-                                <card style="height: 100%;">
-                                <card>Law Ball Ticket: $100</card>
-                                <card>Refund: $50</card>
-                                </card>
-                        </div>
+                           <table class="col-12">
+                                            <tr>
+                                                <th>Payment ID</th>
+                                                <th>Status</th>
+                                                <th>Payee</th>
+                                                <th>Date Submitted</th>
+                                                <th>Date Paid</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                            <tr v-for="payment in payments" v-bind:key="payment.id">
+                                                <th>{{payment.id}}</th>
+                                                <th>{{payment.status}}</th>
+                                                <th>{{payment.payee}}</th>
+                                                <th>{{payment.date1}}</th>
+                                                <th>{{payment.date2}}</th>
+                                                <th>{{payment.amount}}</th>
+                                                <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
+                                            </tr>
+                                </table>
                         </div>
                     </tab-pane>
                     <tab-pane key="tab4">
@@ -245,53 +253,34 @@ const cardsEventData = [
     
     data () {
         return {
-            times: [
-                    '1:00',
-                    '1:30',
-                    '2:00',
-                    '2:30',
-                    '3:00',
-                    '3:30',
-                    '4:00',
-                    '4:30',
-                    '5:00',
-                    '5:30',
-                    '6:00',
-                    '6:30',
-                    '7:00',
-                    '7:30',
-                    '8:00',
-                    '8:30',
-                    '9:00',
-                    '9:30',
-                    '10:00',
-                    '10:30',
-                    '11:00',
-                    '11:30',
-                    '12:00',
-                    '12:30',
-            ],
-            event: {
-                event_name: '',
-                description: '',
-                location: '',
-                startTime: '',
-                endTime: '',
-
-                extras: {
-                    catering: false,
-                    membersOnly: false
-                },
-                price: '',
-                capacity: 0,
-                dates: "2018-07-17 to 2018-07-19",
-            },
+            times:  [
+                    '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30',
+                    '5:00', '5:30', '6:00', '6:30', '7:00', '7:30', '8:00', '8:30',
+                    '9:00', '9:30','10:00','10:30','11:00','11:30','12:00','12:30',
+                    ],
+            event:  {
+                        event_name: '',
+                        description: '',
+                        location: '',
+                        startTime: '',
+                        endTime: '',
+                        extras: {
+                            catering: false,
+                            membersOnly: false
+                        },
+                        price: 0,
+                        capacity: 0,
+                        dates: "2018-07-17 to 2018-07-19",
+                    },
             memberlist: [],
             user: this.$store.state.userDetails.title ? this.$store.state.userDetails.title : 'Student Society',
             cardsLinks: cardsData,
             cardsEventsLinks: cardsEventData, 
             modals: {
             add: false,
+            payments:[{
+
+            }]
             },
         }
     },
@@ -373,8 +362,37 @@ const cardsEventData = [
                 this.retrieveMembership()
                 this.getMembers()
                 this.getEvents()
+                this.retrievePayments()
             } 
         },
+
+        async retrievePayments () {
+            const pays = this.$store.dispatch('getClubPayments')
+            .then(function (data) {
+            const Arpayments = []
+            for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].details)
+                const card = { }
+                
+                card.id = data[i].id
+                card.status = data[i].status
+                card.payee = data[i].payee
+                const dateholder = new Date(data[i].date1.seconds * 1000)
+                card.date1 = dateholder.getDate().toString() + '/' + dateholder.getMonth().toString() + '/' + dateholder.getYear().toString()
+                dateholder = new Date(data[i].date2.seconds * 1000)
+                card.date2 = dateholder.getDate().toString() + '/' + dateholder.getMonth().toString() + '/' + dateholder.getYear().toString()
+                card.amount = '$' + (data[i].amount/100).toString()
+
+            Arpayments.push(card)
+            }
+                return Arpayments
+            })
+        this.payments = await pays
+
+        console.log('paymentcheck:', this.payments)
+        },
+        
+
 
         async getEvents () {
             const eventCards = this.$store.dispatch('getClubEvents')
@@ -385,7 +403,7 @@ const cardsEventData = [
                         capacity: '',
                         date: '',
                         date_created: '',
-                        dietr: false,
+                        catering: false,
                         endTime: '',
                         event_description: '',
                         event_name: '',
@@ -404,7 +422,12 @@ const cardsEventData = [
                     card.image = '/img/theme/lcard.png'
                     card.url = '/event/' + data[i].id
                     card.id = data[i].id
-                    card.date_created = data[i].date_created                
+                    card.date_created = data[i].date_created 
+                    card.catering = data[i].catering   
+                    card.memberonly = data[i].membersOnly
+                    card.location = data[i].location          
+                    card.price = data[i].price     
+                    card.capacity = data[i].capacity 
                 cardsData.push(card)
                 }
                     return cardsData

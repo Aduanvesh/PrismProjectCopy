@@ -113,7 +113,7 @@
                     <p>Price</p>
                     <base-input 
                         v-model="edit.price"
-                        type="text"
+                        type="number"
                         placeholder="$0.00"
                         class="field"
                     >
@@ -121,7 +121,7 @@
                     <p>Capacity</p>
                     <base-input 
                         v-model="edit.capacity"
-                        type="text"
+                        type="number"
                         placeholder="0"
                         class="field"
                     >
@@ -184,7 +184,7 @@
                   </li>
                   <li class="nav-item" v-if="options && !$slots.button1 || !$slots.button2 || !$slots.button3">
                     <a class="nav-link nav-white-highlight"
-                        href="#" @click.prevent="modals.edit = true"
+                        href="#" @click.prevent="onEditStart"
                       >Edit</a>
                   </li> 
                   <li class="nav-item" v-if="options && !$slots.button1 || !$slots.button2 || !$slots.button3">
@@ -279,8 +279,38 @@ export default {
     },
     name: {
         type: String,
-        default: 'Untitled',
+        default: 'Name',
         description: "Name of the file, event or membership"
+    },
+    location: {
+        type: String,
+        default: 'Location',
+        description: "Name of the file, event or membership"
+    },
+    description: {
+        type: String,
+        default: 'Description',
+        description: "Name of the file, event or membership"
+    },
+    price: {
+        type: Number,
+        default: 0,
+        description: "Name of the file, event or membership"
+    },
+    capacity: {
+        type: Number,
+        default: 0,
+        description: "Name of the file, event or membership"
+    },
+    cateringProp: {
+        type: Boolean,
+        default: false,
+        description: "Boolean for dietary requirements"
+    },
+    memberProp: {
+        type: Boolean,
+        default: false,
+        description: "Boolean for members only"
     },
     type: {
       type: String,
@@ -352,6 +382,7 @@ export default {
       this.edit.id = this.id
       console.log(this.edit)
       this.$store.dispatch('updateEvent', this.edit)
+      this.modals.edit = false
     },
 
     async onEdit(evt){
@@ -362,8 +393,22 @@ export default {
 
     async viewEvent () {
       this.$router.push(this.link)
-    }
     },
+    
+    async onEditStart() {
+      this.edit.title = this.name
+      this.edit.category = this.name
+      this.edit.description = this.description
+      this.edit.price = this.price
+      this.edit.capacity = this.capacity
+      this.edit.location = this.location
+      console.log(this.edit.extras.catering, this.cateringProp)
+      this.edit.extras.catering = this.cateringProp
+      this.edit.extras.membersOnly = this.memberProp
+      this.modals.edit = true
+
+    }
+  },
 
     
 };

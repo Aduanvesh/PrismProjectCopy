@@ -65,6 +65,7 @@ export default new Vuex.Store({
               members: [],
               membership_types: [],
               events:[],
+              payments:[],
               details: '',
               description: ''
             })
@@ -244,10 +245,10 @@ export default new Vuex.Store({
       const targetUser = firebase.firestore().collection('users').doc(userID)
       const targetArray = await targetUser.get()
         .then(doc => {
-          console.log('check', doc.data().memberships)
           return doc.data().memberships
         })
       const memberArray = []
+      console.log('checkeve', targetArray)
       for (var i = 0; i < targetArray.length; i++) {
         const snapshot = await firebase.firestore().collection('memberships').doc(targetArray[i]).get()
           .then(doc => {
@@ -302,6 +303,26 @@ export default new Vuex.Store({
           finalArray.push(snapshot)
         }
       console.log('final array:', finalArray)
+      return finalArray
+    },
+
+    async getClubPayments () {
+      const userID = firebase.auth().currentUser.uid
+      const targetUser = firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const targetArray = await targetUser.get()
+          .then(doc => {
+            console.log('check', doc.data().payments)
+            return doc.data().payments
+          })
+        const finalArray = []
+        for (var i = 0; i < targetArray.length; i++) {
+          const snapshot = await firebase.firestore().collection('payments').doc(targetArray[i]).get()
+            .then(doc => {
+              return doc.data()
+            })
+          finalArray.push(snapshot)
+        }
+      console.log('final array club pay:', finalArray)
       return finalArray
     },
 
@@ -382,6 +403,9 @@ export default new Vuex.Store({
         membership.update({
           members: firebase.firestore.FieldValue.arrayUnion(userID)
         })
+        
+
+
         const paras = {}
         paras.date1 = new Date()
         paras.date2 = new Date()
@@ -406,6 +430,10 @@ export default new Vuex.Store({
       })
         targetUser.update({
           membership_types: firebase.firestore.FieldValue.arrayUnion(membershipclubid),
+          payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
+        })
+        const clubs = await firebase.firestore().collection('memberships').doc(membershipclubid)
+        clubs.update({
           payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
         })
 
@@ -479,7 +507,7 @@ export default new Vuex.Store({
           })
             finalArray.push(snapshotev)
       }
-      console.log(finalArray)
+      console.log('Events', finalArray)
       return finalArray
     },
     
@@ -611,11 +639,11 @@ export default new Vuex.Store({
     async updateEvent (a = {}, payload) {
       const targetEvent = firebase.firestore().collection('events').doc(payload.id)
       console.log('eventsdata:', payload)
-      if (payload.title != undefined){
         targetEvent.update({
           event_name: payload.title,
+          catering: payload.extras.catering,
+          membersOnly: payload.extras.membersOnly,
         })
-      }
       if (payload.event_description != undefined){
         targetEvent.update({
           event_description: payload.description,
