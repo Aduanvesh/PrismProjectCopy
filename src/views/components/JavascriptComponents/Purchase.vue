@@ -47,6 +47,16 @@ export default {
   components: {
     Modal
   },
+  props: {
+
+    link: {
+      type: String,
+      default: "",
+      description: "URL for the content to be edited."
+    },
+
+    
+  },
   data() {
     return {
       modals: {
