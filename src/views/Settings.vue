@@ -80,18 +80,28 @@
                         </div>
                         <template>
                             <form @submit.prevent>
-                                <h6 class="heading-small text-muted mb-4">Sociit Settings</h6>
-                                <div class="pl-lg-4">
+                                <h6 class="heading-small text-muted">Sociit Settings</h6>
+                                <div class="pb-4">
+                                    <label> Theme Colour </label>
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                                    <base-input alternative=""
-                                                                label="Dashboard Theme"
-                                                                placeholder="Username"
-                                                                input-classes="form-control-alternative"
-                                                                v-model="model.username"
-                                                                class="p-1"
-                                                    />
+                                        <div class="col-1">
+                                                    <base-radio inline name="colour" class="bg-warning"/>
                                         </div>
+                                        <div class="col-1">
+                                                    <base-radio inline name="colour"/>
+                                        </div>
+                                        <div class="col-1">
+                                                    <base-radio inline name="colour"/>
+                                        </div>
+                                        <div class="col-1">
+                                                    <base-radio inline name="colour"/>
+                                        </div>
+                                        <div class="col-1">
+                                            <base-radio inline name="colour"/>
+                                        </div> 
+                                        <div class="col-1">
+                                            <base-radio inline name="colour"/>
+                                        </div>                                         
                                     </div>
                                 </div>
                                 <h6 class="heading-small text-muted mb-4">User information</h6>
