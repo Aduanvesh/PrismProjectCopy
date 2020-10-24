@@ -182,7 +182,8 @@
                                             <tr>
                                                 <th>Payment ID</th>
                                                 <th>Status</th>
-                                                <th>Payee</th>
+                                                <th>Payer</th>
+                                                <th>Info</th>
                                                 <th>Date Submitted</th>
                                                 <th>Date Paid</th>
                                                 <th>Amount</th>
@@ -190,7 +191,8 @@
                                             <tr v-for="payment in payments" v-bind:key="payment.id">
                                                 <th>{{payment.id}}</th>
                                                 <th>{{payment.status}}</th>
-                                                <th>{{payment.payee}}</th>
+                                                <th>{{payment.payer}}</th>
+                                                <th>{{payment.info}}</th>
                                                 <th>{{payment.date1}}</th>
                                                 <th>{{payment.date2}}</th>
                                                 <th>{{payment.amount}}</th>
@@ -376,13 +378,13 @@ const cardsEventData = [
                 
                 card.id = data[i].id
                 card.status = data[i].status
-                card.payee = data[i].payee
+                card.info = data[i].info
                 const dateholder = new Date(data[i].date1.seconds * 1000)
-                card.date1 = dateholder.getDate().toString() + '/' + dateholder.getMonth().toString() + '/' + dateholder.getYear().toString()
+                card.date1 = dateholder.getDate().toString() + '/' + (dateholder.getMonth() + 1).toString() + '/' + '20'+(dateholder.getYear() - 100).toString()
                 dateholder = new Date(data[i].date2.seconds * 1000)
-                card.date2 = dateholder.getDate().toString() + '/' + dateholder.getMonth().toString() + '/' + dateholder.getYear().toString()
-                card.amount = '$' + (data[i].amount/100).toString()
-
+                card.date2 = dateholder.getDate().toString() + '/' + (dateholder.getMonth() + 1).toString() + '/' + '20'+(dateholder.getYear() - 100).toString()
+                card.amount = '$' + (data[i].amount).toString()
+                card.payer = data[i].payer
             Arpayments.push(card)
             }
                 return Arpayments
@@ -392,8 +394,6 @@ const cardsEventData = [
         console.log('paymentcheck:', this.payments)
         },
         
-
-
         async getEvents () {
             const eventCards = this.$store.dispatch('getClubEvents')
                 .then(function (data) {
