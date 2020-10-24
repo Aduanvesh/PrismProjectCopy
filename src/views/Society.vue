@@ -93,13 +93,14 @@
             </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-            <div class="container-fluid d-flex align-items-center">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-7 col-md-10">
+                    <div class="col-auto mr-auto">
                         <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
+                    </div>
+                    <div class="col-auto">
                         <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
                         <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-keyboard-o" rounded icon-only></base-button>
-                    </tabs>
                     </div>
                 </div>
             </div>
