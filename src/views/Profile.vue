@@ -1,20 +1,10 @@
 <template>
     <div class="profile-page">
-        <!-- <section class="section-profile-cover section-shaped my-0">
-            <div class="shape shape-style-1 shape-primary alpha-4">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </section> -->
-        <section class="section-profile-cover section-shaped my-0">
-        <img v-lazy="'/img/theme/qutlscover.jpg'" class="col-12"/>
-        </section>
-        <section class="section section-skew">
+            <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-primary"
+                     style="min-height: 600px; background-image: url(/img/theme/img-2-1200x1000.jpg); background-size: cover; background-position: center top;">
+            <!-- Mask -->
+            <span class="mask bg-gradient-success opacity-8"></span>
+            </base-header>
             <div class="container">
                 <card shadow class="card-profile mt--300" no-body>
                     <div class="px-4">
@@ -26,12 +16,21 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
-                                <div class="card-profile-actions py-4 mt-lg-0">
-                                    <button type="default" size="sm" class="btn btn-1 btn-primary" @click="addToClub">Follow</button>
+                            <!-- <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center col-12 col-sm-6 col-sm">
+                                <div class="card-profile-actions py-4 mt-lg-0"> -->
+                                <div class="container pt-5">
+                                    <div class="row justify-content-between">
+                                        <div class="col-auto mr-auto">
+                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="addToClub">Follow</base-button>
+                                        </div>
+                                        <div class="col-auto">
+                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="scrollPage('events')">View Events</base-button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 order-lg-1">
+                                <!-- </div>
+                            </div> -->
+                            <div class="col-lg-4 order-lg-1 pt-lg-5 pt-4 pt-md-3">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
                                         <span class="heading">{{memberlist.length}}</span>
@@ -44,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center mt-5">
+                        <div class="text-center mt-2">
                             <h3>{{society_name}}
                                 <span class="font-weight-light"></span>
                             </h3>
@@ -71,7 +70,7 @@
                          -->
                         <!-- Vue-if statement. Are there tickets to display for this society that are available for purchase? -->
                         <div class="mt-5 py-5 border-top text-center">
-                            <div class="h6"> Events </div>
+                            <div class="h6 mb-4 mb-lg-5" id="events"> Events </div>
                             <div class="row justify-content-center">
                                     <div class="col-md-6 mb-3" v-for="cards in eventData" v-bind:key="cards.title">
                                         <card class="card-options--hover shadow" :link="cards.link" :img="cards.image">
@@ -111,7 +110,6 @@
                     </div>
                 </card>
             </div>
-        </section>
     </div>
 </template>
 <script>
@@ -166,6 +164,10 @@ data() {
 },
 methods: {
 
+
+    scrollPage(div) {
+        window.location.href = '#'+ div
+    },
 
     async addToClub () {
         if (this.$store.userDetails.type = 'user'){
