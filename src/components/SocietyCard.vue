@@ -38,7 +38,7 @@
                 <p>Current Attendees:</p>
 
                 <template slot="footer">
-                    <base-button type="primary">View Event</base-button>
+                    <base-button type="primary" @click="viewEvent">View Event</base-button>
                     <base-button outline type="primary" @click="modals.view = false; modals.guest = true">View Guest List</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.view = false">Close
                     </base-button>
@@ -200,6 +200,7 @@ import Modal from "@/components/Modal.vue";
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import store from 'main'
+import router from '../router'
 
 export default {
   name: "card",
@@ -348,7 +349,13 @@ export default {
         alert(JSON.stringify(this.edit))
         this.editThis()
       },
-  }
+
+    async viewEvent () {
+      this.$router.push(this.link)
+    }
+    },
+
+    
 };
 </script>
 <style>

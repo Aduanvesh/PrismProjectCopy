@@ -97,23 +97,14 @@ data() {
 },
 methods: {
 
-    async checkUserPage () {
-      const check = await this.$store.dispatch('checkUser', this.$route.params.id)
-      if (check !== 'in') {
-        router.push('/')
-      } else {
-        this.name = this.fullname
-      }
-    }
-  },
+},
   computed: {
       fullname() {
           return this.$store.state.userDetails.firstName + ' ' + this.$store.state.userDetails.lastName
       }
   },
     created () {
-    this.checkUserPage()
-    console.log('profile')
+    console.log('events')
   }
 }
 </script>

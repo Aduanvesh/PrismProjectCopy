@@ -349,17 +349,88 @@ export default new Vuex.Store({
       }
     },
 
-    async getMembershipTypes (a = {}, payload) {
-      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
-      const FinalArray = []
-      const targetMem = await club.collection('membership_types').get()
-        .then(querySnapshot => {
-          querySnapshot.docs.forEach(doc => {
-            FinalArray.push(doc.data())
-          })
+    async purchaseMembershipTypes (a = {}, payload) {
+      console.log('purchasing:', payload)
+      const userID = firebase.auth().currentUser.uid
+      if (this.state.userDetails.type === 'Club'){
+        return 'failed because clubs cannot purchase this'
+      } else {
+        const membership = await firebase.firestore().collection('membership_types').doc(payload)
+        membership.update({
+          members: firebase.firestore.FieldValue.arrayUnion(userID)
         })
-      return FinalArray
+        const membershipclubid = await membership.get()
+          .then(doc => {
+            return doc.data().membershiplink
+        })
+        const targetUser = await firebase.firestore().collection('users').doc(userID)
+        targetUser.update({
+          membership_types: firebase.firestore.FieldValue.arrayUnion(membershipclubid)
+        })
+      }
+    },
+
+    async createPayment () {
+
+    },
+
+    async getMembershipTypes (a = {}, payload) {
+      var memid = ''
+      if (payload === undefined){
+        memid = this.state.userDetails.linkid
+      } else {
+        memid = await firebase.firestore().collection('users').doc(payload).get()
+          .then(doc => {
+            return doc.data().membershiplink
+        })
+      }
+      const id = await memid
+      const club = await firebase.firestore().collection('memberships').doc(id)
+      const FinalArray = []
+      const targetMem = await club.get()
+        .then(doc => {
+          return doc.data().membership_types
+        })
+        const membership = await firebase.firestore().collection('membership_types').doc(targetMem[0]).get()
+        .then(doc => {
+          return doc.data()
+        })
+        membership.link = targetMem[0]
+        console.log('overhere:', membership)
+      return membership
     }, 
+
+    async getClubEvents (a = {}, payload) {
+      var memid = ''
+      if (payload === undefined){
+        memid = this.state.userDetails.linkid
+      } else {
+        memid = await firebase.firestore().collection('users').doc(payload).get()
+          .then(doc => {
+            return doc.data().membershiplink
+        })
+      }
+      const id = await memid
+      const club = await firebase.firestore().collection('memberships').doc(id)
+      const snapshot = await club.get()
+        .then(doc => {
+          if (doc.exists){
+            return doc.data().events 
+          }
+        })
+      const finalArray = []
+      for (var i = 0; i < snapshot.length; i++) {
+        console.log(snapshot[i])
+        const snapshotev = await firebase.firestore().collection('events').doc(snapshot[i]).get()
+          .then(doc => {
+            return doc.data()
+          })
+            finalArray.push(snapshotev)
+      }
+      console.log(finalArray)
+      return finalArray
+    },
+    
 
     async createMembershipType (a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
@@ -443,26 +514,7 @@ export default new Vuex.Store({
     },
 
 
-    async getClubEvents () {
-      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
-      const snapshot = await club.get()
-        .then(doc => {
-          if (doc.exists){
-            return doc.data().events 
-          }
-        })
-      const finalArray = []
-      for (var i = 0; i < snapshot.length; i++) {
-        console.log(snapshot[i])
-        const snapshotev = await firebase.firestore().collection('events').doc(snapshot[i]).get()
-          .then(doc => {
-            return doc.data()
-          })
-            finalArray.push(snapshotev)
-      }
-      console.log(finalArray)
-      return finalArray
-    },
+    
 
     async createEvent (a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)

@@ -33,8 +33,8 @@
                         </form>
                     </template>
                 <template slot="footer">
-                    <base-button type="primary">Purchase</base-button>
-                    <base-button type="link" class="ml-auto" @click="modals.modal1 = false">Close
+                    <base-button type="primary" @click="makePayment">Purchase</base-button>
+                    <base-button type="link" class="ml-auto" @click="this.modals.modal1 = false">Close
                     </base-button>
                 </template>
             </modal>
@@ -43,19 +43,20 @@
 </template>
 <script>
 import Modal from "@/components/Modal.vue";
+import store from 'main'
+
 export default {
   components: {
     Modal
   },
   props: {
 
-    link: {
-      type: String,
-      default: "",
-      description: "URL for the content to be edited."
-    },
+      link: {
+          type: String,
+          default: "",
+          description: "URL for the content to be edited."
+      }
 
-    
   },
   data() {
     return {
@@ -66,8 +67,16 @@ export default {
       cardname: 'L Card',
       price: '$10',
       terms: 'I agree to the terms and conditions'
-    };
-  }
+      
+    }
+    },
+    methods: {
+        async makePayment () {
+            this.modals.modal1 = false
+            this.$store.dispatch('purchaseMembershipTypes', this.link)
+            console.log(this.link)
+        }
+    }
 };
 </script>
 <style>

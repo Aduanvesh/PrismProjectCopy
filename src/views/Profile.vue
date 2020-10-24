@@ -95,7 +95,7 @@
                                         </div>
                                         
                                         <div class="col-md-6 mb-3" v-for="cards in membershipData" v-bind:key="cards.title">
-                                                <modal>
+                                                <modal :link="cards.link">
                                                     <template slot="modal-button-wrapper">
                                                         <card class="card-options--hover shadow" :link="cards.link" :img="cards.image">
                                                             <template slot="header">
@@ -157,7 +157,7 @@ data() {
           {
             title: 'Membership Title 1',
             image: '/img/theme/lcard.png',
-            link: '/event/',
+            id: '1231245',
           },
         ],
     };
@@ -166,14 +166,6 @@ data() {
 },
 methods: {
 
-    async checkUserPage () {
-      const check = await this.$store.dispatch('checkUser', this.$route.params.id)
-      if (check !== 'in') {
-        router.push('/')
-      } else {
-        this.name = this.fullname
-      }
-    },
 
     async addToClub () {
         if (this.$store.userDetails.type = 'user'){
@@ -212,6 +204,76 @@ methods: {
         console.log('membercheck:', this.memberlist)
     },
 
+    async retrieveMemberships () {
+    const cards = this.$store.dispatch('getMembershipTypes', this.$route.params.id)
+        .then(function (data) {
+                /*const cardsData = []
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].details)
+                    const card = {
+                        title: '',
+                        caption: '',
+                        price: '',
+                        members: []
+                    }
+                    card.title = data[i].name
+                    card.caption = data[i].description
+                    card.price = data[i].price
+                    card.members = data[i].members
+                    cardsData.push(card)
+                }
+                return cardsData*/console
+                const cardsData = []
+                const card = {}
+                card.title = data.name
+                card.caption = data.description
+                card.price = data.price
+                card.members = data.members
+                card.image = '/img/theme/lcard.png'
+                card.link = data.link
+                cardsData.push(card)
+                return cardsData
+            })
+    this.membershipData = await cards
+    
+    console.log('cardscheckmembers:', this.membershipData)
+    },
+    
+    async retrieveEvents () {
+            const eventCards = this.$store.dispatch('getClubEvents', this.$route.params.id)
+                .then(function (data) {
+                const cardsData = []
+                for (var i = 0; i < data.length; i++) {
+                    const card = {
+                        capacity: '',
+                        date: '',
+                        date_created: '',
+                        dietr: false,
+                        endTime: '',
+                        event_description: '',
+                        event_name: '',
+                        id: '',
+                        location: '',
+                        memberonly: false,
+                        price: '',
+                        startTime: '',
+                        url: ''
+                    }
+                    if (data[i].event_name === undefined || data[i].event_name === '' || data[i].event_name === null) {card.title = 'Untitled Event'}
+                    else {card.title = data[i].event_name}
+                    card.event_description = data[i].event_description
+                    card.link = '/event/' + data[i].id
+                    card.id = data[i].id
+                    card.image = '/img/theme/lcard.png'
+                    card.date_created = data[i].date_created                
+                cardsData.push(card)
+                }
+                    return cardsData
+                })
+        this.eventData = await eventCards
+        console.log('eventcardscheck:', this.eventData) 
+    }
+
     /*async pay () {
         
         stripe.redirectToCheckout({ sessionId: this.sessionId })
@@ -234,9 +296,10 @@ methods: {
       }
   },
     created () {
-    //this.checkUserPage()
     this.getMembers()
     this.getDetails()
+    this.retrieveMemberships()
+    this.retrieveEvents()
     /*axios.post('')
         .then(response => {
             this.sessionId = response.data
