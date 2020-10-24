@@ -327,7 +327,7 @@ const cardsEventData = [
         async retrieveMembership () {
         const cards = this.$store.dispatch('getMembershipTypes')
             .then(function (data) {
-                const cardsData = []
+                /*const cardsData = []
                 for (var i = 0; i < data.length; i++) {
                     console.log(data[i].details)
                     const card = {
@@ -342,6 +342,14 @@ const cardsEventData = [
                     card.members = data[i].members
                     cardsData.push(card)
                 }
+                return cardsData*/console
+                const cardsData = []
+                const card = {}
+                card.title = data.name
+                card.caption = data.description
+                card.price = data.price
+                card.members = data.members
+                cardsData.push(card)
                 return cardsData
             })
         this.cardsData = await cards
@@ -391,7 +399,7 @@ const cardsEventData = [
                         startTime: '',
                         url: ''
                     }
-                    if (data[i].event_name === undefined || data[i].event_name === '' || data[i].event_name === null) {card.event_name = 'Untitled'}
+                    if (data[i].event_name === undefined || data[i].event_name === '' || data[i].event_name === null) {card.event_name = 'Untitled Event'}
                     else {card.event_name = data[i].event_name}
 
                     card.event_description = data[i].event_description
