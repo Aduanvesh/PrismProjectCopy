@@ -97,15 +97,8 @@
                 <div class="row">
                     <div class="col-lg-7 col-md-10">
                         <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
-                        <tabs :fill="false" circle>
-                        <tab-pane>
-                            <a @click="goProfile">Go to profile</a>
-                            <span slot="title" class="nav-link-icon d-block"><i class="ni ni-atom"></i></span>
-                        </tab-pane>
-                        <tab-pane>
-                            <a href="/kiosk/undefined/">Go to Kiosk Mode</a>
-                            <span slot="title" class="nav-link-icon d-block"><i class="fa fa-keyboard-o"></i></span>
-                        </tab-pane>
+                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
+                        <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-keyboard-o" rounded icon-only></base-button>
                     </tabs>
                     </div>
                 </div>
