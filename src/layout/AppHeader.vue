@@ -30,7 +30,7 @@
                   <router-link to="/" v-on:click.native="toDashboard">
                      <div class="row align-items-center">
                         <img src="/img/brand/logoblk.svg">
-                        <h2 class="mt-2"> Sociit </h2>
+                        <h2 class="mt-2 display-2 "> Sociit </h2>
                      </div>
                   </router-link>
                </div>
@@ -121,19 +121,30 @@
             </base-dropdown>
          </ul>
          <div class = "white" v-if="userExists">
-            <!--  -->
             <ul class="navbar-nav align-items-lg-center ml-lg-auto navbar-right">
-               <li class="nav-item d-none d-lg-block ml-lg-4" @click="toDashboard">
-                  {{user}}
-               </li>
-               <li class="nav-item d-none d-lg-block ml-lg-4">    
-                  <img alt="Profile Settings" 
-                     class="img-fluid rounded-circle shadow" 
-                     data-src="img/theme/team-2-800x800.jpg" 
-                     src="/img/theme/team-2-800x800.jpg" 
-                     lazy="loaded" 
-                     style="max-width: 50px; max-height: 50px;">
-               </li>
+                              <li class="">
+                              <base-dropdown class="nav-link pr-0">
+                                 <div class="media align-items-center" slot="title">
+                                       <span class="avatar rounded-circle">
+                                          <img alt="Image placeholder" src="/img/theme/team-2-800x800.jpg" style="max-width: 50px; max-height: 50px;">
+                                       </span>
+                                       <div class="media-body ml-2 d-none d-lg-block">
+                                          <span class="mb-0 text-sm  font-weight-bold">{{user}}</span>
+                                       </div>
+                                 </div>
+
+                                 <template>
+                                       <router-link to="/profile" class="dropdown-item">
+                                          <i class="ni ni-single-02"></i>
+                                          <span>Edit Profile</span>
+                                       </router-link>
+                                       <router-link to="/profile" class="dropdown-item">
+                                          <i class="ni ni-settings-gear-65"></i>
+                                          <span>Settings</span>
+                                       </router-link>
+                                 </template>
+                              </base-dropdown>
+                           </li>
                <li class="nav-item d-none d-lg-block ml-lg-4">
                   <button type="submit" class="btn btn-1 btn-outline-neutral" @click="$store.dispatch('signoutUser')">Log out</button>
                </li>

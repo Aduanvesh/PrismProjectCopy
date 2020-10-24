@@ -1,6 +1,5 @@
 <template>
     <div class="profile-page">
-
         <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-primary"
                      style="min-height: 600px; background-image: url(/img/theme/cloudland.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
