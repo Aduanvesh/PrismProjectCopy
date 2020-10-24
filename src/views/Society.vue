@@ -349,6 +349,7 @@ const cardsEventData = [
                 card.caption = data.description
                 card.price = data.price
                 card.members = data.members
+                card.image = '/img/theme/lcard.png'
                 cardsData.push(card)
                 return cardsData
             })
@@ -404,7 +405,7 @@ const cardsEventData = [
 
                     card.event_description = data[i].event_description
 
-
+                    card.image = '/img/theme/lcard.png'
                     card.url = '/event/' + data[i].id
                     card.id = data[i].id
                     card.date_created = data[i].date_created                
