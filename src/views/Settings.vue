@@ -126,22 +126,22 @@
                                     <label> Theme Colour </label>
                                     <div class="row">
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#"  type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
                                         </div> 
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
                                         </div>                                         
                                     </div>
                                 </div>
@@ -258,6 +258,7 @@ components: {
 },
 data() {
     return {
+        userID: '',
         sessionId:'',
         followers: 0,
         up_coming_events: 0,
@@ -291,11 +292,21 @@ data() {
 },
 
   methods: {
+
+    async associateImage () {
+        
+        const userID = firebase.auth().currentUser.uid
+        const user = await firebase.firestore().collection('users').doc(userID)
+        user.update({
+            "profile_img" : this.img1
+        })
+
+    },
+
     create () {
       
       const post = {
-        photo: this.img1,
-        caption: this.caption        
+        photo: this.img1,     
       }
       firebase.database().ref('PhotoGallery').push(post)
       .then((response) => {
