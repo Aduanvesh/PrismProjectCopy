@@ -86,12 +86,12 @@ export default {
   },
   data() {
     return {
-      event_name: "Law Ball",
-      society_name: "QUT Law Society",
-      location: "Brisbane, Queensland",
-      university: "Queensland University of Technology",
-      price: 100,
-      capacity: 50,
+      event_name: "...",
+      society_name: "Society",
+      location: "Location",
+      university: "University",
+      price: 0,
+      capacity: 0,
       catering: false,
       membersOnly: false,
       date: '',
