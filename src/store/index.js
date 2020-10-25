@@ -220,6 +220,24 @@ export default new Vuex.Store({
       return club
     },
 
+    async getClubMembersEvents(a = {}, payload){
+      const snapshot = await firebase.firestore().collection('events').doc(payload).get()
+      .then(doc => {
+        console.log('check', doc.data())
+        return doc.data()
+      })
+      const finalArray = []
+      for (var i = 0; i < snapshot.members.length; i++) {
+        const userdata = await firebase.firestore().collection('users').doc(snapshot.members[i]).get()
+          .then(doc => {
+            return doc.data()
+          })
+        finalArray.push(userdata)
+      }
+      console.log(finalArray)
+      return finalArray
+    },
+
     async getEventDetails(a = {}, payload){
       const snapshot = await firebase.firestore().collection('events').doc(payload).get()
       .then(doc => {
@@ -404,6 +422,7 @@ export default new Vuex.Store({
       console.log('purchasing:', payload)
       const userID = firebase.auth().currentUser.uid
       if (this.state.userDetails.type === 'Club') {
+        console.log('failed because clubs cannot purchase this')
         return 'failed because clubs cannot purchase this'
       } else {
         const targetUser = await firebase.firestore().collection('users').doc(userID)
@@ -605,6 +624,7 @@ export default new Vuex.Store({
     },
 
     async createMembershipType(a = {}, payload) {
+      console.log('casdaj:', payload)
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const clubdata = await club.get()
       .then(doc => {
@@ -613,12 +633,14 @@ export default new Vuex.Store({
       if (clubdata.length != 0){
         console.log('club already exists')
       } else {
+        console.log('away we go')
         const membership = await firebase.firestore().collection('membership_types').doc()
         membership.set({
           members: [],
           description: payload.description,
           membershiplink: this.state.userDetails.linkid,
           name: payload.name,
+          imgURL: payload.imgURL,
           price: payload.price
         })
         club.update({
@@ -641,7 +663,7 @@ export default new Vuex.Store({
       .then(doc => {
         return doc.data().membership_types
       })
-      const membership = await firebase.firestore().collection('membership_types').doc()
+      const membership = await firebase.firestore().collection('membership_types').doc(clubdata[0])
         membership.update({
           description: payload.description,
           name: payload.name,
