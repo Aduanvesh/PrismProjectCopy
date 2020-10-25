@@ -34,8 +34,8 @@
         <modal :show.sync="modals.view">
                 <h6 slot="header" class="modal-title" id="modal-title-default">Statistics</h6>
 
-                <p>Tickets Sold:</p>
-                <p>Current Attendees:</p>
+                <p>Tickets Sold: <b> {{attendee.length}}</b></p>
+                <p>Current Attendees: <b> {{attendee.length}} </b></p>
 
                 <template slot="footer">
                     <base-button type="primary" @click="viewEvent">View Event</base-button>
