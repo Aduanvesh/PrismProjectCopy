@@ -229,6 +229,18 @@ export default new Vuex.Store({
     return snapshot
     },
 
+    async getClubEventDetails(a = {}, payload){
+      const snapshot = await firebase.firestore().collection('memberships').doc(payload).get()
+      .then(doc => {
+        return doc.data().userlink
+      })
+      const clubdata = await firebase.firestore().collection('users').doc(snapshot).get()
+      .then(doc => {
+        return doc.data()
+      })
+    return clubdata
+    },
+
     async getMemberships() {
       const userID = firebase.auth().currentUser.uid
       const targetUser = firebase.firestore().collection('users').doc(userID)
@@ -470,32 +482,31 @@ export default new Vuex.Store({
           console.log('already have this purchased')
           return 'already have this purchased'
         }
-        const eventdata = await firebase.firestore().collection('events').doc(payload).get()
+        const event = await firebase.firestore().collection('events').doc(payload)
+        const eventdata = await event.get()
           .then(doc => {
             return doc.data()
           })
+          console.log('purchasing2:', eventdata)
         const membership = await firebase.firestore().collection('memberships').doc(eventdata.linked_account)
         const membershipdata = await membership.get()
           .then(doc => {
             return doc.data()
           })
-        membership.update({
+        event.update({
           members: firebase.firestore.FieldValue.arrayUnion(userID)
         })
-        
-
         const paras = {}
         paras.date1 = new Date()
         paras.date2 = new Date()
         paras.payee = membershipdata.name
         paras.payer = this.state.userDetails.firstName + ' ' + this.state.userDetails.lastName
-        paras.info = 'Ticket Purchase: ' + await eventdata.name
+        paras.info = 'Ticket Purchase: ' + await eventdata.event_name
         paras.payeeid = eventdata.linked_account
         paras.payerid = userID
         paras.status = 'paid'
         paras.amount = eventdata.price
-        //this.createPayment(paras)
-
+        
         console.log('checkor:', paras)
         const targetpayment = await firebase.firestore().collection('payments').doc()
         targetpayment.set({

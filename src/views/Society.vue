@@ -169,7 +169,7 @@
                             <i class="fa fa-university mr-2"></i>{{user}}
                         </template>
                                 <div class="row">
-                                    <div class="col-auto mr-auto mb-3">Edit Page</div>
+                                    <div class="col-auto mr-auto mb-3">Profile Page:</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -202,7 +202,7 @@
                             <i class="ni ni-calendar-grid-58 mr-2"></i>Events
                         </template>
                                 <div class="row">
-                                    <div class="col-auto mr-auto">Active Events</div>
+                                    <div class="col-auto mr-auto">All Events:</div>
                                         <base-button outline class="btn-2 col-auto mb-3" type="primary" icon="fa fa-plus" @click="initialiseEventData">
                                         </base-button>
                                 </div>
@@ -220,9 +220,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="row pt-5">
-                                        <div class="col-md-6 mb-5 mb-md-3"> Past Events </div>
-                                    </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                         </div>
@@ -233,7 +230,9 @@
                         <template slot="title">
                             <i class="ni ni-money-coins mr-2"></i>Payments
                         </template>
-                        <h5> Payments</h5>
+                        <div class="row">
+                            <div class="col-auto mr-auto mt-3">Payment History:</div>
+                        </div>
                         <div v-if="showPay" class="row">
                            <table class="col-12" id="paymenttable">
                                             <tr>
@@ -263,7 +262,7 @@
                         </template>
                         <h5> Membership List</h5>
                                <div>
-                                   <table style="width:75%">
+                                   <table style="width:75%"  id="membertable">
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -271,10 +270,10 @@
                                         <th>University</th>
                                     </tr>
                                     <tr v-for="member in memberlist" v-bind:key="member.id">
-                                        <th>{{member.first_name}} {{member.last_name}} &nbsp;</th>
-                                        <th>{{member.email}}&nbsp;</th>
-                                        <th>{{member.phone_1}}&nbsp;</th>
-                                        <th>{{member.university}}</th>
+                                        <td>{{member.first_name}} {{member.last_name}} &nbsp;</td>
+                                        <td>{{member.email}}&nbsp;</td>
+                                        <td>{{member.phone_1}}&nbsp;</td>
+                                        <td>{{member.university}}</td>
                                     </tr>
                                     </table>
                                </div>
@@ -525,22 +524,27 @@ const paymentData = [
 </script>
 
 <style>
-#paymenttable{
+#paymenttable, #membertable{
     border: 1px solid #ddd;
     border-collapse: collapse;
     width: 100%;
 }
 
-#paymenttable td, #paymenttable th {
+#paymenttable td, #paymenttable th, #membertable td, #membertable th {
     border: 1px solid #ddd;
     overflow: hidden;
 }
 
 #paymenttable tr:nth-child(even){background-color: #f2f2f2;}
 
-#paymenttable th {
+#membertable tr:nth-child(even){background-color: #f2f2f2;}
+
+#paymenttable th, #membertable th {
     background-color: #2d3e77;
     color: white;
 }
+
+
+
 
 </style>

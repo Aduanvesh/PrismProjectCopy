@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                             <div class="row">-->
-              <div class="col-auto mr-auto mt-3 mb-3">Following</div>
+              <div class="col-auto mr-auto mt-3 mb-3">Events from pages you follow: </div>
             </div>
             <div class="row">
               <div
@@ -129,22 +129,13 @@
                     <th>Amount</th>
                   </tr>
                   <tr v-for="payment in payments" v-bind:key="payment.id">
-                    <th>{{ payment.id }}</th>
-                    <th>{{ payment.status }}</th>
-                    <th>{{ payment.payee }}</th>
-                    <th>{{ payment.info }}</th>
-                    <th>{{ payment.date1 }}</th>
-                    <th>{{ payment.date2 }}</th>
-                    <th>{{ payment.amount }}</th>
-                    <th>
-                      <button
-                        class="btn btn-1 btn-success"
-                        v-if="payment.status === 'unpaid'"
-                        @click="paymentMake(payment.id)"
-                      >
-                        Pay
-                      </button>
-                    </th>
+                    <td>{{ payment.id }}</td>
+                    <td>{{ payment.status }}</td>
+                    <td>{{ payment.payee }}</td>
+                    <td>{{ payment.info }}</td>
+                    <td>{{ payment.date1 }}</td>
+                    <td>{{ payment.date2 }}</td>
+                    <td>{{ payment.amount }}</td>
                   </tr>
                 </table>
               </div>
@@ -156,7 +147,7 @@
             </template>
             <div class="row">
               <div class="col-auto mr-auto mt-3 mb-3">
-                My Premium Memberships
+                My Premium Memberships:
               </div>
             </div>
             <div class="row">
@@ -177,7 +168,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-auto mr-auto mt-3 mb-3">My Tickets</div>
+              <div class="col-auto mr-auto mt-3 mb-3">My Event Tickets:</div>
             </div>
             <div class="row">
               <div
