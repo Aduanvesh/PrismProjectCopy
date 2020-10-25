@@ -126,8 +126,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-auto mr-auto mt-3">Active Memberships</div>
-                                        <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus"></base-button>
+                                    <div class="col-auto mr-auto mt-3">Active Membership</div>
+                                        <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus" @click="createMembership"></base-button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
@@ -177,7 +177,7 @@
                             <i class="ni ni-money-coins mr-2"></i>Payments
                         </template>
                         <h5> Payments</h5>
-                        <div class="row">
+                        <div v-if="showPay" class="row">
                            <table class="col-12">
                                             <tr>
                                                 <th>Payment ID</th>
@@ -197,7 +197,7 @@
                                                 <th>{{payment.date2}}</th>
                                                 <th>{{payment.amount}}</th>
                                                 <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
-                                            </tr>
+                                            </tr> 
                                 </table>
                         </div>
                     </tab-pane>
@@ -245,6 +245,9 @@ const cardsData = [
 const cardsEventData = [
 ]
 
+const paymentData = [
+]
+
   export default {
     name: 'tables',
     components: {
@@ -260,6 +263,8 @@ const cardsEventData = [
                     '5:00', '5:30', '6:00', '6:30', '7:00', '7:30', '8:00', '8:30',
                     '9:00', '9:30','10:00','10:30','11:00','11:30','12:00','12:30',
                     ],
+            payments: paymentData,
+            showPayments: false,
             event:  {
                         event_name: '',
                         description: '',
@@ -280,14 +285,15 @@ const cardsEventData = [
             cardsEventsLinks: cardsEventData, 
             modals: {
             add: false,
-            payments:[{
-
-            }]
+            
             },
         }
     },
 
     methods: {
+        async createMembership(){
+            this.$store.dispatch('createMembershipType')
+        },
 
         async initialiseEventData(event)
         {
@@ -308,7 +314,6 @@ const cardsEventData = [
             this.$store.dispatch('createEvent', this.event)
             this.modals.add = false;
             //this.initialiseEventData(this.event)
-           
         },
         
         async retrieveMembership () {
@@ -365,6 +370,7 @@ const cardsEventData = [
                 this.getMembers()
                 this.getEvents()
                 this.retrievePayments()
+                this.showPayments = true
             } 
         },
 
@@ -389,7 +395,8 @@ const cardsEventData = [
             }
                 return Arpayments
             })
-        this.payments = await pays
+        this.paymentData = await pays
+        this.payments = this.paymentData
 
         console.log('paymentcheck:', this.payments)
         },
@@ -439,6 +446,11 @@ const cardsEventData = [
     },
     created() {
         this.goLoad()
+    },
+    computed: {
+        showPay () {
+            return this.showPayments
+        }
     }
   }
   

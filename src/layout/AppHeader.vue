@@ -72,7 +72,7 @@
                   </a>
                   <!-- Dashboard Menu Item -->
                   <div v-if="userExists">
-                  <a href="/" v-on:click.native="toDashboard"
+                  <a href="/" v-on:click="toDashboard"
                      class="media d-flex align-items-center">
                      <div class="icon icon-shape bg-gradient-warning rounded-circle-no-outline text-white">
                         <i class="ni ni-ui-04"></i>
