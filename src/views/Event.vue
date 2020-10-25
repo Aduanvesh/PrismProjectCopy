@@ -24,8 +24,25 @@
             <div class="h6 mt-4">
               <i class="ni business_briefcase-24 mr-2"></i>{{ society_name }}
             </div>
-            <div><i class="ni education_hat mr-2"></i>{{ university }} University</div>
-           
+            <div class="mb-2"><i class="ni education_hat mr-2"></i>{{ university }} University</div>
+            <div class="h6 mt-4">
+            <ShareNetwork
+                    network="facebook"
+                    url="https://sociit.web.app"
+                    :title="society_name"
+                    :description="bio"
+                    :quote="bio"
+                    :hashtags="'sociit,' + society_name"
+                    class="text-center"
+                  >
+                  <base-button
+                    type="primary"
+                    size="sm"
+                    class="btn btn-1 btn-primary text-center"
+                    >Share on Facebook</base-button
+                  >
+              </ShareNetwork>
+              </div>
           </div>
           <div class="mt-5 py-5 border-top text-center">
             <div class="h6">Description</div>
