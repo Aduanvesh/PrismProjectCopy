@@ -49,7 +49,20 @@
                 <h6 slot="header" class="modal-title" id="modal-title-default">Guest List</h6>
 
                 <p>Guests:</p>
-
+                <div class="container">
+                  <table class="col-12">
+                    <tr>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Paid</th>
+                    </tr>
+                    <tr v-for="member in atendee" v-bind:key="member.phone">
+                      <td>{{attendee.name}}</td>
+                      <td>{{attendee.phone}}</td>
+                      <td>{{attendee.paid}}</td>
+                    </tr>
+                  </table>
+                </div>
                 <template slot="footer">
                     <base-button type="primary" @click="modals.view = true; modals.guest = false">View Stats</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.guest = false">Close
@@ -347,6 +360,12 @@ export default {
         price: '',
         capacity: 0,
         dates: "2020-01-09 to 2020-01-10",
+      },
+
+      attendee: {
+        name: '',
+        phone: '',
+        paid: false,
       },
 
       //@Adarsh, you might need these to be props? 
