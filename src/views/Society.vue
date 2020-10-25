@@ -231,11 +231,12 @@
                         <template slot="title">
                             <i class="ni ni-money-coins mr-2"></i>Payments
                         </template>
-                        <div class="row">
-                            <div class="col-auto mr-auto mt-3">Payment History:</div>
-                        </div>
+                                <div class="row">
+                                    <div class="col-auto mr-auto mb-3">Payment History:</div>
+                                </div>
+                        <div class="container">
                         <div v-if="showPay" class="row">
-                           <table class="col-12" id="paymenttable">
+                           <table class="col" id="paymenttable">
                                             <tr>
                                                 <th>Payment ID</th>
                                                 <th>Status</th>
@@ -256,14 +257,18 @@
                                             </tr> 
                                 </table>
                         </div>
+                        </div>
                     </tab-pane>
                     <tab-pane key="tab4">
                         <template slot="title">
                             <i class="fa fa-users mr-2"></i>Membership list
                         </template>
-                        <h5> Membership List</h5>
-                               <div>
-                                   <table style="width:75%"  id="membertable">
+                        <div class="row">
+                                    <div class="col-auto mr-auto mb-3">Membership List:</div>
+                        </div>
+                               <div class="container">
+                                   <div class="row">
+                                   <table class="col" id="membertable">
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -277,6 +282,7 @@
                                         <td>{{member.university}}</td>
                                     </tr>
                                     </table>
+                                   </div>
                                </div>
                     </tab-pane>
                 </card>
