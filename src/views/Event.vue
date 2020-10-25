@@ -9,7 +9,7 @@
                 <card shadow class="card-profile mt-300" no-body>
                     <div class="px-4">
                         <div class="text-center pt-5">
-                            <h3>{{event_name}} HELP
+                            <h3>{{event_name}}
                                 <span class="font-weight-light"></span>
                             </h3>
                             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{location}}</div>
