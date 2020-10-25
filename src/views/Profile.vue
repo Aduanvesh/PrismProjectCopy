@@ -239,6 +239,7 @@ export default {
       this.up_coming_events = clubDetails.events.length;
       this.bio = clubDetails.description;
       console.log("lolma", this.society_name);
+      this.$forceUpdate();
     },
 
     async getMembers() {

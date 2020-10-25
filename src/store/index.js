@@ -412,10 +412,6 @@ export default new Vuex.Store({
           .then(doc => {
             return doc.data()
           })
-        const membershipdata = await membership.get()
-          .then(doc => {
-            return doc.data()
-          })
         membership.update({
           members: firebase.firestore.FieldValue.arrayUnion(userID)
         })
@@ -430,7 +426,7 @@ export default new Vuex.Store({
         paras.payeeid = membershipclubid
         paras.payerid = userID
         paras.status = 'paid'
-        paras.amount = membershipdata.price
+        paras.amount = membershipclubid.price
         //this.createPayment(paras)
 
         console.log('checkor:', paras)
@@ -452,6 +448,73 @@ export default new Vuex.Store({
           payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
         })
         const clubs = await firebase.firestore().collection('memberships').doc(membershipclubid.membershiplink)
+        clubs.update({
+          payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
+        })
+
+      }
+    },
+
+    async purchaseEventTicket(a = {}, payload) {
+      console.log('purchasing:', payload)
+      const userID = firebase.auth().currentUser.uid
+      if (this.state.userDetails.type === 'Club') {
+        return 'failed because clubs cannot purchase this'
+      } else {
+        const targetUser = await firebase.firestore().collection('users').doc(userID)
+        const check = await targetUser.get()
+          .then(doc => {
+            return doc.data().events
+          })
+        if (check.includes(payload)) {
+          console.log('already have this purchased')
+          return 'already have this purchased'
+        }
+        const eventdata = await firebase.firestore().collection('events').doc(payload).get()
+          .then(doc => {
+            return doc.data()
+          })
+        const membership = await firebase.firestore().collection('memberships').doc(eventdata.linked_account)
+        const membershipdata = await membership.get()
+          .then(doc => {
+            return doc.data()
+          })
+        membership.update({
+          members: firebase.firestore.FieldValue.arrayUnion(userID)
+        })
+        
+
+        const paras = {}
+        paras.date1 = new Date()
+        paras.date2 = new Date()
+        paras.payee = membershipdata.name
+        paras.payer = this.state.userDetails.firstName + ' ' + this.state.userDetails.lastName
+        paras.info = 'Ticket Purchase: ' + await eventdata.name
+        paras.payeeid = eventdata.linked_account
+        paras.payerid = userID
+        paras.status = 'paid'
+        paras.amount = eventdata.price
+        //this.createPayment(paras)
+
+        console.log('checkor:', paras)
+        const targetpayment = await firebase.firestore().collection('payments').doc()
+        targetpayment.set({
+          date1: paras.date1,
+          date2: paras.date2,
+          id: targetpayment.id,
+          payee: paras.payee,
+          info: paras.info,
+          payer: paras.payer,
+          payeeid: paras.payeeid,
+          payerid: paras.payerid,
+          status: paras.status,
+          amount: paras.amount
+        })
+        targetUser.update({
+          events: firebase.firestore.FieldValue.arrayUnion(payload),
+          payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
+        })
+        const clubs = await firebase.firestore().collection('memberships').doc(eventdata.linked_account)
         clubs.update({
           payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
         })
