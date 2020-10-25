@@ -116,7 +116,7 @@
           </div>
           <!-- Vue-if statement. Are there memberships to display for this society that are available for purchase? -->
           <div class="mt-5 py-5 border-top text-center">
-            <div class="h6">Memberships</div>
+            <div class="h6 mb-4 mb-lg-5">Memberships</div>
             <div class="row justify-content-center">
               <div class="row">
                 <div class="col-md-6 mb-5 mb-md-3"></div>
@@ -168,8 +168,8 @@ export default {
       sessionId: "",
       followers: 22,
       up_coming_events: 10,
-      society_name: "QUT Law Society",
-      subtitle: "Law Society",
+      society_name: '',
+      subtitle: '',
       university: "Queensland University of Technology",
       bio:
         "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
@@ -234,8 +234,8 @@ export default {
         .then(function (data) {
           return data;
         });
-      this.society_name = clubDetails.name;
-      this.subtitle = clubDetails.details;
+      this.society_name, this.society_name = clubDetails.name;
+      this.subtitle, this.subtitle = clubDetails.details;
       this.up_coming_events = clubDetails.events.length;
       this.bio = clubDetails.description;
       console.log("lolma", this.society_name);
