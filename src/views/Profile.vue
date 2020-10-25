@@ -38,6 +38,21 @@
                     @click="addToClub"
                     >Follow</base-button
                   >
+                  <ShareNetwork
+                    network="facebook"
+                    url="https://sociit.web.app"
+                    :title="society_name"
+                    :description="bio"
+                    :quote="bio"
+                    :hashtags="'sociit,' + society_name"
+                  >
+                  <base-button
+                    type="blue"
+                    size="sm"
+                    class="btn btn-1 btn-primary"
+                    >Facebook</base-button
+                  >
+                </ShareNetwork>
                 </div>
                 <div class="col-auto">
                   <base-button
@@ -148,6 +163,7 @@
   </div>
 </template>
 <script>
+import VueSocialSharing from 'vue-social-sharing';
 import Modal from "./components/JavascriptComponents/Purchase.vue";
 import store from "main";
 import router from "../router";

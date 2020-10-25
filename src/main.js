@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import VueSocialSharing from 'vue-social-sharing';
 import Vue from "vue";
 import App from "./App.vue";
 import store from './store'
@@ -42,6 +43,7 @@ firebase.initializeApp(firebaseConfig)
 
 Vue.config.productionTip = false;
 Vue.use(Argon);
+Vue.use(VueSocialSharing);
 Vue.use(ArgonDashboard);
 new Vue({
   router,
