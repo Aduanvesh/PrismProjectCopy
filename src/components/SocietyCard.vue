@@ -154,10 +154,10 @@
             <modal :show.sync="modals.view">
                 <h6 slot="header" class="modal-title" id="modal-title-default">Statistics</h6>
 
-                <p>Number of Sold Memberships:</p>
+                <p>Number of Sold Memberships: <b>{{membership.numberMembers}}</b></p>
 
                 <template slot="footer">
-                    <base-button type="link" class="ml-auto" @click="modals.memberView = false">Close
+                    <base-button type="link" class="ml-auto" @click="modals.view = false">Close
                     </base-button>
                 </template>
             </modal>
@@ -173,6 +173,27 @@
                         placeholder="Image URL"
                         class="field"> 
                     </base-input>
+                    <p> Colour </p>
+                                    <div class="row pb-3">
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
+                                        </div> 
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
+                                        </div>                                         
+                                    </div>
                 <p>Title and Description</p>
                     <base-input 
                         v-model="membership.title"
