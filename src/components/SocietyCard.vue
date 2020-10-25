@@ -176,22 +176,22 @@
                     <p> Colour </p>
                                     <div class="row pb-3">
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'primary'" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'info'" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'success'" type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'warning'" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'danger'" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
                                         </div> 
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'gray'" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
                                         </div>                                         
                                     </div>
                 <p>Title and Description</p>
@@ -343,8 +343,10 @@ export default {
       },
 
       //@Adarsh, you might need these to be props? 
+      // ['primary', 'info', 'success', 'warning', 'danger', 'gray']
       membership: {
         imgURL: '',
+        colour: '', 
         title: '',
         description: '',
         price: 0,
