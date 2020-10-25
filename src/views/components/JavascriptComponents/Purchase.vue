@@ -24,7 +24,7 @@
                         <form role="form">
                             <base-input alternative
                                         type="text"
-                                        placeholder="Card Inscription"
+                                        placeholder="Notes"
                                         addon-left-icon="fa fa-pencil">
                             </base-input>
                             <base-checkbox>
@@ -55,7 +55,15 @@ export default {
           type: String,
           default: "",
           description: "URL for the content to be edited."
-      }
+      },
+
+    cardname: String,
+    description: String,
+    price: String,
+    terms: {
+        type: String,
+        default: "I agree to the terms and conditions"
+    }
 
   },
   data() {
@@ -63,10 +71,10 @@ export default {
       modals: {
         modal1: false
       },
-      description: 'The L Card is a student discount card created by the UQ Law Society, in collaboration with QUT Law Society, Griffith University Law Society and USQ Law Society.',
-      cardname: 'L Card',
-      price: '$10',
-      terms: 'I agree to the terms and conditions'
+      description: this.description ? this.description :'The L Card is a student discount card created by the UQ Law Society, in collaboration with QUT Law Society, Griffith University Law Society and USQ Law Society.',
+      cardname: this.cardname ? this.cardname : 'L Card',
+      price: this.price ? this.price : 'Price error',
+      terms: this.terms ? this.terms : 'I agree to the terms and conditions'
       
     }
     },

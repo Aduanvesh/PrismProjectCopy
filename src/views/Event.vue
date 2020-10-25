@@ -51,7 +51,7 @@
               <div class="col-lg-9">
                 <div class="container container-lg">
                   <div class="row">
-                        <modal link="none">
+                        <modal link="none" :cardname="event_name + ' Ticket'" :description="description" :price="'$'+ price">
                           <template slot="modal-button-wrapper">
                             <card
                               class="card-options--hover shadow"
@@ -98,7 +98,7 @@ export default {
       start_time: '',
       end_time: '',
       description:
-        "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
+        "",
     };
     // need to pass data 'down the tree'
     // card image, card title, etc --> modal (Purchase.vue)
@@ -112,7 +112,7 @@ export default {
       .then(function (data) {
           return data;
         });
-      this.description = event.event_description;
+      this.description= event.event_description;
       this.event_name = event.event_name;
       this.location = event.location;
       this.price = event.price;
