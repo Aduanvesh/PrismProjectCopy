@@ -16,18 +16,16 @@
       <card shadow class="card-profile mt-300" no-body>
         <div class="px-4">
           <div class="text-center pt-5">
-            <h3>
+            <h1>
               {{ event_name }}
+              <div><i class="fade"></i><p>#{{ $route.params.id }}</p></div>
               <span class="font-weight-light"></span>
-            </h3>
-            <div class="h6 font-weight-300">
-              <i class="ni location_pin mr-2"></i>{{ location }}
-            </div>
+            </h1>
             <div class="h6 mt-4">
               <i class="ni business_briefcase-24 mr-2"></i>{{ society_name }}
             </div>
-            <div><i class="ni education_hat mr-2"></i>{{ university }}</div>
-            <div><i class="fade"></i>#{{ $route.params.id }}</div>
+            <div><i class="ni education_hat mr-2"></i>{{ university }} University</div>
+           
           </div>
           <div class="mt-5 py-5 border-top text-center">
             <div class="h6">Description</div>
@@ -128,7 +126,18 @@ export default {
       this.club = event.linked_account
       console.log("lolma", this.society_name);
       this.$forceUpdate();
+
+      const club = await this.$store.dispatch(
+        "getClubEventDetails",
+        this.club
+      )
+      .then(function (data) {
+          return data;
+        });
+        this.university = club.university
+        this.society_name = club.title
     },
+
   },
   computed: {
     fullname() {
