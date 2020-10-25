@@ -220,6 +220,15 @@ export default new Vuex.Store({
       return club
     },
 
+    async getEventDetails(a = {}, payload){
+      const snapshot = await firebase.firestore().collection('events').doc(payload).get()
+      .then(doc => {
+        console.log('supercheckevents', doc.data())
+        return doc.data()
+      })
+    return snapshot
+    },
+
     async getMemberships() {
       const userID = firebase.auth().currentUser.uid
       const targetUser = firebase.firestore().collection('users').doc(userID)
@@ -395,7 +404,7 @@ export default new Vuex.Store({
           .then(doc => {
             return doc.data()
           })
-        if (check.includes(membershipclubid)) {
+        if (check.includes(membershipclubid.membershiplink)) {
           console.log('already have this purchased')
           return 'already have this purchased'
         }
