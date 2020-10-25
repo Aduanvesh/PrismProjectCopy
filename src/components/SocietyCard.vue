@@ -112,7 +112,7 @@
                     </base-input>
                     <p>Price</p>
                     <base-input 
-                        v-model="edit.price"
+                        v-model.number="edit.price"
                         type="number"
                         placeholder="$0.00"
                         class="field"
@@ -120,7 +120,7 @@
                     </base-input>
                     <p>Capacity</p>
                     <base-input 
-                        v-model="edit.capacity"
+                        v-model.number="edit.capacity"
                         type="number"
                         placeholder="0"
                         class="field"
