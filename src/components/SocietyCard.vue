@@ -39,7 +39,7 @@
 
                 <template slot="footer">
                     <base-button type="primary" @click="viewEvent">View Event</base-button>
-                    <base-button outline type="primary" @click="modals.view = false; modals.guest = true">View Guest List</base-button>
+                    <base-button outline type="primary" @click="getMembers">View Guest List</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.view = false">Close
                     </base-button>
                 </template>
@@ -56,10 +56,10 @@
                       <th>Phone</th>
                       <th>Paid</th>
                     </tr>
-                    <tr v-for="member in atendee" v-bind:key="member.phone">
-                      <td>{{attendee.name}}</td>
-                      <td>{{attendee.phone}}</td>
-                      <td>{{attendee.paid}}</td>
+                    <tr v-for="member in attendee" v-bind:key="member.phone">
+                      <td>{{member.name}}</td>
+                      <td>{{member.phone_1}}</td>
+                      <td>{{member.paid}}</td>
                     </tr>
                   </table>
                 </div>
@@ -209,7 +209,7 @@
                                     </div>
                 <p>Title and Description</p>
                     <base-input 
-                        v-model="membership.title"
+                        v-model="membership.name"
                         type="text"
                         placeholder="Title"
                         class="field"> 
@@ -222,7 +222,7 @@
                     </base-input>
                     <p>Price</p>
                     <base-input 
-                        v-model="membership.price"
+                        v-model.number="membership.price"
                         type="number"
                         placeholder="$0.00"
                         class="field"
@@ -230,6 +230,7 @@
                     </base-input>
 
                 <template slot="footer">
+                  <base-button type="submit" @click="onMemEdit">Save changes</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.edit = false">Close
                     </base-button>
                 </template>
@@ -362,18 +363,27 @@ export default {
         dates: "2020-01-09 to 2020-01-10",
       },
 
-      attendee: {
+      memedit: {
+        imgURL: '',
+        colour: '', 
+        name: '',
+        description: '',
+        price: 0,
+        numberMembers: 0,
+      },
+
+      attendee: [{
         name: '',
         phone: '',
         paid: false,
-      },
+      }],
 
       //@Adarsh, you might need these to be props? 
       // ['primary', 'info', 'success', 'warning', 'danger', 'gray']
       membership: {
         imgURL: '',
         colour: '', 
-        title: '',
+        name: '',
         description: '',
         price: 0,
         numberMembers: 0,
@@ -507,6 +517,19 @@ export default {
         this.editThis()
       },
 
+      async MemeditThis () {
+      this.membership.id = this.id
+      console.log(this.membership)
+      this.$store.dispatch('updateMembershipType', this.membership)
+      this.modals.edit = false
+    },
+
+    async onMemEdit(evt){
+        evt.preventDefault()
+        alert(JSON.stringify(this.membership))
+        this.MemeditThis()
+      },
+
     async viewEvent () {
       this.$router.push(this.link)
     },
@@ -523,6 +546,30 @@ export default {
       this.edit.extras.membersOnly = this.memberProp
       this.modals.edit = true
 
+    },
+
+    async getMembers() {
+     
+      console.log(this.id + 'nom')
+      const members = await this.$store.dispatch('getClubMembersEvents', this.id)
+        .then(function (data) {
+        const Arpayments = []
+        for (var i = 0; i < data.length; i++) {
+                //console.log(data[i].details)
+                const card = { }
+                
+                
+                card.name = data[i].first_name + ' ' + data[i].last_name
+                card.phone_1 = data[i].phone_1
+                card.paid = true;
+                Arpayments.push(card)
+            }
+          return Arpayments
+      })
+        this.attendee = await members
+        console.log('paymentcheck:', this.attendee)
+      this.modals.view = false; 
+      this.modals.guest = true
     }
   },
 

@@ -77,11 +77,10 @@
             <div><i class="fade"></i>#{{ $route.params.id }}</div>
           </div>
           <div class="mt-5 py-5 border-top text-center">
-            <div class="h6">Bio</div>
+            <div class="h6">Description</div>
             <div class="row justify-content-center">
               <div class="col-lg-9">
                 <p>{{ bio }}</p>
-                <a href="#">Show more</a>
               </div>
             </div>
           </div>
@@ -354,6 +353,16 @@ export default {
         this.$store.state.userDetails.lastName
       );
     },
+
+     isUser () {
+          if (this.$store.state.userDetails.type === 'club') {
+              return false
+          } else {
+              return true
+          }
+          
+      }
+
   },
   created() {
     this.getMembers();

@@ -95,7 +95,7 @@
                <h6 slot="header" class="modal-title" id="modal-title-default">Create a Membership</h6>
                 <p>Title and Description</p>
                     <base-input 
-                        v-model="membership.title"
+                        v-model="membership.name"
                         type="text"
                         placeholder="Title"
                         class="field"> 
@@ -136,7 +136,7 @@
                                     </div>
                     <p>Price</p>
                     <base-input 
-                        v-model="membership.price"
+                        v-model.number="membership.price"
                         type="number"
                         placeholder="$0.00"
                         class="field"
@@ -144,6 +144,7 @@
                     </base-input>
 
                 <template slot="footer">
+                    <base-button type="submit" @click="onMemSubmit">Save changes</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.membership = false">Close
                     </base-button>
                 </template>
@@ -340,27 +341,22 @@ const paymentData = [
             cardsLinks: cardsData,
             cardsEventsLinks: cardsEventData, 
             modals: {
-            add: false,
-            membership: false,
-            
+                add: false,
+                membership: false,
             },
 
-                  membership: {
-                        imgURL: '',
-                        colour: '', 
-                        title: '',
-                        description: '',
-                        price: 0,
-                        numberMembers: 0,
-                    },
+            membership: {
+                imgURL: '',
+                colour: '', 
+                name: '',
+                description: '',
+                price: 0,
+                numberMembers: 0,
+            },
         }
     },
 
     methods: {
-        async createMembership(){
-            this.$store.dispatch('createMembershipType')
-        },
-
         async initialiseEventData(event)
         {
             this.modals.add = true;
@@ -383,6 +379,16 @@ const paymentData = [
             //this.initialiseEventData(this.event)
         },
         
+        async onMemSubmit(evt){
+            evt.preventDefault()
+            console.log(this.membership)
+            alert(JSON.stringify(this.membership))
+            console.log('checkeroni', this.membership)
+            this.$store.dispatch('createMembershipType', this.membership)
+            this.modals.add = false;
+            //this.initialiseEventData(this.event)
+        },
+
         async retrieveMembership () {
         const cards = this.$store.dispatch('getMembershipTypes')
             .then(function (data) {
