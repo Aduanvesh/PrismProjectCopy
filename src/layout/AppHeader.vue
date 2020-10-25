@@ -126,7 +126,7 @@
                               <base-dropdown class="nav-link pr-0">
                                  <div class="media align-items-center" slot="title">
                                        <span class="avatar rounded-circle">
-                                          <img alt="Image placeholder" src="/img/theme/team-2-800x800.jpg" style="max-width: 50px; max-height: 50px;">
+                                          <img alt="" src="/img/theme/profile.jpg" style="max-width: 50px; max-height: 50px;">
                                        </span>
                                        <div class="media-body ml-2 d-none d-lg-block">
                                           <span class="mb-0 text-sm  font-weight-bold">{{user}}</span>
@@ -189,12 +189,18 @@ import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
 import store from 'main'
 import router from '../router'
+// import profileIMG from ".../img/theme/profile.jpg";
 
 export default {
   components: {
     BaseNav,
     CloseButton,
     BaseDropdown
+  },
+
+  data: {
+
+     profilePic: '/public/img/theme/profile.jpg',
   },
 
   methods: {

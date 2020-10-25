@@ -43,6 +43,8 @@
 
 
 <script>
+import * as firebase from 'firebase'
+
 export default {
   data () {
     return {

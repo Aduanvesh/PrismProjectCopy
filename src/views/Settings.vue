@@ -1,5 +1,24 @@
 <template>
     <div class="profile-page">
+        <modal :show.sync="modals.bannerImage">
+            <template slot="header">
+                Upload a New Banner
+            </template>
+            <div v-if="imageData!=null" class="text-center">                     
+                    <img class="preview" height="268" width="356" :src="img1">
+            </div>
+            <div v-else>
+            </div>  
+            <div class="text-center">
+                <base-button type="info" @click="clickUpload" class="mb-2 mt-2">Choose a photo</base-button>
+                <input type="file" ref="input1"
+                        style="display: none"
+                        @change="previewImage" accept="image/*" > 
+                                        <div class="text-center">
+                    <base-button color="pink" @click="create">upload</base-button>
+                </div>
+            </div>
+        </modal>
         <div class="shape shape-style-1 bg-secondary">
             <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-gradient-default"
                      style="min-height: 600px; background-size: cover; background-position: center top;">
@@ -18,7 +37,7 @@
                                 <div class="container pt-5">
                                     <div class="row justify-content-between">
                                         <div class="col-auto mr-auto">
-                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Banner</base-button>
+                                            <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="modals.bannerImage = true">Change Banner</base-button>
                                         </div>
                                         <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Profile Picture</base-button>
                                     </div>
@@ -206,11 +225,10 @@
     </div>
 </template>
 <script>
-import Modal from "./components/JavascriptComponents/Purchase.vue";
+import Modal from "@/components/Modal.vue";
 import store from 'main'
 import router from '../router'
-// import axios from 'axios'
-// const Stripe = require('stripe')
+import * as firebase from 'firebase'
 
 export default {
 name: "components",
@@ -239,152 +257,59 @@ data() {
           zipCode: '',
           about: '',
           subtitle: '',
-        }
-    };
-},
-methods: {
-
-    async addToClub () {
-        if (this.$store.userDetails.type = 'user'){
-            const check = this.$store.dispatch('joinClubCode', this.$route.params.id)
-            const result = await check.then(function (defs, messageError) {
-                return defs
-            })
-            console.log(result)
-        }
-    },
-
-     async goLoad () {
-            console.log('loading:', this.$store.state.userDetails.email)
-            if (this.$store.state.userDetails.email === undefined){
-                  setTimeout(() => this.goLoad(), 50) 
-            } else {
-                
-            } 
+        },
+        modals:
+        {
+            bannerImage: false
         },
 
-    async getDetails () {
-        const clubDetails = await this.$store.dispatch('getClubDetails', this.$route.params.id)
-            .then(function (data) { 
-                return data
-            })
-        this.society_name = clubDetails.name
-        this.subtitle = clubDetails.details
-        this.up_coming_events = clubDetails.events.length
-        this.bio = clubDetails.description
-        console.log('lolma', this.society_name)
-    },
+      imageData:'',
+      img1: '',
+    };
+},
 
-    async getMembers () {
-        const clubMembers = await this.$store.dispatch('getClubMembers', this.$route.params.id)
-        this.memberlist = clubMembers
-        console.log('membercheck:', this.memberlist)
-    },
-
-    async retrieveMemberships () {
-    const cards = this.$store.dispatch('getMembershipTypes', this.$route.params.id)
-        .then(function (data) {
-                /*const cardsData = []
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].details)
-                    const card = {
-                        title: '',
-                        caption: '',
-                        price: '',
-                        members: []
-                    }
-                    card.title = data[i].name
-                    card.caption = data[i].description
-                    card.price = data[i].price
-                    card.members = data[i].members
-                    cardsData.push(card)
-                }
-                return cardsData*/console
-                const cardsData = []
-                const card = {}
-                card.title = data.name
-                card.caption = data.description
-                card.price = data.price
-                card.members = data.members
-                card.image = '/img/theme/lcard.png'
-                card.link = data.link
-                cardsData.push(card)
-                return cardsData
-            })
-    this.membershipData = await cards
-    
-    console.log('cardscheckmembers:', this.membershipData)
-    },
-    
-    async retrieveEvents () {
-            const eventCards = this.$store.dispatch('getClubEvents', this.$route.params.id)
-                .then(function (data) {
-                const cardsData = []
-                for (var i = 0; i < data.length; i++) {
-                    const card = {
-                        capacity: '',
-                        date: '',
-                        date_created: '',
-                        dietr: false,
-                        endTime: '',
-                        event_description: '',
-                        event_name: '',
-                        id: '',
-                        location: '',
-                        memberonly: false,
-                        price: '',
-                        startTime: '',
-                        url: ''
-                    }
-                    if (data[i].event_name === undefined || data[i].event_name === '' || data[i].event_name === null) {card.title = 'Untitled Event'}
-                    else {card.title = data[i].event_name}
-                    card.event_description = data[i].event_description
-                    card.link = '/event/' + data[i].id
-                    card.id = data[i].id
-                    card.image = '/img/theme/lcard.png'
-                    card.date_created = data[i].date_created                
-                cardsData.push(card)
-                }
-                    return cardsData
-                })
-        this.eventData = await eventCards
-        console.log('eventcardscheck:', this.eventData) 
-    }
-
-    /*async pay () {
-        
-        stripe.redirectToCheckout({ sessionId: this.sessionId })
-            .then(function(result) {
-          // If `redirectToCheckout` fails due to a browser or network
-          // error, you should display the localized error message to your
-          // customer using `error.message`.
-            if (result.error) {
-                alert(result.error.message);
-            }
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-         });
-    }*/
-  },
-  computed: {
-      fullname() {
-          return this.$store.state.userDetails.firstName + ' ' + this.$store.state.userDetails.lastName
+  methods: {
+    create () {
+      
+      const post = {
+        photo: this.img1,
+        caption: this.caption        
       }
-  },
-    created () {
-    this.getMembers()
-    this.getDetails()
-    this.retrieveMemberships()
-    this.retrieveEvents()
-    /*axios.post('')
-        .then(response => {
-            this.sessionId = response.data
-            console.log('Response:', response.data)
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        })*/
+      firebase.database().ref('PhotoGallery').push(post)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+            clickUpload() {
+        this.$refs.input1.click()   
+        },
+
+        previewImage(event) {
+        this.uploadValue=0;
+        this.img1=null;
+        this.imageData = event.target.files[0];
+        this.onUpload()
+        },
+
+        onUpload(){
+        this.img1=null;
+        const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+        storageRef.on(`state_changed`,snapshot=>{
+        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+            }, error=>{console.log(error.message)},
+        ()=>{this.uploadValue=100;
+            storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+                this.img1 =url;
+                console.log(this.img1)
+                });
+            }      
+            );
+        },
+
   }
 }
 </script>
