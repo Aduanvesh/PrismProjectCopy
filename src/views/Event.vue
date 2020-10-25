@@ -53,19 +53,19 @@
               <div class="col-lg-9">
                 <div class="container container-lg">
                   <div class="row">
-                    <div class="col-md-6 mb-5 mb-md-0">
-                      <div class="card shadow border-0">
-                        <modal></modal>
-                      </div>
-                    </div>
-                    <div class="col-md-6 mb-5 mb-lg-0">
-                      <div class="card card-lift--hover shadow border-0">
-                        <img v-lazy="'/img/theme/lcard.png'" class="card-img" />
-                        <!-- <router-link to="/profile" title="Profile Page">
-                                                        
-                                                    </router-link>   -->
-                      </div>
-                    </div>
+                        <modal link="none">
+                          <template slot="modal-button-wrapper">
+                            <card
+                              class="card-options--hover shadow"
+                              link="url"
+                              img="/img/theme/lcard.png"
+                            >
+                              <template slot="footer">
+                                Get Ticket
+                              </template>
+                            </card>
+                          </template>
+                        </modal>
                   </div>
                 </div>
               </div>
