@@ -126,22 +126,22 @@
                                     <label> Theme Colour </label>
                                     <div class="row">
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" v-on:click="colour = 'primary'" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" v-on:click="colour = 'info'" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#"  type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" v-on:click="colour = 'success'"  type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" v-on:click="colour = 'warning'" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
                                         </div>
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" v-on:click="colour = 'danger'" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
                                         </div> 
                                         <div class="col-1">
-                                        <base-button tag="a" href="#" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
+                                        <base-button tag="a" v-on:click="colour = 'gray'" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
                                         </div>                                         
                                     </div>
                                 </div>
@@ -266,6 +266,7 @@ data() {
         subtitle: "Law Society",
         university: "Queensland University of Technology",
         bio: "",
+        colour: '',
         memberlist: [],
         model: {
           username: '',
