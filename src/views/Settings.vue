@@ -196,7 +196,6 @@
                                 <!-- Description -->
                                 <base-button type="default" class="btn btn-1 btn-primary">Save Changes</base-button>
                                 <base-button type="secondary" class="btn btn-1 btn-primary">Cancel</base-button>
-                                <p> CHANGES ARE NOT SHOWING Up!!!!!! </p>
                             </form>
                         </template>
                     </card>
