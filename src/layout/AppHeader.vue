@@ -132,9 +132,9 @@
                                           <span class="mb-0 text-sm  font-weight-bold">{{user}}</span>
                                        </div>
                                  </div>
-
+                                 <!-- Made Changes -->
                                  <template>
-                                       <router-link to="/profile" class="dropdown-item">
+                                       <router-link to="/settings" class="dropdown-item">
                                           <i class="ni ni-single-02"></i>
                                           <span>Edit Profile</span>
                                        </router-link>

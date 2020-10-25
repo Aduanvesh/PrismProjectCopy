@@ -194,6 +194,7 @@
                                 </div>
                                 <hr class="" />
                                 <!-- Description -->
+                                 <base-button type="default" class="btn btn-1 btn-primary">Submit</base-button>
                             </form>
                         </template>
                     </card>
