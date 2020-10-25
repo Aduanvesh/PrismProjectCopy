@@ -30,7 +30,7 @@
               </base-button>
             </template>
         </modal>
-
+    <div v-if="options != 'membership'">
         <modal :show.sync="modals.view">
                 <h6 slot="header" class="modal-title" id="modal-title-default">Statistics</h6>
 
@@ -148,6 +148,60 @@
         </form>
     </div>
   </modal>
+  </div>
+  <!-- If the card type is a membership, show different modals -->
+  <div v-if="options === 'membership'">
+            <modal :show.sync="modals.view">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Statistics</h6>
+
+                <p>Number of Sold Memberships:</p>
+
+                <template slot="footer">
+                    <base-button type="link" class="ml-auto" @click="modals.memberView = false">Close
+                    </base-button>
+                </template>
+            </modal>
+
+            <modal :show.sync="modals.edit">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Edit Membership</h6>
+
+                <p>Number of Sold Memberships: <b>{{membership.numberMembers}}</b></p>
+                <p>Image</p>
+                      <base-input 
+                        v-model="membership.imgURL"
+                        type="text"
+                        placeholder="Image URL"
+                        class="field"> 
+                    </base-input>
+                <p>Title and Description</p>
+                    <base-input 
+                        v-model="membership.title"
+                        type="text"
+                        placeholder="Title"
+                        class="field"> 
+                    </base-input>
+                    <base-input 
+                        v-model="membership.description"
+                        type="text"
+                        placeholder="Description"
+                        class="field"> 
+                    </base-input>
+                    <p>Price</p>
+                    <base-input 
+                        v-model="membership.price"
+                        type="number"
+                        placeholder="$0.00"
+                        class="field"
+                    >
+                    </base-input>
+
+                <template slot="footer">
+                    <base-button type="link" class="ml-auto" @click="modals.edit = false">Close
+                    </base-button>
+                </template>
+            </modal>
+
+  </div>
 
 
         <div class="card-header" :class="headerClasses" v-if="$slots.header">
@@ -187,12 +241,12 @@
                         href="#" @click.prevent="onEditStart"
                       >Edit</a>
                   </li> 
-                  <li class="nav-item" v-if="options && !$slots.button1 || !$slots.button2 || !$slots.button3">
+                  <!-- || !$slots.button1 || !$slots.button2 || !$slots.button3 -->
+                  <li class="nav-item" v-if="options != 'membership'">
                       <a class="nav-link nav-white-highlight" href="#" @click.prevent="modals.delete = true">Delete</a>
                   </li>             
                 </ul>
               </div>
-              <!-- div class body-options... list menu options here in a slot? -->
              <!-- End -->
             <!-- End -->
         </div>
@@ -267,6 +321,15 @@ export default {
         dates: "2020-01-09 to 2020-01-10",
       },
 
+      //@Adarsh, you might need these to be props? 
+      membership: {
+        imgURL: '',
+        title: '',
+        description: '',
+        price: 0,
+        numberMembers: 0,
+      },
+
       dates: "2020-01-09 to 2020-01-10",
       
     };
@@ -326,7 +389,7 @@ export default {
     },
     // Below has been added by Ed
     options: {
-      type: [String, Object, Array],
+      type: String,
       description: "Whether card should display a secondary menu on hover, and the contents of that menu"
     },
     link: {

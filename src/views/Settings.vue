@@ -11,7 +11,7 @@
                             <div class="col-lg-3">
                                 <div class="card-profile-image">
                                     <a href="#">
-                                        <img v-lazy="'/img/theme/QUTLS 2020.png'" class="rounded-circle">
+                                        <img v-lazy="'/img/theme/profile.jpg'" class="rounded-circle avatar-xl " style="width: ">
                                     </a>
                                 </div>
                             </div>
@@ -20,6 +20,7 @@
                                         <div class="col-auto mr-auto">
                                             <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Banner</base-button>
                                         </div>
+                                        <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Profile Picture</base-button>
                                     </div>
                                 </div>
                             <div class="col-lg-4 order-lg-1 pt-lg-5 pt-4 pt-md-3">
@@ -195,7 +196,7 @@
                                 <hr class="" />
                                 <!-- Description -->
                                 <base-button type="default" class="btn btn-1 btn-primary">Save Changes</base-button>
-                                <base-button type="secondary" class="btn btn-1 btn-primary">Cancel!!!</base-button>
+                                <base-button type="secondary" class="btn btn-1 btn-primary">Cancel</base-button>
                             </form>
                         </template>
                     </card>

@@ -4,6 +4,7 @@ import AppHeader from "./layout/AppHeader";
 import AppFooter from "./layout/AppFooter";
 import Components from "./views/Components.vue";
 import Settings from "./views/Settings.vue";
+import Upload from "./views/Upload.vue";
 import Login from "./views/Login.vue";
 import PasswordReset from "./views/PasswordReset.vue";
 import Register from "./views/Register.vue";
@@ -12,7 +13,6 @@ import Dashboard from "./views/UserDash.vue";
 import SocietyDashboard from "./views/Society.vue";
 import Event from "./views/Event.vue";
 import Kiosk from "./views/Kiosk.vue";
-import Upload from "./views/ImageUpload.vue";
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
@@ -37,6 +37,13 @@ export default new VueRouter({
         header: AppHeader,
         default: Settings,
         footer: AppFooter
+      }
+    },
+    {
+      path: "/upload",
+      name: "upload",
+      components: {
+        default: Upload,
       }
     },
     {

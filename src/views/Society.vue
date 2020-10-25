@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
-                                        <card class="card-options--hover shadow" options="true" :link="cards.link" :img="cards.image">
+                                        <card class="card-options--hover shadow" options="membership" :link="cards.link" :img="cards.image">
                                             <template slot="header">
                                                 {{cards.title}}
                                             </template>
