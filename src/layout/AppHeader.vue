@@ -138,7 +138,7 @@
                                           <i class="ni ni-single-02"></i>
                                           <span>Edit Profile</span>
                                        </router-link>
-                                       <router-link to="/profile" class="dropdown-item">
+                                       <router-link to="/settings" class="dropdown-item">
                                           <i class="ni ni-settings-gear-65"></i>
                                           <span>Settings</span>
                                        </router-link>
