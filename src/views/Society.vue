@@ -116,12 +116,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <router-link to="/profile/cPcBCPXhnVPTonoVOQtyrCF0MNh1">
-                                        <card class="card-options--hover shadow" link="/profile/cPcBCPXhnVPTonoVOQtyrCF0MNh1" img="/img/theme/qutlscover.jpg">
-                                            <template slot="footer">
-                                                {{user}} Page
-                                            </template>
-                                        </card>
+                                        <router-link to="#" v-on:click.native="goProfile">
+                                            <card class="card-options--hover shadow" :img='profileBanner'>
+                                                <template slot="footer">
+                                                    {{user}} Page
+                                                </template>
+                                            </card>
                                         </router-link>
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.id">
                                         <div v-if="cards.event_name != null"> 
                                             <!-- Above, weak workaround to hide null events. -->
-                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name"
+                                            <card class="card-options--hover shadow" options="event" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name"
                                             :cateringProp="cards.catering" :memberProp="cards.memberonly" :location="cards.location" :price="cards.price" 
                                             :capacity="cards.capacity" :description="cards.event_description">
                                                 <template slot="header">
@@ -250,7 +250,6 @@ const paymentData = [
   export default {
     name: 'tables',
     components: {
-      //ProjectsTable
       Modal,
       flatPicker
     },
@@ -280,6 +279,8 @@ const paymentData = [
                     },
             memberlist: [],
             user: this.$store.state.userDetails.title ? this.$store.state.userDetails.title : 'Student Society',
+            // @Adarsh, can you add a profileBanner reference to the db?
+            profileBanner: '/img/theme/qutlscover.jpg',
             cardsLinks: cardsData,
             cardsEventsLinks: cardsEventData, 
             modals: {

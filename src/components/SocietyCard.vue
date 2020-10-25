@@ -231,8 +231,15 @@
         </div>
         <div class="card-body" :class="bodyClasses" v-if="!noBody">
             <slot></slot>
-            <div v-if="img">
-              <img :src="img" class="card-img-crop" >
+            <router-link to="#" v-on:click.native="setViewState" v-if="options === 'membership' || options === 'event'">
+              <div v-if="img">
+                <img :src="img" class="card-img-crop" >
+              </div>
+            </router-link>
+            <div v-else>
+              <div v-if="img">
+                <img :src="img" class="card-img-crop" >
+              </div>
             </div>
               <div v-if="options"> 
                 <ul class="nav nav-pills-circle justify-content-center">
@@ -454,7 +461,11 @@ export default {
   },
   methods: {
 
-    
+    setViewState: function()
+    {
+      this.modals.view = true
+    },
+
     async deleteThis (evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.id))
