@@ -74,6 +74,7 @@ export default {
         async makePayment () {
             this.modals.modal1 = false
             this.$store.dispatch('purchaseMembershipTypes', this.link)
+            this.$store.dispatch("joinClubCode", this.$route.params.id)
             console.log(this.link)
         }
     }

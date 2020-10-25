@@ -346,8 +346,11 @@ export default new Vuex.Store({
     async joinClubCode(a = {}, payload) {
       console.log('attempt:', payload)
       try {
-        const club = await firebase.firestore().collection('memberships').doc(payload)
-
+        const clubid = await firebase.firestore().collection('users').doc(payload).get()
+          .then(doc => {
+              return doc.data().membershiplink
+          })
+        const club = await firebase.firestore().collection('memberships').doc(clubid)
         const snapshot = await club.get()
           .then(doc => {
             if (doc.exists) {
@@ -520,23 +523,47 @@ export default new Vuex.Store({
 
     async createMembershipType(a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
-      const targetMem = club.collection('membership_types').doc()
+      const clubdata = await club.get()
+      .then(doc => {
+        return doc.data().membership_types
+      })
+      if (clubdata.length != 0){
+        console.log('club already exists')
+      } else {
+        const membership = await firebase.firestore().collection('membership_types').doc()
+        membership.set({
+          members: [],
+          description: payload.description,
+          membershiplink: this.state.userDetails.linkid,
+          name: payload.name,
+          price: payload.price
+        })
+        club.update({
+          membership_types: firebase.firestore.FieldValue.arrayUnion(membership.id)
+        })
+      }
+      
+      /*const targetMem = club.collection('membership_types').doc()
       targetMem.set({
         members: [],
         price: 0,
         name: payload.title,
         origin: this.state.userDetails.linkid
-      })
+      })*/
     },
 
     async updateMembershipType(a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
-      const targetMem = club.collection('membership_types').doc(payload.id)
-      targetMem.update({
-        price: payload.price,
-        name: payload.title,
-        origin: this.state.userDetails.linkid
+      const clubdata = await club.get()
+      .then(doc => {
+        return doc.data().membership_types
       })
+      const membership = await firebase.firestore().collection('membership_types').doc()
+        membership.update({
+          description: payload.description,
+          name: payload.name,
+          price: payload.price
+        })
     },
 
     async deleteMembershipType(a = {}, payload) {

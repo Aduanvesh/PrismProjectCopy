@@ -207,7 +207,7 @@ export default {
     },
 
     async addToClub() {
-      if ((this.$store.userDetails.type = "user")) {
+      if ((this.$store.state.userDetails.type = "user")) {
         const check = this.$store.dispatch(
           "joinClubCode",
           this.$route.params.id
