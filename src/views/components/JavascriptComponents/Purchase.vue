@@ -73,9 +73,17 @@ export default {
     methods: {
         async makePayment () {
             this.modals.modal1 = false
-            this.$store.dispatch('purchaseMembershipTypes', this.link)
-            this.$store.dispatch("joinClubCode", this.$route.params.id)
-            console.log(this.link)
+            
+            if (this.$router.currentRoute.path.includes('profile')){
+                this.$store.dispatch('purchaseMembershipTypes', this.link)
+                this.$store.dispatch("joinClubCode", this.$route.params.id)
+                console.log('lol:')
+            } else {
+                this.$store.dispatch('purchaseEventTicket', this.$route.params.id)
+            }
+            
+            
+            
         }
     }
 };
