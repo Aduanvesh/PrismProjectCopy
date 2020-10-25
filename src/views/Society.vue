@@ -144,7 +144,7 @@
                     </base-input>
 
                 <template slot="footer">
-                    <base-button type="link" class="ml-auto" @click="modals.edit = false">Close
+                    <base-button type="link" class="ml-auto" @click="modals.membership = false">Close
                     </base-button>
                 </template>
             </modal>
