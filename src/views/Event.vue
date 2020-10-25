@@ -127,6 +127,7 @@ export default {
       this.membersOnly = event.membersOnly
       this.club = event.linked_account
       console.log("lolma", this.society_name);
+      this.$forceUpdate();
     },
   },
   computed: {
