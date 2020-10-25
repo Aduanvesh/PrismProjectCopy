@@ -118,7 +118,7 @@
             </div>
             <div class="row">
               <div class="col-12">
-                <table class="col-12">
+                <table class="col-12" id="paymenttable">
                   <tr>
                     <th>Payment ID</th>
                     <th>Status</th>
@@ -413,5 +413,22 @@ export default {
 }
 #userdashboardbgdiv {
   height: 100vh;
+}
+#paymenttable{
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#paymenttable td, #paymenttable th {
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+#paymenttable tr:nth-child(even){background-color: #f2f2f2;}
+
+#paymenttable th {
+    background-color: #2d3e77;
+    color: white;
 }
 </style>

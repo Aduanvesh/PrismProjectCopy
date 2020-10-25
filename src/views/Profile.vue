@@ -99,7 +99,8 @@
               <div
                 class="col-md-6 mb-3"
                 v-for="cards in eventData"
-                v-bind:key="cards.title" @click="goToEvent(cards.link)"
+                v-bind:key="cards.title"
+                @click="goToEvent(cards.link)"
               >
                 <card
                   class="card-options--hover shadow"
@@ -117,28 +118,28 @@
           <div class="mt-5 py-5 border-top text-center">
             <div class="h6">Memberships</div>
             <div class="row justify-content-center">
-                <div class="row">
-                  <div class="col-md-6 mb-5 mb-md-3"></div>
-                </div>
-                <div
-                  class="col-md-6 mb-3"
-                  v-for="cards in membershipData"
-                  v-bind:key="cards.title"
-                >
-                  <modal :link="cards.link">
-                    <template slot="modal-button-wrapper">
-                      <card
-                        class="card-options--hover shadow"
-                        :link="cards.link"
-                        :img="cards.image"
-                      >
-                        <template slot="header">
-                          {{ cards.title }}
-                        </template>
-                      </card>
-                    </template>
-                  </modal>
-                </div>
+              <div class="row">
+                <div class="col-md-6 mb-5 mb-md-3"></div>
+              </div>
+              <div
+                class="col-md-6 mb-3"
+                v-for="cards in membershipData"
+                v-bind:key="cards.title"
+              >
+                <modal :link="cards.link">
+                  <template slot="modal-button-wrapper">
+                    <card
+                      class="card-options--hover shadow"
+                      :link="cards.link"
+                      :img="cards.image"
+                    >
+                      <template slot="header">
+                        {{ cards.title }}
+                      </template>
+                    </card>
+                  </template>
+                </modal>
+              </div>
             </div>
           </div>
         </div>
@@ -202,8 +203,8 @@ export default {
       window.location.href = "#" + div;
     },
 
-    async goToEvent (url) {
-        this.$router.push(url)
+    async goToEvent(url) {
+      this.$router.push(url);
     },
 
     async addToClub() {

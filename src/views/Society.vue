@@ -57,7 +57,7 @@
                     </base-input>
                     <p>Price</p>
                     <base-input 
-                        v-model="event.price"
+                        v-model.number="event.price"
                         type="number"
                         placeholder="$0.00"
                         class="field"
@@ -65,7 +65,7 @@
                     </base-input>
                     <p>Capacity</p>
                     <base-input 
-                        v-model="event.capacity"
+                        v-model.number="event.capacity"
                         type="number"
                         placeholder="0"
                         class="field"
@@ -178,7 +178,7 @@
                         </template>
                         <h5> Payments</h5>
                         <div v-if="showPay" class="row">
-                           <table class="col-12">
+                           <table class="col-12" id="paymenttable">
                                             <tr>
                                                 <th>Payment ID</th>
                                                 <th>Status</th>
@@ -189,14 +189,13 @@
                                                 <th>Amount</th>
                                             </tr>
                                             <tr v-for="payment in payments" v-bind:key="payment.id">
-                                                <th>{{payment.id}}</th>
-                                                <th>{{payment.status}}</th>
-                                                <th>{{payment.payer}}</th>
-                                                <th>{{payment.info}}</th>
-                                                <th>{{payment.date1}}</th>
-                                                <th>{{payment.date2}}</th>
-                                                <th>{{payment.amount}}</th>
-                                                <th><button class="btn btn-1 btn-success" v-if="payment.status==='unpaid'" @click="paymentMake(payment.id)">Pay</button></th>
+                                                <td>{{payment.id}}</td>
+                                                <td>{{payment.status}}</td>
+                                                <td>{{payment.payer}}</td>
+                                                <td>{{payment.info}}</td>
+                                                <td>{{payment.date1}}</td>
+                                                <td>{{payment.date2}}</td>
+                                                <td>{{payment.amount}}</td>
                                             </tr> 
                                 </table>
                         </div>
@@ -309,6 +308,7 @@ const paymentData = [
 
         async onSubmit(evt){
             evt.preventDefault()
+            console.log(this.event)
             alert(JSON.stringify(this.event))
             console.log('checkeroni', this.event)
             this.$store.dispatch('createEvent', this.event)
@@ -456,4 +456,23 @@ const paymentData = [
   
 </script>
 
-<style></style>
+<style>
+#paymenttable{
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#paymenttable td, #paymenttable th {
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+#paymenttable tr:nth-child(even){background-color: #f2f2f2;}
+
+#paymenttable th {
+    background-color: #2d3e77;
+    color: white;
+}
+
+</style>
