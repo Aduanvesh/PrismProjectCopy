@@ -4,10 +4,11 @@
             <template slot="header">
                 Upload a New Banner
             </template>
-            <div v-if="imageData!=null" class="text-center">                     
+            <div v-if="imageData!=null && imageData!=''" class="text-center">                     
                     <img class="preview" height="268" width="356" :src="img1">
             </div>
             <div v-else>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
             </div>  
             <div class="text-center">
                 <base-button type="info" @click="clickUpload" class="mb-2 mt-2">Choose a photo</base-button>
@@ -15,7 +16,27 @@
                         style="display: none"
                         @change="previewImage" accept="image/*" > 
                                         <div class="text-center">
-                    <base-button color="pink" @click="create">upload</base-button>
+                    <base-button color="pink" @click="create">Upload</base-button>
+                </div>
+            </div>
+        </modal>
+        <modal :show.sync="modals.profileImage">
+            <template slot="header">
+                Upload a Profile Image
+            </template>
+            <div v-if="imageData!=null && imageData!=''" class="text-center">                     
+                    <img class="preview" height="268" width="356" :src="img1">
+            </div>
+            <div v-else>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"/>
+            </div>  
+            <div class="text-center">
+                <base-button type="info" @click="clickUpload" class="mb-2 mt-2">Choose a photo</base-button>
+                <input type="file" ref="input1"
+                        style="display: none"
+                        @change="previewImage" accept="image/*" > 
+                                        <div class="text-center">
+                    <base-button color="pink" @click="create">Upload</base-button>
                 </div>
             </div>
         </modal>
@@ -39,7 +60,7 @@
                                         <div class="col-auto mr-auto">
                                             <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="modals.bannerImage = true">Change Banner</base-button>
                                         </div>
-                                        <base-button type="default" size="sm" class="btn btn-1 btn-primary">Change Profile Picture</base-button>
+                                        <base-button type="default" size="sm" class="btn btn-1 btn-primary" @click="modals.profileImage = true">Change Profile Picture</base-button>
                                     </div>
                                 </div>
                             <div class="col-lg-4 order-lg-1 pt-lg-5 pt-4 pt-md-3">
@@ -260,7 +281,8 @@ data() {
         },
         modals:
         {
-            bannerImage: false
+            bannerImage: false,
+            profileImage: false,
         },
 
       imageData:'',
