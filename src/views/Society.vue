@@ -91,6 +91,63 @@
         </form>
     </div>
             </modal>
+            <modal :show.sync="modals.membership">
+               <h6 slot="header" class="modal-title" id="modal-title-default">Create a Membership</h6>
+                <p>Title and Description</p>
+                    <base-input 
+                        v-model="membership.title"
+                        type="text"
+                        placeholder="Title"
+                        class="field"> 
+                    </base-input>
+                    <base-input 
+                        v-model="membership.description"
+                        type="text"
+                        placeholder="Description"
+                        class="field"> 
+                    </base-input>
+                <p>Image</p>
+                      <base-input 
+                        v-model="membership.imgURL"
+                        type="text"
+                        placeholder="Image URL"
+                        class="field"> 
+                    </base-input>
+                    <p> Colour </p>
+                                    <div class="row pb-3">
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'primary'" type="secondary" class="bg-gradient-primary text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'info'" type="secondary" class="bg-gradient-info text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'success'" type="secondary" class="bg-gradient-success text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'warning'" type="secondary" class="bg-gradient-warning text-white" icon="" rounded icon-only></base-button>
+                                        </div>
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'danger'" type="secondary" class="bg-gradient-danger text-white" icon="" rounded icon-only></base-button>
+                                        </div> 
+                                        <div class="col-1">
+                                        <base-button tag="a" href="#" v-on:click="membership.colour = 'gray'" type="secondary" class="bg-gradient-gray text-white" icon="" rounded icon-only></base-button>
+                                        </div>                                         
+                                    </div>
+                    <p>Price</p>
+                    <base-input 
+                        v-model="membership.price"
+                        type="number"
+                        placeholder="$0.00"
+                        class="field"
+                    >
+                    </base-input>
+
+                <template slot="footer">
+                    <base-button type="link" class="ml-auto" @click="modals.membership = false">Close
+                    </base-button>
+                </template>
+            </modal>
     <div class="shape shape-style-1 bg-gradient-default"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
             <div class="container-fluid mb-3 mb-l-5">
@@ -116,18 +173,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <router-link to="/profile/cPcBCPXhnVPTonoVOQtyrCF0MNh1">
-                                        <card class="card-options--hover shadow" link="/profile/cPcBCPXhnVPTonoVOQtyrCF0MNh1" img="/img/theme/qutlscover.jpg">
-                                            <template slot="footer">
-                                                {{user}} Page
-                                            </template>
-                                        </card>
+                                        <router-link to="#" v-on:click.native="goProfile">
+                                            <card class="card-options--hover shadow" :img='profileBanner'>
+                                                <template slot="footer">
+                                                    {{user}} Page
+                                                </template>
+                                            </card>
                                         </router-link>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-auto mr-auto mt-3">Paid Membership:</div>
-                                        <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus" @click="createMembership"></base-button>
+                                    <div class="col-auto mr-auto mt-3">Active Membership</div>
+                                        <base-button outline class="btn-2 col-auto mb-3 mt-3" type="primary" icon="fa fa-plus" @click="modals.membership = true"></base-button>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3" v-for="cards in cardsLinks" v-bind:key="cards.title">
@@ -153,7 +210,7 @@
                                     <div class="col-md-6 mb-3" v-for="cards in cardsEventsLinks" v-bind:key="cards.id">
                                         <div v-if="cards.event_name != null"> 
                                             <!-- Above, weak workaround to hide null events. -->
-                                            <card class="card-options--hover shadow" options="true" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name"
+                                            <card class="card-options--hover shadow" options="event" :link="cards.url" :id="cards.id" :img="cards.image" :name="cards.event_name"
                                             :cateringProp="cards.catering" :memberProp="cards.memberonly" :location="cards.location" :price="cards.price" 
                                             :capacity="cards.capacity" :description="cards.event_description">
                                                 <template slot="header">
@@ -249,7 +306,6 @@ const paymentData = [
   export default {
     name: 'tables',
     components: {
-      //ProjectsTable
       Modal,
       flatPicker
     },
@@ -279,12 +335,24 @@ const paymentData = [
                     },
             memberlist: [],
             user: this.$store.state.userDetails.title ? this.$store.state.userDetails.title : 'Student Society',
+            // @Adarsh, can you add a profileBanner reference to the db?
+            profileBanner: '/img/theme/qutlscover.jpg',
             cardsLinks: cardsData,
             cardsEventsLinks: cardsEventData, 
             modals: {
             add: false,
+            membership: false,
             
             },
+
+                  membership: {
+                        imgURL: '',
+                        colour: '', 
+                        title: '',
+                        description: '',
+                        price: 0,
+                        numberMembers: 0,
+                    },
         }
     },
 
