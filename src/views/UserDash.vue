@@ -4,22 +4,25 @@
       class="shape shape-style-1 bg-gradient-default"
       id="userdashboardbg"
     ></div>
-    <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-      <h1 class="h1 pl-sm-3 pl-3" style="color: white">Hi, {{ this.user }}</h1>
-      <div class="col-12 offset-10">
-        <tabs :fill="false" circle>
-          <tab-pane>
-            <span slot="title" class="nav-link-icon d-block"
-              ><i class="ni ni-atom"></i
-            ></span>
-          </tab-pane>
-          <tab-pane>
-            <span slot="title" class="nav-link-icon d-block"
-              ><i class="fa fa-keyboard-o"></i
-            ></span>
-          </tab-pane>
-        </tabs>
+    <!-- <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3 mb-5"> -->
+      <div class="">
+        <h1 class="h1 pl-sm-3 pl-3" style="color: white">Hi, {{ this.user }}</h1>
+        <div class="col-12 offset-10">
+          <tabs :fill="false" circle>
+            <tab-pane>
+              <span slot="title" class="nav-link-icon d-block"
+                ><i class="ni ni-atom"></i
+              ></span>
+            </tab-pane>
+            <tab-pane>
+              <span slot="title" class="nav-link-icon d-block"
+                ><i class="fa fa-keyboard-o"></i
+              ></span>
+            </tab-pane>
+          </tabs>
+        </div>
       </div>
+      <div class="ml-xl-5 ml-lg-5 ml-md-4 ml-3 mr-xl-5 mr-lg-5 mr-md-4 mr-sm-3">
       <tabs fill class="flex-column flex-md-row">
         <card
           shadow
@@ -33,19 +36,14 @@
             <div class="row">
               <div class="col-auto mr-auto mb-3">Following</div>
             </div>
-            <div class="row">
-              <br />
-              <div
-                class="col-md-6 mb-3"
+            <div class="row"  
                 v-for="element in following"
                 @click="goToPage(element.url)"
-                v-bind:key="element.uid"
-              >
-                <!-- <card class="card-options--hover shadow" :link="element.recentEvent.url" img="/img/theme/lcard.png" :name="element.recentEvent.name"> -->
-                <card
-                  class="card-lift--hover shadow"
-                  img="/img/theme/lcard.png"
-                >
+                v-bind:key="element.uid">
+              <div class="col-md-6 mb-3">
+                      <!-- Above, weak workaround to hide null events. -->
+                <card  class="card-lift--hover shadow"
+                        img="/img/theme/lcard.png">
                   <template slot="header">
                     {{ element.title }}
                   </template>
@@ -58,11 +56,11 @@
                                                         <base-button outline @click="goTo(element.recentEvent.url)">   
                                                         {{element.recentEvent.name}} </base-button></p> -->
                     </div>
-                  </template>
-                </card>
+                    </template>
+                  </card>
               </div>
-            </div>
-            <div class="d-flex flex-row-reverse">
+          </div>
+          <div class="d-flex flex-row-reverse">
               <div class="col-auto pt-5">
                 <modal></modal>
               </div>
@@ -172,26 +170,29 @@
             </div>
             <div class="row">
               <div
-                class="col-md-6 mb-3"
                 v-for="element in tickets"
-                v-bind:key="element.title"
-              >
-                <card
-                  class="card-lift--hover shadow"
-                  img="/img/theme/lcard.png"
-                  :name="element.title"
-                >
-                  <template slot="header">
-                    {{ element.title }}
-                  </template>
-                </card>
+                v-bind:key="element.title">
+                  <div
+                    class="col-md-6 mb-3"
+                  >
+                    <card
+                      class="card-lift--hover shadow"
+                      img="/img/theme/lcard.png"
+                      :name="element.title"
+                    >
+                      <template slot="header">
+                        {{ element.title }}
+                      </template>
+                    </card>
+                  </div>
               </div>
             </div>
           </tab-pane>
         </card>
       </tabs>
+      </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
