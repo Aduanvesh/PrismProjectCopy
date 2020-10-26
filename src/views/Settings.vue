@@ -89,7 +89,7 @@
                                         class="p-1"
                             />
                             </div>
-                            <div class="pl-lg-4">
+                            <!-- <div class="pl-lg-4">
                                 <base-input alternative=""
                                             label="University"
                                             placeholder="University"
@@ -97,14 +97,15 @@
                                             v-model="model.university"
                                             class="p-1"
                                 />
-                            </div>
+                            </div> -->
                         </div>
                                     <div class="pl-lg-4 text-center">
                                         <base-input alternative=""
                                                     class="p-1"
                                                     label="Bio"
+                                                   
                                                     >
-                                            <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."></textarea>
+                                            <textarea rows="4" class="form-control form-control-alternative"  v-model="model.about" placeholder="A few words about you ..."></textarea>
                                         </base-input>
                                     </div>
                     </div>
@@ -157,7 +158,7 @@
                                                         class="p-1"
                                             />
                                         </div>
-                                        <div class="col-lg-6">
+                                        <!-- <div class="col-lg-6">
                                             <base-input alternative=""
                                                         label="Email address"
                                                         placeholder="jesse@example.com"
@@ -165,7 +166,7 @@
                                                         v-model="model.email"
                                                         class="p-1"
                                             />
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -239,8 +240,8 @@
                                 </div>
                                 <hr class="" />
                                 <!-- Description -->
-                                <base-button type="default" class="btn btn-1 btn-primary">Save Changes</base-button>
-                                <base-button type="secondary" class="btn btn-1 btn-primary">Cancel</base-button>
+                                <base-button type="default" class="btn btn-1 btn-primary" @click="submit">Save Changes</base-button>
+                                <base-button type="secondary" class="btn btn-1 btn-primary" @click="goBack">Cancel</base-button>
                             </form>
                         </template>
                     </card>
@@ -267,8 +268,8 @@ data() {
         sessionId:'',
         followers: 0,
         up_coming_events: 0,
-        society_name: "QUT Law Society",
-        subtitle: "Law Society",
+        society_name: '',
+        subtitle: 'Club Subtitle',
         university: "Queensland University of Technology",
         bio: "",
         colour: '',
@@ -324,7 +325,7 @@ data() {
       const post = {
         photo: this.img1,     
       }
-      firebase.database().ref('PhotoGallery').push(post)
+      firebase.firestore().collection('PhotoGallery').doc(post)
       .then((response) => {
         console.log(response)
       })
@@ -342,6 +343,19 @@ data() {
         this.img1=null;
         this.imageData = event.target.files[0];
         this.onUpload()
+        },
+
+        async submit(){
+            console.log('modelhere', this.model)
+            if (this.model.subtitle === '' || this.model.about === ''){
+                alert('Subtitle and Bio values are compulsory for page edits')
+            } else {
+                 this.$store.dispatch('UpdateProfile', this.model)
+            }
+        },
+
+        async goBack () {
+            this.$router.push('/profile/' + this.$store.state.userDetails.id)
         },
 
         onUpload(){

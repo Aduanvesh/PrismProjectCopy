@@ -48,7 +48,8 @@ export default new Vuex.Store({
             memberships: [],
             membership_types: [],
             payments: [],
-            events: []
+            events: [],
+            attending: []
           })
         } else if (payload.type === 'Club') {
           targetUser.set({
@@ -57,7 +58,15 @@ export default new Vuex.Store({
             title: payload.title,
             phone_1: payload.phoneNumber,
             university: payload.university,
-            membershiplink: targetClub.id
+            membershiplink: targetClub.id,
+            address: '',
+            subtitle: '',
+            zipCode: '',
+            country: '',
+            city: '',
+            username: '',
+            first_name: '',
+            last_name: ''
           })
           targetClub.set({
             name: payload.title,
@@ -220,6 +229,33 @@ export default new Vuex.Store({
       return club
     },
 
+    async removeFromEvent(a={}, payload){
+      console.log(payload)
+      const snapshot = await firebase.firestore().collection('events').doc(payload.eventid)
+      snapshot.update({
+        members: firebase.firestore.FieldValue.arrayRemove(payload.memberid)
+      })
+      const user = await firebase.firestore().collection('users').doc(payload.memberid)
+      user.update({
+        attending: firebase.firestore.FieldValue.arrayRemove(payload.eventid),
+        events: firebase.firestore.FieldValue.arrayRemove(payload.eventid)
+      })
+    },
+
+    async updateAttendance (a = {}, payload) {
+      console.log(payload)
+      const snapshot = await firebase.firestore().collection('users').doc(payload.id)
+      if (payload.attending) {
+        snapshot.update({
+          attending: firebase.firestore.FieldValue.arrayUnion(payload.eventid)
+        })
+      } else {
+        snapshot.update({
+          attending: firebase.firestore.FieldValue.arrayRemove(payload.eventid)
+        })
+      }
+    },
+
     async getClubMembersEvents(a = {}, payload){
       const snapshot = await firebase.firestore().collection('events').doc(payload).get()
       .then(doc => {
@@ -232,6 +268,8 @@ export default new Vuex.Store({
           .then(doc => {
             return doc.data()
           })
+        userdata.id = snapshot.members[i]
+        userdata.eventid = payload
         finalArray.push(userdata)
       }
       console.log(finalArray)
@@ -380,6 +418,11 @@ export default new Vuex.Store({
       } else {
         return 'out'
       }
+    },
+
+    async gotolink(a = {}, payload) {
+      router.push(payload)
+      router.go()
     },
 
     async joinClubCode(a = {}, payload) {
@@ -657,6 +700,28 @@ export default new Vuex.Store({
       })*/
     },
 
+    async UpdateProfile(a={}, payload){
+      console.log(payload)
+      const userID = await firebase.auth().currentUser.uid
+      const targetUser = await firebase.firestore().collection('users').doc(userID)
+      targetUser.update({
+        address: payload.address,
+        subtitle: payload.subtitle,
+        username: payload.username,
+        last_name: payload.lastName,
+        first_name: payload.firstName,
+        zipCode: payload.zipCode,
+        country: payload.country,
+        city: payload.city,
+      })
+      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      club.update({
+        details: payload.subtitle,
+        description: payload.about
+      })
+      router.push('/profile/' + userID)
+    },
+
     async updateMembershipType(a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const clubdata = await club.get()
@@ -746,7 +811,8 @@ export default new Vuex.Store({
         membersOnly: payload.extras.membersOnly,
         capacity: payload.capacity,
         id: targetEvent.id,
-        linked_account: this.state.userDetails.linkid
+        linked_account: this.state.userDetails.linkid,
+        members: []
       })
       club.update({
         events: firebase.firestore.FieldValue.arrayUnion(targetEvent.id)
