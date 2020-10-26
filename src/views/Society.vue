@@ -150,7 +150,6 @@
                 </template>
             </modal>
            <div :class="[gradient ? `bg-gradient-${gradient}` + ' shape shape-style-1' : 'bg-gradient-default shape shape-style-1']"></div>
-
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
             <div class="container-fluid mb-3 mb-l-5">
                 <div class="row">
