@@ -30,8 +30,8 @@
                     network="facebook"
                     url="https://sociit.web.app"
                     :title="society_name"
-                    :description="bio"
-                    :quote="bio"
+                    :description="description"
+                    :quote="description"
                     :hashtags="'sociit,' + society_name"
                     class="text-center"
                   >
