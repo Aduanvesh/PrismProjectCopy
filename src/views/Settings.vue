@@ -232,7 +232,7 @@
                                             />
                                         </div>
                                         <h6 class="heading-small text-muted mb-4">Join Code</h6>
-                                        <div class="col-lg-1">
+                                        <div class="col-lg-4">
                                             <qrcode-vue :value="qr.value" :background="qr.background" :foreground="qr.foreground"></qrcode-vue>
                                         </div>
                                     </div>
