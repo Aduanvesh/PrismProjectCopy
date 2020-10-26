@@ -55,16 +55,27 @@
                       <th>Name</th>
                       <th>Phone</th>
                       <th>Paid</th>
+                      <th>  </th>
+                      <th>Attending</th>
+                      <th></th>
                     </tr>
-                    <tr v-for="member in attendee" v-bind:key="member.phone">
+                    <tr v-for="member in attendee" v-bind:key="member.id">
                       <td>{{member.name}}</td>
                       <td>{{member.phone_1}}</td>
                       <td>{{member.paid}}</td>
+                      <td>  </td>
+                      <td> <base-checkbox
+                      type="checkbox"
+                      v-model="member.attending"
+                      class="field"
+            ><p></p></base-checkbox> </td>
+                    <td><base-button type="primary" @click="remove(member.id, member.eventid)">Remove</base-button></td>
                     </tr>
                   </table>
                 </div>
                 <template slot="footer">
                     <base-button type="primary" @click="modals.view = true; modals.guest = false">View Stats</base-button>
+                    <base-button type="primary" @click="updateAttending">Apply Attendance</base-button>
                     <base-button type="link" class="ml-auto" @click="modals.guest = false">Close
                     </base-button>
                 </template>
@@ -376,6 +387,7 @@ export default {
         name: '',
         phone: '',
         paid: false,
+        attending: false
       }],
 
       //@Adarsh, you might need these to be props? 
@@ -495,6 +507,15 @@ export default {
       this.modals.view = true
     },
 
+    async remove(memberid, eventid) {
+      console.log(memberid, eventid)
+      const tran = {}
+      tran.memberid = memberid
+      tran.eventid = eventid
+      this.$store.dispatch('removeFromEvent', tran)
+    },
+
+
     async deleteThis (evt) {
       evt.preventDefault()
       alert(JSON.stringify(this.id))
@@ -509,6 +530,18 @@ export default {
       console.log(this.edit)
       this.$store.dispatch('updateEvent', this.edit)
       this.modals.edit = false
+    },
+
+    async updateAttending () {
+      console.log('lol:', this.attendee)
+      for (var i = 0; i < this.attendee.length; i++){
+        console.log(this.attendee[i])
+        const tran = {}
+        tran.id = this.attendee[i].id
+        tran.eventid = this.attendee[i].eventid
+        tran.attending = this.attendee[i].attending
+        this.$store.dispatch('updateAttendance', tran)
+      }
     },
 
     async onEdit(evt){
@@ -531,7 +564,7 @@ export default {
       },
 
     async viewEvent () {
-      this.$router.push(this.link)
+      this.$store.dispatch('gotolink', this.link)
     },
     
     async onEditStart() {
@@ -549,7 +582,6 @@ export default {
     },
 
     async getMembers() {
-     
       console.log(this.id + 'nom')
       const members = await this.$store.dispatch('getClubMembersEvents', this.id)
         .then(function (data) {
@@ -557,17 +589,24 @@ export default {
         for (var i = 0; i < data.length; i++) {
                 //console.log(data[i].details)
                 const card = { }
-                
-                
                 card.name = data[i].first_name + ' ' + data[i].last_name
                 card.phone_1 = data[i].phone_1
                 card.paid = true;
+                card.id = data[i].id
+                card.eventid = data[i].eventid
+                if (data[i].attending.includes(data[i].eventid)){
+                  console.log('success')
+                  card.attending = true;
+                } else {
+                  card.attending = false;
+                }
                 Arpayments.push(card)
             }
           return Arpayments
       })
         this.attendee = await members
         console.log('paymentcheck:', this.attendee)
+         this.$forceUpdate(); 
       this.modals.view = false; 
       this.modals.guest = true
     }
