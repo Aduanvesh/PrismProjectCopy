@@ -233,7 +233,7 @@
                                         </div>
                                         <h6 class="heading-small text-muted mb-4">Join Code</h6>
                                         <div class="col-lg-1">
-                                            <qrcode-vue :value="value"></qrcode-vue>
+                                            <qrcode-vue :value="qr.value" :background="qr.background" :foreground="qr.foreground"></qrcode-vue>
                                         </div>
                                     </div>
                                 </div>
@@ -294,9 +294,11 @@ data() {
 
       imageData:'',
       img1: '',
-      value: '/profile/join/',
-      
-      size: 300,
+      qr: {
+            value: '/profile/join/',
+            background: '#f4f5f7',
+            foreground: '#18204d',
+      }
     };
 },
 
