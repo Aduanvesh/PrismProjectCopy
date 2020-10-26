@@ -163,7 +163,7 @@
                 </div>
             </div>
            <tabs fill class="flex-column flex-md-row">
-                <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
+                <card shadow class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
                     <!-- Tabs begin here -->
                     <tab-pane key="tab1">
                         <template slot="title"> 

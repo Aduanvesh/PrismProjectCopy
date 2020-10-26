@@ -23,7 +23,7 @@
             </div>
     <!-- Tab Flex -->
            <tabs fill class="flex-column flex-md-row">
-                <card shadow slot-scope="{activeTabIndex}" class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
+                <card shadow class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
                     <!-- Tabs begin here -->
                     <tab-pane key="tab1">
                         <template slot="title"> 
@@ -76,7 +76,7 @@
                                         </div> -->
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            Events from pages you follow:
+                                            Events from pages you follow
                                         </div>
                                     </div>
                                     <div class="row">
@@ -136,7 +136,7 @@
                             <i class="fa fa-users mr-2"></i>Tickets
                         </template>
                         <div class="row">
-                                    <div class="col-auto mr-auto mb-3">My Premium Memberships:</div>
+                                    <div class="col-auto mr-auto mb-3">My Premium Memberships</div>
                         </div>
                                <div class="container">
                                    <div class="row">
@@ -156,8 +156,9 @@
                                                 </card>
                                             </div>
                                    </div>
+                               </div>
                                    <div class="row">
-                                        <div class="col-md-6 mb-3">My Event Tickets:</div>
+                                        <div class="col-md-6 mb-3">My Event Tickets</div>
                                    </div>
                                     <div class="row">
                                         <div
@@ -175,7 +176,7 @@
                                                 </card>
                                             </div>
                                    </div>
-                               </div>
+                               
                     </tab-pane>
                 </card>
             </tabs>
