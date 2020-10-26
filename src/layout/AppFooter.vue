@@ -12,7 +12,7 @@
                 <div class="col-md-6">
                     <ul class="nav nav-footer justify-content-end">
                         <li class="nav-item">
-                            <a href="https://sociit.com/about" class="nav-link" target="_blank" rel="noopener">About
+                            <a href="/#about" class="nav-link" target="_blank" rel="noopener">About
                                 Us</a>
                         </li>
                         <li class="nav-item">
