@@ -294,7 +294,7 @@ data() {
 
       imageData:'',
       img1: '',
-      value: '/profile/',
+      value: '/profile/join/',
       
       size: 300,
     };
