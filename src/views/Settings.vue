@@ -231,6 +231,10 @@
                                                         class="p-1"
                                             />
                                         </div>
+                                        <h6 class="heading-small text-muted mb-4">Join Code</h6>
+                                        <div class="col-lg-1">
+                                            <qrcode-vue :value="value"></qrcode-vue>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr class="" />
@@ -250,6 +254,7 @@ import Modal from "@/components/Modal.vue";
 import store from 'main'
 import router from '../router'
 import * as firebase from 'firebase'
+import QrcodeVue from 'qrcode.vue'
 
 export default {
 name: "components",
@@ -289,8 +294,16 @@ data() {
 
       imageData:'',
       img1: '',
+      value: '/profile/',
+      
+      size: 300,
     };
 },
+
+  components: {
+
+      QrcodeVue,
+  },
 
   methods: {
 

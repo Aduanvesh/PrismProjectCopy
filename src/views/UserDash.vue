@@ -1,7 +1,9 @@
 <template>
     <div :class="[gradient ? `bg-gradient-${gradient}` + ' section section-shaped section-lg my-0' : '','section section-shaped section-lg my-0']" id="userdashboardbgdiv">
     <!-- Background and shading -->
+
             <div
+                v-if="!gradient"
                 class="shape shape-style-1 bg-gradient-default"
                 id="userdashboardbg"
             ></div>
@@ -207,7 +209,7 @@ export default {
       following: [],
 
       tickets: {},
-      gradient: 'warning'
+      gradient: 'info'
     };
   },
   methods: {
