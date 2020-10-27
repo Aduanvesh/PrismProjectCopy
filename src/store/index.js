@@ -49,7 +49,14 @@ export default new Vuex.Store({
             membership_types: [],
             payments: [],
             events: [],
-            attending: []
+            attending: [],
+            address: '',
+            subtitle: '',
+            username: '',
+            zipCode: '',
+            country: '',
+            city: '',
+            colour: 'success'
           })
         } else if (payload.type === 'Club') {
           targetUser.set({
@@ -66,7 +73,8 @@ export default new Vuex.Store({
             city: '',
             username: '',
             first_name: '',
-            last_name: ''
+            last_name: '',
+            colour: 'success'
           })
           targetClub.set({
             name: payload.title,
@@ -215,6 +223,16 @@ export default new Vuex.Store({
       }
     },
 
+    async getColor() {
+      const colour = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid).get()
+        .then(doc => {
+          console.log('check', doc.data().membershiplink)
+          return doc.data().colour
+        })
+      console.log('dashboardcolor:', colour)
+      return colour
+    },
+
     async getClubDetails(a = {}, payload) {
       const snapshot = await firebase.firestore().collection('users').doc(payload).get()
         .then(doc => {
@@ -229,7 +247,7 @@ export default new Vuex.Store({
       return club
     },
 
-    async removeFromEvent(a={}, payload){
+    async removeFromEvent(a = {}, payload) {
       console.log(payload)
       const snapshot = await firebase.firestore().collection('events').doc(payload.eventid)
       snapshot.update({
@@ -242,7 +260,7 @@ export default new Vuex.Store({
       })
     },
 
-    async updateAttendance (a = {}, payload) {
+    async updateAttendance(a = {}, payload) {
       console.log(payload)
       const snapshot = await firebase.firestore().collection('users').doc(payload.id)
       if (payload.attending) {
@@ -256,12 +274,12 @@ export default new Vuex.Store({
       }
     },
 
-    async getClubMembersEvents(a = {}, payload){
+    async getClubMembersEvents(a = {}, payload) {
       const snapshot = await firebase.firestore().collection('events').doc(payload).get()
-      .then(doc => {
-        console.log('check', doc.data())
-        return doc.data()
-      })
+        .then(doc => {
+          console.log('check', doc.data())
+          return doc.data()
+        })
       const finalArray = []
       for (var i = 0; i < snapshot.members.length; i++) {
         const userdata = await firebase.firestore().collection('users').doc(snapshot.members[i]).get()
@@ -276,25 +294,25 @@ export default new Vuex.Store({
       return finalArray
     },
 
-    async getEventDetails(a = {}, payload){
+    async getEventDetails(a = {}, payload) {
       const snapshot = await firebase.firestore().collection('events').doc(payload).get()
-      .then(doc => {
-        console.log('supercheckevents', doc.data())
-        return doc.data()
-      })
-    return snapshot
+        .then(doc => {
+          console.log('supercheckevents', doc.data())
+          return doc.data()
+        })
+      return snapshot
     },
 
-    async getClubEventDetails(a = {}, payload){
+    async getClubEventDetails(a = {}, payload) {
       const snapshot = await firebase.firestore().collection('memberships').doc(payload).get()
-      .then(doc => {
-        return doc.data().userlink
-      })
+        .then(doc => {
+          return doc.data().userlink
+        })
       const clubdata = await firebase.firestore().collection('users').doc(snapshot).get()
-      .then(doc => {
-        return doc.data()
-      })
-    return clubdata
+        .then(doc => {
+          return doc.data()
+        })
+      return clubdata
     },
 
     async getMemberships() {
@@ -430,7 +448,7 @@ export default new Vuex.Store({
       try {
         const clubid = await firebase.firestore().collection('users').doc(payload).get()
           .then(doc => {
-              return doc.data().membershiplink
+            return doc.data().membershiplink
           })
         const club = await firebase.firestore().collection('memberships').doc(clubid)
         const snapshot = await club.get()
@@ -549,7 +567,7 @@ export default new Vuex.Store({
           .then(doc => {
             return doc.data()
           })
-          console.log('purchasing2:', eventdata)
+        console.log('purchasing2:', eventdata)
         const membership = await firebase.firestore().collection('memberships').doc(eventdata.linked_account)
         const membershipdata = await membership.get()
           .then(doc => {
@@ -568,7 +586,7 @@ export default new Vuex.Store({
         paras.payerid = userID
         paras.status = 'paid'
         paras.amount = eventdata.price
-        
+
         console.log('checkor:', paras)
         const targetpayment = await firebase.firestore().collection('payments').doc()
         targetpayment.set({
@@ -670,10 +688,10 @@ export default new Vuex.Store({
       console.log('casdaj:', payload)
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const clubdata = await club.get()
-      .then(doc => {
-        return doc.data().membership_types
-      })
-      if (clubdata.length != 0){
+        .then(doc => {
+          return doc.data().membership_types
+        })
+      if (clubdata.length != 0) {
         console.log('club already exists')
       } else {
         console.log('away we go')
@@ -690,7 +708,7 @@ export default new Vuex.Store({
           membership_types: firebase.firestore.FieldValue.arrayUnion(membership.id)
         })
       }
-      
+
       /*const targetMem = club.collection('membership_types').doc()
       targetMem.set({
         members: [],
@@ -700,40 +718,54 @@ export default new Vuex.Store({
       })*/
     },
 
-    async UpdateProfile(a={}, payload){
+    async UpdateProfile(a = {}, payload) {
       console.log(payload)
       const userID = await firebase.auth().currentUser.uid
+      console.log(userID)
       const targetUser = await firebase.firestore().collection('users').doc(userID)
       targetUser.update({
         address: payload.address,
         subtitle: payload.subtitle,
+        description: payload.about,
         username: payload.username,
         last_name: payload.lastName,
         first_name: payload.firstName,
         zipCode: payload.zipCode,
         country: payload.country,
+        colour: payload.colour,
         city: payload.city,
       })
-      const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
-      club.update({
-        details: payload.subtitle,
-        description: payload.about
-      })
-      router.push('/profile/' + userID)
+      if (this.state.userDetails.type === 'Club') {
+        const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+        club.update({
+          details: payload.subtitle,
+          description: payload.about,
+        })
+      }
+      if (this.state.userDetails.type === "User") {
+        router.push(
+          "/dashboard/user/" + this.state.userDetails.id
+        );
+      } else {
+        router.push(
+          "/dashboard/club/" + this.state.userDetails.id
+        );
+      }
     },
 
     async updateMembershipType(a = {}, payload) {
       const club = await firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
       const clubdata = await club.get()
-      .then(doc => {
-        return doc.data().membership_types
-      })
-      const membership = await firebase.firestore().collection('membership_types').doc(clubdata[0])
-        membership.update({
-          description: payload.description,
-          name: payload.name,
-          price: payload.price
+        .then(doc => {
+          return doc.data().membership_types
         })
+      const membership = await firebase.firestore().collection('membership_types').doc(clubdata[0])
+      membership.update({
+        description: payload.description,
+        name: payload.name,
+        price: payload.price
+      })
+
     },
 
     async deleteMembershipType(a = {}, payload) {
@@ -882,13 +914,24 @@ export default new Vuex.Store({
       })
     },
 
+    async getSettings(a = {}) {
+      const userID = firebase.auth().currentUser.uid
+      const user = await firebase.firestore().collection('users').doc(userID)
+      const clubthing = await user.get()
+        .then(doc => {
+          return doc.data()
+        })
+      return clubthing
+    },
+
     async getClubMembers(a = {}, payload) {
+      console.log('thickem', payload)
       const user = await firebase.firestore().collection('users').doc(payload)
       const clubthing = await user.get()
         .then(doc => {
           return doc.data().membershiplink
         })
-      console.log('thickem', clubthing)
+
       const club = await firebase.firestore().collection('memberships').doc(clubthing)
       const targetArray = await club.get()
         .then(doc => {

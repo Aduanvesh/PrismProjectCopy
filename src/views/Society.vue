@@ -450,8 +450,18 @@ const paymentData = [
                 this.getMembers()
                 this.getEvents()
                 this.retrievePayments()
+                this.getColor()
                 this.showPayments = true
             } 
+        },
+
+        async getColor () {
+            const colour = await this.$store.dispatch('getColor')
+            .then(function (data) {
+                return data
+            })
+            this.colour = colour
+            console.log('colorcheck:', colour)
         },
 
         async retrievePayments () {
