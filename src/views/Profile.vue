@@ -240,6 +240,7 @@ export default {
       if (this.$store.state.userDetails.email === undefined) {
         setTimeout(() => this.goLoad(), 50);
       } else {
+         
       }
     },
 
@@ -258,6 +259,7 @@ export default {
     },
 
     async getMembers() {
+         console.log('break:', this.$route.params.id)
       const clubMembers = await this.$store.dispatch(
         "getClubMembers",
         this.$route.params.id
@@ -303,7 +305,8 @@ export default {
     },
 
     async retrieveEvents() {
-      const eventCards = this.$store
+       
+      const eventCards = await this.$store
         .dispatch("getClubEvents", this.$route.params.id)
         .then(function (data) {
           const cardsData = [];
@@ -381,10 +384,10 @@ export default {
 
   },
   created() {
-    this.getMembers();
-    this.getDetails();
-    this.retrieveMemberships();
-    this.retrieveEvents();
+     this.getMembers();
+        this.getDetails();
+        this.retrieveMemberships();
+        this.retrieveEvents();
     /*axios.post('')
         .then(response => {
             this.sessionId = response.data

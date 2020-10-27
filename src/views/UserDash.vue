@@ -16,8 +16,8 @@
                         <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
                     </div>
                     <div class="col-auto my-auto">
-                        <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
-                        <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-qrcode" rounded icon-only></base-button>
+                        <!-- <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
+                        <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-qrcode" rounded icon-only></base-button> -->
                     </div>
                 </div>
             </div>

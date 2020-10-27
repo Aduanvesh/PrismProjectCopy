@@ -513,6 +513,7 @@ export default {
       tran.memberid = memberid
       tran.eventid = eventid
       this.$store.dispatch('removeFromEvent', tran)
+      this.modals.guest = false
     },
 
 
