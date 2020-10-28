@@ -1,6 +1,7 @@
 <template>
   <div class="profile-page">
     <base-header
+      :class="[gradient ? `bg-gradient-${gradient}` + ' header pb-8 pt-5 pt-lg-8 d-flex align-items-center' : 'header pb-8 pt-5 pt-lg-8 d-flex align-items-center']"
       class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-primary"
       style="
         min-height: 600px;
@@ -185,6 +186,7 @@ export default {
       up_coming_events: 0,
       society_name: '',
       subtitle: '',
+      gradient: '',
       profilePic: '/img/theme/profile.jpg',
       university: "Queensland University of Technology",
       bio:
@@ -254,6 +256,7 @@ export default {
       this.society_name, this.society_name = clubDetails.name;
       console.log(this.$store.state.userDetails.profile_img);
       this.profilePic = this.$store.state.userDetails.profile_img;
+      this.gradient = this.$store.state.userDetails.colour;
       this.subtitle, this.subtitle = clubDetails.details;
       this.up_coming_events = clubDetails.events.length;
       this.bio = clubDetails.description;
