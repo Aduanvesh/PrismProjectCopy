@@ -14,6 +14,7 @@ import SocietyDashboard from "./views/Society.vue";
 import Event from "./views/Event.vue";
 import Kiosk from "./views/Kiosk.vue";
 import VueRouter from 'vue-router'
+import Join from "./views/Join.vue"
 
 Vue.use(VueRouter);
 
@@ -62,13 +63,6 @@ export default new VueRouter({
         header: AppHeader,
         default: PasswordReset,
         //footer: AppFooter
-      }
-    },
-    {
-      path: "/upload",
-      name: "upload",
-      components: {
-        default: Upload,
       }
     },
     {
@@ -141,6 +135,26 @@ export default new VueRouter({
       name: "kiosk",
       components: {
         default: Kiosk,
+      },
+      children: [
+        {
+          path: '/kiosk/join',
+          name: 'user',
+          component: Register
+        },
+        {
+          path: '/register/club',
+          name: 'club',
+          component: Register
+        },]
+    },
+    {
+      path: "/clubjoin/:id",
+      name: "clubjoin",
+      component: {
+        header: AppHeader,
+        default: Join,
+        footer: AppFooter
       }
     }
   ],

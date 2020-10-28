@@ -26,7 +26,7 @@ export default new Vuex.Store({
     setColour(state, payload) {
       state.userDetails.colour = payload
     },
-    setImage(){
+    setImage() {
       state.userDetails.profile_img = payload
     },
     getUniversityNames(state, payload) {
@@ -148,6 +148,8 @@ export default new Vuex.Store({
                     && !router.currentRoute.fullPath.includes('event')
                     && !router.currentRoute.fullPath.includes('upload')
                     && !router.currentRoute.fullPath.includes('settings')
+                    && !router.currentRoute.fullPath.includes('join')
+                    && !router.currentRoute.fullPath.includes('kiosk')
                   ) {
                     router.push('/dashboard/user/' + userID)
                   }
@@ -165,6 +167,8 @@ export default new Vuex.Store({
                     && !router.currentRoute.fullPath.includes('event')
                     && !router.currentRoute.fullPath.includes('upload')
                     && !router.currentRoute.fullPath.includes('settings')
+                    && !router.currentRoute.fullPath.includes('join')
+                    && !router.currentRoute.fullPath.includes('kiosk')
                   ) {
                     router.push('/dashboard/club/' + userID)
                   }
@@ -204,6 +208,94 @@ export default new Vuex.Store({
         console.log(err.message)
         return err.message
       }
+    },
+
+    async addMemberEvent(a = {}, payload) {
+      const club = firebase.firestore().collection('memberships').doc(this.state.userDetails.linkid)
+      const clubmembers = await club.get()
+        .then(doc => {
+          return doc.data().members
+        })
+      console.log('plz2', clubmembers)
+      var userIDf = ''
+      for (var i = 0; i < clubmembers.length; i++) {
+        const user = await firebase.firestore().collection('users').doc(clubmembers[i]).get()
+          .then(doc => {
+            return doc.data()
+          })
+        console.log(user)
+        if (user.email === payload.memberEmail) {
+          userIDf = clubmembers[i]
+        }
+      }
+      console.log('plz', userIDf, payload.cash)
+      if (userIDf !== '') {
+        const targetUser = await firebase.firestore().collection('users').doc(userIDf)
+        const check = await targetUser.get()
+          .then(doc => {
+            return doc.data()
+          })
+        if (check.events.includes(payload.eventid)) {
+          console.log('already have this purchased')
+          return 'already have this purchased'
+        }
+        const event = await firebase.firestore().collection('events').doc(payload.eventid)
+        const eventdata = await event.get()
+          .then(doc => {
+            return doc.data()
+          })
+        console.log('purchasing2:', eventdata)
+        const membership = await firebase.firestore().collection('memberships').doc(eventdata.linked_account)
+        const membershipdata = await membership.get()
+          .then(doc => {
+            return doc.data()
+          })
+        event.update({
+          members: firebase.firestore.FieldValue.arrayUnion(userIDf)
+        })
+        if (payload.cash) {
+          const paras = {}
+          paras.date1 = new Date()
+          paras.date2 = new Date()
+          paras.payee = membershipdata.name
+          paras.payer = check.first_name + ' ' + check.last_name
+          paras.info = 'Ticket Purchase (Cash): ' + eventdata.event_name
+          paras.payeeid = eventdata.linked_account
+          paras.payerid = userIDf
+          paras.status = 'paid'
+          paras.amount = eventdata.price
+
+          console.log('checkor:', paras)
+          const targetpayment = await firebase.firestore().collection('payments').doc()
+          targetpayment.set({
+            date1: paras.date1,
+            date2: paras.date2,
+            id: targetpayment.id,
+            payee: paras.payee,
+            info: paras.info,
+            payer: paras.payer,
+            payeeid: paras.payeeid,
+            payerid: paras.payerid,
+            status: paras.status,
+            amount: paras.amount
+          })
+          targetUser.update({
+            events: firebase.firestore.FieldValue.arrayUnion(payload.eventid),
+            payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
+          })
+          const clubs = await firebase.firestore().collection('memberships').doc(eventdata.linked_account)
+          clubs.update({
+            payments: firebase.firestore.FieldValue.arrayUnion(targetpayment.id)
+          })
+
+        } else {
+          targetUser.update({
+            events: firebase.firestore.FieldValue.arrayUnion(payload.eventid)
+          })
+        }
+      }
+
+
     },
 
     async addCard(a = {}, payload) {
@@ -752,7 +844,7 @@ export default new Vuex.Store({
           description: payload.about,
         })
       }
-      
+
       if (this.state.userDetails.type === "User") {
         router.push(
           "/dashboard/user/" + this.state.userDetails.id
@@ -762,7 +854,7 @@ export default new Vuex.Store({
           "/dashboard/club/" + this.state.userDetails.id
         );
       }
-     
+
     },
 
     async updateMembershipType(a = {}, payload) {

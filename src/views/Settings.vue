@@ -324,7 +324,7 @@
                         class="p-1"
                       />
                     </div>
-                    <h6 class="heading-small text-muted mb-4">Join Code</h6>
+                    <h6 class="heading-small text-muted mb-4"   @click="joincode">Join Code</h6>
                     <div class="col-lg-4">
                       <qrcode-vue
                         :value="qr.value"
@@ -414,6 +414,10 @@ export default {
   },
 
   methods: {
+      async joincode () {
+          this.$router.push(this.qr.value)
+      },
+
     async associateImage() {
       const userID = firebase.auth().currentUser.uid;
       console.log("success");
@@ -493,7 +497,8 @@ export default {
       } else {
         this.getSettings();
         this.profile_pic = this.$store.state.userDetails.profile_img;
-        console.log("nock", this.profile_pic);
+        this.qr.value = '/join/' + this.$store.state.userDetails.id 
+        console.log("nock", this.qr.value);
       }
     },
 
