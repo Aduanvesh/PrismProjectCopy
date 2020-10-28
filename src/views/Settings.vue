@@ -54,7 +54,7 @@
     </modal>
     <div class="shape shape-style-1 bg-secondary">
       <base-header
-        class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-gradient-default"
+        :class="[model.colour ? `bg-gradient-${model.colour}` + ' header pb-8 pt-5 pt-lg-8 d-flex align-items-center' : 'header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-default']"
         style="
           min-height: 600px;
           background-size: cover;
@@ -380,7 +380,7 @@ export default {
       bio: "",
       memberlist: [],
       model: {
-        colour: "primary",
+        colour: "",
         username: "",
         university: "",
         email: "",
