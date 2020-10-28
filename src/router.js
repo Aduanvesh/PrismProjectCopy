@@ -135,14 +135,25 @@ export default new VueRouter({
       name: "kiosk",
       components: {
         default: Kiosk,
-      }
+      },
+      children: [
+        {
+          path: '/kiosk/join',
+          name: 'user',
+          component: Register
+        },
+        {
+          path: '/register/club',
+          name: 'club',
+          component: Register
+        },]
     },
     {
-      path: "/join/:id",
-      name: "join",
+      path: "/clubjoin/:id",
+      name: "clubjoin",
       component: {
         header: AppHeader,
-        default: Register,
+        default: Join,
         footer: AppFooter
       }
     }

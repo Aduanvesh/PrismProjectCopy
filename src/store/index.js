@@ -149,6 +149,7 @@ export default new Vuex.Store({
                     && !router.currentRoute.fullPath.includes('upload')
                     && !router.currentRoute.fullPath.includes('settings')
                     && !router.currentRoute.fullPath.includes('join')
+                    && !router.currentRoute.fullPath.includes('kiosk')
                   ) {
                     router.push('/dashboard/user/' + userID)
                   }
@@ -167,6 +168,7 @@ export default new Vuex.Store({
                     && !router.currentRoute.fullPath.includes('upload')
                     && !router.currentRoute.fullPath.includes('settings')
                     && !router.currentRoute.fullPath.includes('join')
+                    && !router.currentRoute.fullPath.includes('kiosk')
                   ) {
                     router.push('/dashboard/club/' + userID)
                   }
