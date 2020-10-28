@@ -1,186 +1,188 @@
 <template>
-    <div :class="[gradient ? `bg-gradient-${gradient}` + ' section section-shaped section-lg my-0' : '','section section-shaped section-lg my-0']" id="userdashboardbgdiv">
-    <!-- Background and shading -->
+    <div> 
+      <div :class="[gradient ? `bg-gradient-${gradient}` + ' section section-shaped section-lg my-0' : '','section section-shaped section-lg my-0']" id="userdashboardbgdiv">
+      <!-- Background and shading -->
+              <div
+                  v-if="!gradient"
+                  class="shape shape-style-1 bg-gradient-default"
+                  id="userdashboardbg"
+              ></div>
+      <!-- Hi, Section -->
+      <div :class="[gradient ? `bg-gradient-${gradient}` + 'shape shape-style-1' : '','shape shape-style-1']"></div>
+          <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
+              <div class="container-fluid mb-3 mb-l-5">
+                  <div class="row">
+                      <div class="col-auto mr-auto my-auto">
+                          <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
+                      </div>
+                      <div class="col-auto my-auto">
+                          <!-- <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
+                          <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-qrcode" rounded icon-only></base-button> -->
+                      </div>
+                  </div>
+              </div>
+      <!-- Tab Flex -->
+            <tabs fill class="flex-column flex-md-row">
+                  <card shadow class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
+                      <!-- Tabs begin here -->
+                      <tab-pane key="tab1">
+                          <template slot="title"> 
+                              <i class="fa fa-university mr-2"></i>Clubs and Societies
+                          </template>
+                                  <div class="row">
+                                      <div class="col-auto mr-auto mb-3">Following</div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-md-6 mb-3" v-for="element in following"  @click="goToPage(element.url)" v-bind:key="element.uid">
+                                          <card class="card-lift--hover shadow" img="/img/theme/lcard.png">
+                                              <template slot="header">
+                                                  {{ element.title }}
+                                              </template>
+                                              <template slot="footer">
+                                                  <div class="d-flex flex-row">
+                                                      <i> {{ element.caption }} </i>
+                                                  </div>
+                                                  <div class="d-flex flex-row-reverse">
+                                                  <!-- <p> Most Recent Event: 
+                                                      <base-button outline @click="goTo(element.recentEvent.url)">   
+                                                      {{element.recentEvent.name}} </base-button></p> -->
+                                                  </div>
+                                              </template>
+                                          </card>
+                                      </div>
+                                  </div>
+                                  <div class="d-flex flex-row-reverse">
+                                      <div class="col-auto pt-5">
+                                          <modal></modal>
+                                      </div>
+                                  </div>
+                      </tab-pane>
 
-            <div
-                v-if="!gradient"
-                class="shape shape-style-1 bg-gradient-default"
-                id="userdashboardbg"
-            ></div>
-    <!-- Hi, Section -->
-    <div :class="[gradient ? `bg-gradient-${gradient}` + 'shape shape-style-1' : '','shape shape-style-1']"></div>
-        <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
-            <div class="container-fluid mb-3 mb-l-5">
-                <div class="row">
-                    <div class="col-auto mr-auto my-auto">
-                        <h1 class="text-white text-nowrap">Hi, {{this.user}}</h1>
-                    </div>
-                    <div class="col-auto my-auto">
-                        <!-- <base-button tag="a" href="#" v-on:click="goProfile" type="secondary" icon="ni ni-atom" rounded icon-only></base-button>
-                        <base-button tag="a" href="/kiosk" v-on:click="goProfile" type="secondary" icon="fa fa-qrcode" rounded icon-only></base-button> -->
-                    </div>
-                </div>
-            </div>
-    <!-- Tab Flex -->
-           <tabs fill class="flex-column flex-md-row">
-                <card shadow class="p-xl-5 p-lg-5 p-md-4 p-sm-3">
-                    <!-- Tabs begin here -->
-                    <tab-pane key="tab1">
-                        <template slot="title"> 
-                            <i class="fa fa-university mr-2"></i>Clubs and Societies
-                        </template>
-                                <div class="row">
-                                    <div class="col-auto mr-auto mb-3">Following</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3" v-for="element in following"  @click="goToPage(element.url)" v-bind:key="element.uid">
-                                        <card class="card-lift--hover shadow" img="/img/theme/lcard.png">
-                                            <template slot="header">
-                                                {{ element.title }}
-                                            </template>
-                                            <template slot="footer">
-                                                <div class="d-flex flex-row">
-                                                    <i> {{ element.caption }} </i>
-                                                </div>
-                                                <div class="d-flex flex-row-reverse">
-                                                <!-- <p> Most Recent Event: 
-                                                    <base-button outline @click="goTo(element.recentEvent.url)">   
-                                                    {{element.recentEvent.name}} </base-button></p> -->
-                                                </div>
-                                            </template>
-                                        </card>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-row-reverse">
-                                    <div class="col-auto pt-5">
-                                        <modal></modal>
-                                    </div>
-                                </div>
-                    </tab-pane>
+                      <tab-pane key="tab2">
+                          <template slot="title">
+                              <i class="ni ni-calendar-grid-58 mr-2"></i>Events
+                          </template>
+                                  <!-- <div class="row"> -->
+                                      <!--<div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
+                                      </div>
+                                          <div class="row">
+                                              <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.id">
+                                                      <card class="card-lift--hover shadow" :link="element.url" img="/img/theme/lcard.png" :name="element.name">
+                                                          <template slot="header">
+                                                              {{element.event.name}}
+                                                          </template>
+                                                      </card>
+                                              </div>
+                                          </div> -->
+                                      <div class="row">
+                                          <div class="col-md-6 mb-3">
+                                              Events from pages you follow
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col-md-6 mb-3"
+                                              v-for="element in events"
+                                              v-bind:key="element.id"
+                                              @click="goToPage(element.url)"
+                                          >
+                                              <card
+                                              class="card-lift--hover shadow"
+                                              :link="element.url"
+                                              img="/img/theme/lcard.png"
+                                              :name="element.name"
+                                              >
+                                                  <template slot="header">
+                                                      {{ element.name }}
+                                                  </template>
+                                              </card>
+                                          </div>
+                                      </div>
+                      </tab-pane>
 
-                    <tab-pane key="tab2">
-                        <template slot="title">
-                            <i class="ni ni-calendar-grid-58 mr-2"></i>Events
-                        </template>
-                                <!-- <div class="row"> -->
-                                    <!--<div class="col-auto mr-auto mb-3">Upcoming for my Membership</div>
-                                    </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3" v-for="element in subscribed" v-bind:key="element.id">
-                                                    <card class="card-lift--hover shadow" :link="element.url" img="/img/theme/lcard.png" :name="element.name">
-                                                        <template slot="header">
-                                                            {{element.event.name}}
-                                                        </template>
-                                                    </card>
-                                            </div>
-                                        </div> -->
+                      <tab-pane key="tab3">
+                          <template slot="title">
+                              <i class="ni ni-money-coins mr-2"></i>Payments
+                          </template>
+                                  <div class="row">
+                                      <div class="col-auto mr-auto mb-3">Payments</div>
+                                  </div>
+                          <div class="container">
+                          <div class="row">
+                            <table class="col" id="paymenttable">
+                                              <tr>
+                                                  <th>Payment ID</th>
+                                                  <th>Status</th>
+                                                  <th>Payer</th>
+                                                  <th>Info</th>
+                                                  <th>Date Submitted</th>
+                                                  <th>Date Paid</th>
+                                                  <th>Amount</th>
+                                              </tr>
+                                              <tr v-for="payment in payments" v-bind:key="payment.id">
+                                                  <td>{{payment.id}}</td>
+                                                  <td>{{payment.status}}</td>
+                                                  <td>{{payment.payee}}</td>
+                                                  <td>{{payment.info}}</td>
+                                                  <td>{{payment.date1}}</td>
+                                                  <td>{{payment.date2}}</td>
+                                                  <td>{{payment.amount}}</td>
+                                              </tr> 
+                                  </table>
+                          </div>
+                          </div>
+                      </tab-pane>
+                      <tab-pane key="tab4">
+                          <template slot="title">
+                              <i class="fa fa-users mr-2"></i>Tickets
+                          </template>
+                          <div class="row">
+                                      <div class="col-auto mr-auto mb-3">My Premium Memberships</div>
+                          </div>
                                     <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            Events from pages you follow
-                                        </div>
+                                          <div
+                                              class="col-md-6 mb-3"
+                                              v-for="element in memberships"
+                                              v-bind:key="element.title"
+                                          >
+                                                  <card
+                                                  class="card-lift--hover shadow"
+                                                  img="/img/theme/lcard.png"
+                                                  :name="element.title"
+                                                  >
+                                                  <template slot="header">
+                                                      {{ element.title }}
+                                                  </template>
+                                                  </card>
+                                              </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 mb-3"
-                                             v-for="element in events"
-                                             v-bind:key="element.id"
-                                             @click="goToPage(element.url)"
-                                        >
-                                            <card
-                                            class="card-lift--hover shadow"
-                                            :link="element.url"
-                                            img="/img/theme/lcard.png"
-                                            :name="element.name"
-                                            >
-                                                <template slot="header">
-                                                    {{ element.name }}
-                                                </template>
-                                            </card>
-                                        </div>
+                                          <div class="col-md-6 mb-3">My Event Tickets</div>
                                     </div>
-                    </tab-pane>
-
-                    <tab-pane key="tab3">
-                        <template slot="title">
-                            <i class="ni ni-money-coins mr-2"></i>Payments
-                        </template>
-                                <div class="row">
-                                    <div class="col-auto mr-auto mb-3">Payments</div>
-                                </div>
-                        <div class="container">
-                        <div class="row">
-                           <table class="col" id="paymenttable">
-                                            <tr>
-                                                <th>Payment ID</th>
-                                                <th>Status</th>
-                                                <th>Payer</th>
-                                                <th>Info</th>
-                                                <th>Date Submitted</th>
-                                                <th>Date Paid</th>
-                                                <th>Amount</th>
-                                            </tr>
-                                            <tr v-for="payment in payments" v-bind:key="payment.id">
-                                                <td>{{payment.id}}</td>
-                                                <td>{{payment.status}}</td>
-                                                <td>{{payment.payee}}</td>
-                                                <td>{{payment.info}}</td>
-                                                <td>{{payment.date1}}</td>
-                                                <td>{{payment.date2}}</td>
-                                                <td>{{payment.amount}}</td>
-                                            </tr> 
-                                </table>
-                        </div>
-                        </div>
-                    </tab-pane>
-                    <tab-pane key="tab4">
-                        <template slot="title">
-                            <i class="fa fa-users mr-2"></i>Tickets
-                        </template>
-                        <div class="row">
-                                    <div class="col-auto mr-auto mb-3">My Premium Memberships</div>
-                        </div>
-                               <div class="container">
-                                   <div class="row">
-                                        <div
-                                            class="col-md-6 mb-3"
-                                            v-for="element in memberships"
-                                            v-bind:key="element.title"
-                                        >
-                                                <card
-                                                class="card-lift--hover shadow"
-                                                img="/img/theme/lcard.png"
-                                                :name="element.title"
-                                                >
-                                                <template slot="header">
-                                                    {{ element.title }}
-                                                </template>
-                                                </card>
-                                            </div>
-                                   </div>
-                               </div>
-                                   <div class="row">
-                                        <div class="col-md-6 mb-3">My Event Tickets</div>
-                                   </div>
-                                    <div class="row">
-                                        <div
-                                            class="col-md-6 mb-3"
-                                            v-for="element in tickets"
-                                            v-bind:key="element.title">
-                                                <card
-                                                class="card-lift--hover shadow"
-                                                img="/img/theme/lcard.png"
-                                                :name="element.title"
-                                                >
-                                                <template slot="header">
-                                                    {{ element.title }}
-                                                </template>
-                                                </card>
-                                            </div>
-                                   </div>
-                               
-                    </tab-pane>
-                </card>
-            </tabs>
-        </div>
+                                      <div class="row">
+                                          <div
+                                              class="col-md-6 mb-3"
+                                              v-for="element in tickets"
+                                              v-bind:key="element.title"
+                                              >
+                                                  <usercard 
+                                                  class="card-options--hover shadow"
+                                                  img="/img/theme/lcard.png"
+                                                  :name="element.title"
+                                                  options="true"
+                                                  ticketCode="1234"
+                                                  >
+                                                      <template slot="header">
+                                                      {{ element.title }}
+                                                      </template>
+                                                  </usercard>    
+                                              </div>
+                                    </div>
+                                
+                      </tab-pane>
+                  </card>
+              </tabs>
+          </div>
+      </div>
     </div>  
 </template>
 
@@ -188,12 +190,14 @@
 //import Cards from '../views/components/Cards.vue'
 import store from "main";
 import Modal from "../views/SearchClub.vue";
+import ViewModal from "@/components/UserCard.vue";
 
 const cardsData = [];
 
 export default {
   components: {
     Modal,
+    ViewModal
   },
   data() {
     return {
@@ -210,7 +214,10 @@ export default {
       following: [],
 
       tickets: {},
-      gradient: 'info'
+      gradient: '',
+      modals: {
+        tickets: false
+      },
     };
   },
   methods: {
