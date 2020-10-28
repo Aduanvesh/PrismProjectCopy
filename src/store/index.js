@@ -23,6 +23,12 @@ export default new Vuex.Store({
       state.userDetails = payload
       console.log('ubersuccess:', state.userDetails.firstName)
     },
+    setColour(state, payload) {
+      state.userDetails.colour = payload
+    },
+    setImage(){
+      state.userDetails.profile_img = payload
+    },
     getUniversityNames(state, payload) {
       state.universities = payload
     }
@@ -133,7 +139,9 @@ export default new Vuex.Store({
                     type: 'User',
                     firstName: doc.data().first_name,
                     lastName: doc.data().last_name,
-                    id: userID
+                    id: userID,
+                    colour: doc.data().colour,
+                    profile_img: doc.data().profile_img
                   })
                   if (router.currentRoute.fullPath !== '/dashboard/user/' + userID
                     && !router.currentRoute.fullPath.includes('profile')
@@ -149,7 +157,8 @@ export default new Vuex.Store({
                     title: doc.data().title,
                     linkid: doc.data().membershiplink,
                     type: 'Club',
-                    id: userID
+                    id: userID,
+                    profile_img: doc.data().profile_img
                   })
                   if (router.currentRoute.fullPath !== '/dashboard/club/' + userID
                     && !router.currentRoute.fullPath.includes('profile')
@@ -719,6 +728,7 @@ export default new Vuex.Store({
     },
 
     async UpdateProfile(a = {}, payload) {
+      this.commit('setColour', payload.colour)
       console.log(payload)
       const userID = await firebase.auth().currentUser.uid
       console.log(userID)
@@ -742,6 +752,7 @@ export default new Vuex.Store({
           description: payload.about,
         })
       }
+      
       if (this.state.userDetails.type === "User") {
         router.push(
           "/dashboard/user/" + this.state.userDetails.id
@@ -751,6 +762,7 @@ export default new Vuex.Store({
           "/dashboard/club/" + this.state.userDetails.id
         );
       }
+     
     },
 
     async updateMembershipType(a = {}, payload) {
