@@ -21,7 +21,7 @@
                 <a href="#">
                   <img
                     :src="profilePic"
-                    class="rounded-circle"
+                    class="avatar-xl rounded-circle"
                   />
                 </a>
               </div>
