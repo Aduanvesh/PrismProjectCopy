@@ -181,8 +181,8 @@ export default {
   data() {
     return {
       sessionId: "",
-      followers: 22,
-      up_coming_events: 10,
+      followers: 0,
+      up_coming_events: 0,
       society_name: '',
       subtitle: '',
       profilePic: '/img/theme/profile.jpg',
