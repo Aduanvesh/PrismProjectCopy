@@ -47,7 +47,19 @@
         
         <modal :show.sync="modals.guest">
                 <h6 slot="header" class="modal-title" id="modal-title-default">Guest List</h6>
-
+                 <base-input
+                        alternative=""
+                        placeholder="Add Member via email"
+                        input-classes="form-control-alternative"
+                        v-model="memberEmail"
+                        class="p-1"
+                      />
+                       <base-checkbox v-model="cash">
+                                        Cash Payment
+                                    </base-checkbox>
+                      <div class="text-center pt-3">
+                                    <button type="submit" @click="addMember" class="btn btn-1 btn-primary">Add</button>
+                            </div>
                 <p>Guests:</p>
                 <div class="container">
                   <table class="col-12">
@@ -331,6 +343,7 @@ export default {
         delete: false,
         guest: false,
       },
+      memberEmail:'',
       times: [
             '1:00',
             '1:30',
@@ -389,6 +402,8 @@ export default {
         paid: false,
         attending: false
       }],
+
+      cash: false,
 
       //@Adarsh, you might need these to be props? 
       // ['primary', 'info', 'success', 'warning', 'danger', 'gray']
@@ -580,6 +595,15 @@ export default {
       this.edit.extras.membersOnly = this.memberProp
       this.modals.edit = true
 
+    },
+
+    async addMember () {
+      console.log(this.memberEmail)
+      const load = {}
+      load.memberEmail = this.memberEmail
+      load.eventid = this.id
+      load.cash =  this.cash
+      this.$store.dispatch('addMemberEvent', load)
     },
 
     async getMembers() {
