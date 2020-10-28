@@ -5,11 +5,12 @@
       class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-primary"
       style="
         min-height: 600px;
-        background-image: url(/img/theme/img-2-1200x1000.jpg);
+
         background-size: cover;
         background-position: center top;
       "
     >
+      <!-- background-image: url(/img/theme/img-2-1200x1000.jpg); -->
       <!-- Mask -->
       <span class="mask bg-gradient-success opacity-8"></span>
     </base-header>
