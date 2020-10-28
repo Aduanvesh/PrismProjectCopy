@@ -359,7 +359,7 @@ const paymentData = [
                 price: 0,
                 numberMembers: 0,
             },
-            gradient: 'info',
+            gradient: 'default',
         }
     },
 
@@ -446,6 +446,7 @@ const paymentData = [
             if (this.$store.state.userDetails.email === undefined){
                   setTimeout(() => this.goLoad(), 50) 
             } else {
+                this.gradient = this.$store.state.userDetails.colour;
                 this.retrieveMembership()
                 this.getMembers()
                 this.getEvents()
