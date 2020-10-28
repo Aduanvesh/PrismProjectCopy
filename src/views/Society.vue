@@ -149,7 +149,7 @@
                     </base-button>
                 </template>
             </modal>
-    <div class="shape shape-style-1 bg-gradient-default"></div>
+           <div :class="[gradient ? `bg-gradient-${gradient}` + ' shape shape-style-1' : 'bg-gradient-default shape shape-style-1']"></div>
         <div class="m-xl-5 m-lg-5 m-md-4 m-sm-3">
             <div class="container-fluid mb-3 mb-l-5">
                 <div class="row">
@@ -359,6 +359,7 @@ const paymentData = [
                 price: 0,
                 numberMembers: 0,
             },
+            gradient: 'info',
         }
     },
 

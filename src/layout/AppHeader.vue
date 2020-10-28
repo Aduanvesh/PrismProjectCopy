@@ -83,7 +83,7 @@
                      </div>
                   </a>
                   </div>
-                  <div v-else-if="currentPath === '/'">
+                  <div v-else>
                   <a href="/login"
                      class="media d-flex align-items-center">
                      <div class="icon icon-shape bg-gradient-warning rounded-circle-no-outline text-white">
@@ -94,8 +94,8 @@
                         <p class="description d-none d-md-inline-block mb-0">Login or register to see the dashboard</p>
                      </div>
                   </a>
-                  <!-- End Dashboard Menu Item -->
                   </div>
+                  <!-- End Dashboard Menu Item -->
                </div>
             </base-dropdown>
             <base-dropdown tag="li" class="nav-item">
