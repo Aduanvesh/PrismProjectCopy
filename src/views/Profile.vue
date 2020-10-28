@@ -20,7 +20,7 @@
               <div class="card-profile-image">
                 <a href="#">
                   <img
-                    v-lazy="'/img/theme/QUTLS 2020.png'"
+                    :src="profilePic"
                     class="rounded-circle"
                   />
                 </a>
@@ -185,6 +185,7 @@ export default {
       up_coming_events: 10,
       society_name: '',
       subtitle: '',
+      profilePic: '/img/theme/profile.jpg',
       university: "Queensland University of Technology",
       bio:
         "An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.",
@@ -251,6 +252,8 @@ export default {
           return data;
         });
       this.society_name, this.society_name = clubDetails.name;
+      console.log(this.$store.state.userDetails.profile_img);
+      this.profilePic = this.$store.state.userDetails.profile_img;
       this.subtitle, this.subtitle = clubDetails.details;
       this.up_coming_events = clubDetails.events.length;
       this.bio = clubDetails.description;
