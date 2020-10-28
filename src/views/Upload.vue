@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     create() {
-      const post = {
+     /* const post = {
         photo: this.img1,
         caption: this.caption,
       };
@@ -68,7 +68,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-        });
+        });*/
     },
 
     click1() {
@@ -83,7 +83,7 @@ export default {
     },
 
     onUpload() {
-      this.img1 = null;
+      /*this.img1 = null;
       const storageRef = firebase
         .storage()
         .ref(`${this.imageData.name}`)
@@ -104,7 +104,8 @@ export default {
             console.log(this.img1);
           });
         }
-      );
+      ); */
+      console.log('its fine') 
     },
   },
 };

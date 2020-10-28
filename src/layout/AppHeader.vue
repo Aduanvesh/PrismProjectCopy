@@ -126,7 +126,7 @@
                               <base-dropdown class="nav-link pr-0">
                                  <div class="media align-items-center" slot="title">
                                        <span class="avatar rounded-circle">
-                                          <img alt="" src="/img/theme/profile.jpg" style="max-width: 50px; max-height: 50px;">
+                                          <img alt="" v-bind:src="this.profilePic" style="max-width: 50px; max-height: 50px;">
                                        </span>
                                        <div class="media-body ml-2 d-none d-lg-block">
                                           <span class="mb-0 text-sm  font-weight-bold">{{user}}</span>
@@ -198,9 +198,11 @@ export default {
     BaseDropdown
   },
 
-  data: {
-
-     profilePic: '/public/img/theme/profile.jpg',
+  data() {
+return {
+    profilePic: '/img/theme/profile.jpg',
+   }
+    
   },
 
   methods: {
@@ -211,7 +213,18 @@ export default {
             } else {
                 router.push('/dashboard/user/'+this.$store.state.userDetails.id)
             }
-        }
+        },
+
+        async goLoad() {
+      console.log(this.profilePic)
+      if (this.$store.state.userDetails.email === undefined) {
+        setTimeout(() => this.goLoad(), 50);
+      } else {
+          console.log(this.$store.state.userDetails.profile_img)
+          this.profilePic = this.$store.state.userDetails.profile_img
+      }
+    },
+
     },
   computed: {
 
@@ -234,6 +247,11 @@ export default {
         return false
       }
     } 
+  },
+  created () {
+     
+     
+      this.goLoad()
   }
 };
 </script>

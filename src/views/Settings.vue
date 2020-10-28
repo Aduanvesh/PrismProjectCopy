@@ -3,7 +3,7 @@
     <modal :show.sync="modals.bannerImage">
       <template slot="header"> Upload a New Banner </template>
       <div v-if="imageData != null && imageData != ''" class="text-center">
-        <img class="preview" height="268" width="356" :src="img1" />
+        <img class="preview" height="268" width="356" :src="img2" />
       </div>
       <div v-else>
         <img
@@ -12,13 +12,13 @@
       </div>
       <div class="text-center">
         <base-button type="info" @click="clickUpload" class="mb-2 mt-2"
-          >Choose a photo</base-button
+          >Choose a banner photo</base-button
         >
         <input
           type="file"
           ref="input1"
           style="display: none"
-          @change="previewImage"
+          @change="previewImageBanner"
           accept="image/*"
         />
         <div class="text-center">
@@ -75,7 +75,7 @@
                 <div class="card-profile-image">
                   <a href="#">
                     <img
-                      v-lazy="'/img/theme/profile.jpg'"
+                      v-bind:src="this.profile_pic"
                       class="rounded-circle avatar-xl"
                       style="width: "
                     />
@@ -103,16 +103,9 @@
                 </div>
               </div>
               <div class="col-lg-4 order-lg-1 pt-lg-5 pt-4 pt-md-3">
-                <div class="card-profile-stats d-flex justify-content-center">
-                  <div>
-                    <span class="heading">{{ memberlist.length }}</span>
-                    <span class="description">Followers</span>
-                  </div>
-                  <div>
-                    <span class="heading">{{ up_coming_events }}</span>
-                    <span class="description">Events</span>
-                  </div>
-                </div>
+                <div
+                  class="card-profile-stats d-flex justify-content-center"
+                ></div>
               </div>
             </div>
             <div class="text-center mt-2 mb-4">
@@ -404,9 +397,10 @@ export default {
         bannerImage: false,
         profileImage: false,
       },
-
+      profile_pic: "/img/theme/profile.jpg",
       imageData: "",
       img1: "",
+      img2: "",
       qr: {
         value: "/profile/join/",
         background: "#f4f5f7",
@@ -422,26 +416,17 @@ export default {
   methods: {
     async associateImage() {
       const userID = firebase.auth().currentUser.uid;
+      console.log("success");
       const user = await firebase.firestore().collection("users").doc(userID);
       user.update({
         profile_img: this.img1,
       });
+      this.$store.commit;
     },
 
     create() {
-      const post = {
-        photo: this.img1,
-      };
-      firebase
-        .firestore()
-        .collection("PhotoGallery")
-        .doc(post)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.modals.bannerImage = false;
+      this.modals.profileImage = false;
     },
 
     clickUpload() {
@@ -449,14 +434,51 @@ export default {
     },
 
     previewImage(event) {
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       this.uploadValue = 0;
       this.img1 = null;
       this.imageData = event.target.files[0];
       this.onUpload();
     },
 
+    previewImageBanner(event) {
+      this.uploadValue = 0;
+      this.img2 = null;
+      this.imageData = event.target.files[0];
+      this.onUploadBanner();
+    },
+
+    onUploadBanner() {
+        
+      this.img2 = null;
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        `state_changed`,
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.img2 = url;
+            console.log(this.img2);
+          });
+        }
+      );
+    },
+
     async submit() {
+      console.log("imagehere", this.img1);
+      console.log("imagehere2", this.img2);
       console.log("modelhere", this.model);
+      this.associateImage();
       if (this.model.subtitle === "" || this.model.about === "") {
         alert("Subtitle and Bio values are compulsory for page edits");
       } else {
@@ -469,7 +491,9 @@ export default {
       if (this.$store.state.userDetails.email === undefined) {
         setTimeout(() => this.goLoad(), 50);
       } else {
-         this.getSettings()
+        this.getSettings();
+        this.profile_pic = this.$store.state.userDetails.profile_img;
+        console.log("nock", this.profile_pic);
       }
     },
 
@@ -491,20 +515,22 @@ export default {
         .then(function (data) {
           return data;
         });
-        this.model.colour = settingsData.colour
-        this.model.subtitle = settingsData.subtitle
-        this.model.about = settingsData.description
-        this.model.username = settingsData.username
-        this.model.firstName = settingsData.first_name
-        this.model.lastName = settingsData.last_name
-        this.model.address = settingsData.address
-        this.model.city = settingsData.city
-        this.model.country = settingsData.country
-        this.model.zipCode = settingsData.zipCode
+      this.model.colour = settingsData.colour;
+      this.model.subtitle = settingsData.subtitle;
+      this.model.about = settingsData.description;
+      this.model.username = settingsData.username;
+      this.model.firstName = settingsData.first_name;
+      this.model.lastName = settingsData.last_name;
+      this.model.address = settingsData.address;
+      this.model.city = settingsData.city;
+      this.model.country = settingsData.country;
+      this.model.zipCode = settingsData.zipCode;
+      this.model.img1 = settingsData.profile_img;
       console.log(settingsData);
     },
 
     onUpload() {
+        console.log("choke");
       this.img1 = null;
       const storageRef = firebase
         .storage()
@@ -530,8 +556,8 @@ export default {
     },
   },
   created() {
-      this.goLoad()
-  }
+    this.goLoad();
+  },
 };
 </script>
 <style>

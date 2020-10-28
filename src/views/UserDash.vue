@@ -319,6 +319,8 @@ export default {
         this.retrieveEvents();
         this.retrieveEventsTickets();
         this.retrievePayments();
+        this.gradient = this.$store.state.userDetails.colour
+        console.log(this.$store.state.userDetails.colour)
       }
     },
 
@@ -380,6 +382,9 @@ export default {
   },
   created() {
     this.goLoad();
+       /* const board = document.getElementById("userdashboardbgdiv")
+        console.log('board:', board)
+        board.style.opacity = 0 */
   },
 };
 </script>
@@ -395,7 +400,10 @@ export default {
 }
 #userdashboardbgdiv {
   /* height: 100vh; */
+  opacity: 1;
+  transition: opacity 0.2s linear;
 }
+
 #paymenttable{
     border: 1px solid #ddd;
     border-collapse: collapse;
