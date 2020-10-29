@@ -131,22 +131,11 @@ export default new VueRouter({
       }
     },
     {
-      path: "/kiosk/:id",
+      path: "/kiosk/:type/:id",
       name: "kiosk",
       components: {
         default: Kiosk,
       },
-      children: [
-        {
-          path: '/kiosk/join',
-          name: 'user',
-          component: Register
-        },
-        {
-          path: '/register/club',
-          name: 'club',
-          component: Register
-        },]
     },
     {
       path: "/clubjoin/:id",

@@ -105,7 +105,6 @@ export default new Vuex.Store({
       console.log('payload: ', payload.email)
       try {
         await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-        router.push('/dashboard')
       } catch (err) {
         this.errorMsg = err.message
         console.log(err.message)
