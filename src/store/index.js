@@ -543,6 +543,29 @@ export default new Vuex.Store({
       router.go()
     },
 
+    async markAttendanceEvent(a = {}, payload){
+      const userID = firebase.auth().currentUser.uid
+      try {
+        const user = firebase.firestore().collection('users').doc(userID)
+        const userdata = await user.get()
+        .then(doc => {
+          return doc.data()
+        })
+        if (userdata.attending.includes(payload)){
+          return 'success'
+        }else {
+          user.update({
+            attending: firebase.firestore.FieldValue.arrayUnion(payload)
+          })
+          return 'success'
+        }
+      } catch (err) {
+        this.errorMsg = err.message
+        console.log('error:', err.message)
+        return err.message
+      }
+    },
+
     async joinClubCode(a = {}, payload) {
       console.log('attempt:', payload)
       try {
