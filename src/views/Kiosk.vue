@@ -113,15 +113,34 @@ export default {
             errorType = defs
             if (errorType === undefined) {
             console.log('successfully logged in')
-            return ' '
+            return 'success'
             } else if (errorType === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
             return 'The entered username or password is incorrect'
             } else if (errorType === 'The password is invalid or the user does not have a password.') {
             return 'The entered username or password isrc\stores incorrect'
             }
         })
+        if (this.messageError === 'success'){
+          this.clubjoin()
+        }
       console.log('loginmessageerror(ignore if blank):', this.messageError) 
     },
+    async clubjoin() {
+      console.log(this.$route.params.type)
+      if (this.$route.params.type==='club' && this.$store.state.userDetails.type === 'User'){
+          console.log('search:', this.$route.params.id)
+            const check = this.$store.dispatch('joinClubCode', this.$route.params.id)
+            const result = await check.then(function (defs, messageError) {
+                return defs
+            })
+            
+            if (result === 'success'){
+                this.$router.push('/dashboard/user/' + this.$store.state.userDetails.id)
+            }
+      }
+    },
+
+
     backLogin () {
       console.log(this.tab)
       this.tab = 'login'
@@ -158,7 +177,7 @@ export default {
     }
   },
   created () {
-      console.log('started')
+      
   }, 
   /*computed: {
     errorMessage () {
