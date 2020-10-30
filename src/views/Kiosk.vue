@@ -121,25 +121,42 @@ export default {
             }
         })
         if (this.messageError === 'success'){
-          this.clubjoin()
+          if (this.$route.params.type==='club'){
+            this.clubjoin()
+          } else if(this.$route.params.type==='event'){
+            this.eventattend()
+          }
+         
         }
       console.log('loginmessageerror(ignore if blank):', this.messageError) 
     },
-    async clubjoin() {
-      console.log(this.$route.params.type)
-      if (this.$route.params.type==='club' && this.$store.state.userDetails.type === 'User'){
+
+    async eventattend() {
+      if (this.$store.state.userDetails.type === 'User'){
           console.log('search:', this.$route.params.id)
-            const check = this.$store.dispatch('joinClubCode', this.$route.params.id)
+            const check = this.$store.dispatch('markAttendanceEvent', this.$route.params.id)
             const result = await check.then(function (defs, messageError) {
                 return defs
             })
-            
             if (result === 'success'){
                 this.$router.push('/dashboard/user/' + this.$store.state.userDetails.id)
             }
       }
     },
 
+    async clubjoin() {
+      console.log(this.$route.params.type)
+      if (this.$store.state.userDetails.type === 'User'){
+          console.log('search:', this.$route.params.id)
+            const check = this.$store.dispatch('joinClubCode', this.$route.params.id)
+            const result = await check.then(function (defs, messageError) {
+                return defs
+            })
+            if (result === 'success'){
+                this.$router.push('/dashboard/user/' + this.$store.state.userDetails.id)
+            }
+      }
+    },
 
     backLogin () {
       console.log(this.tab)
