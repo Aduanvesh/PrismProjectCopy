@@ -111,7 +111,7 @@ export default {
             errorType = defs
             if (errorType === undefined) {
             console.log('successfully logged in')
-            router.push('/dashboard')
+            this.$router.push('/dashboard')
             return ' '
             } else if (errorType === 'There is no user record corresponding to this identifier. The user may have been deleted.') {
             return 'The entered username or password is incorrect'
