@@ -234,7 +234,12 @@ return {
    },
 
     userID(){
-      return '/profile/' + this.$store.state.userDetails.id
+       if (this.$store.state.userDetails.type === 'Club'){
+           return '/profile/' + this.$store.state.userDetails.id
+       } else {
+          return ''
+       }
+     
     },
     user(){
       return this.$store.state.userDetails.email

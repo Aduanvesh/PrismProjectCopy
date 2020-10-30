@@ -379,7 +379,7 @@ const paymentData = [
         async onSubmit(evt){
             evt.preventDefault()
             console.log(this.event)
-            alert(JSON.stringify(this.event))
+            //alert(JSON.stringify(this.event))
             console.log('checkeroni', this.event)
             this.$store.dispatch('createEvent', this.event)
             this.modals.add = false;
@@ -389,7 +389,7 @@ const paymentData = [
         async onMemSubmit(evt){
             evt.preventDefault()
             console.log(this.membership)
-            alert(JSON.stringify(this.membership))
+            //alert(JSON.stringify(this.membership))
             console.log('checkeroni', this.membership)
             this.$store.dispatch('createMembershipType', this.membership)
             this.modals.add = false;
